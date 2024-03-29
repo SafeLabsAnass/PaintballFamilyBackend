@@ -20,38 +20,28 @@ class Category extends Model
         'name',
     ];
 
-    /**
-     * @return BelongsToMany
-     */
-    public function products(): BelongsToMany
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(Product::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
-    /**
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeForUser(Builder $query): Builder
-    {
-        return $query->where('user_id', auth()->id());
-    }
+//    /**
+//     * @param Builder $query
+//     * @return Builder
+//     */
+//    public function scopeForUser(Builder $query): Builder
+//    {
+//        return $query->where('user_id', auth()->id());
+//    }
 
-    /**
-     * @param Builder $query
-     * @param array $ids
-     * @return Collection
-     */
-    public function scopeForUserByIds(Builder $query, array $ids): Collection
-    {
-        return $query->find($ids)->where('user_id', auth()->id());
-    }
+//    /**
+//     * @param Builder $query
+//     * @param array $ids
+//     * @return Collection
+//     */
+//    public function scopeForUserByIds(Builder $query, array $ids): Collection
+//    {
+//        return $query->find($ids)->where('user_id', auth()->id());
+//    }
 }

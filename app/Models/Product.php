@@ -17,15 +17,9 @@ class Product extends Model
     protected $fillable = [
         'name',
         'price',
+        'category_id'
     ];
 
-    /**
-     * @return BelongsToMany
-     */
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(Category::class);
-    }
 
     /**
      * @param Builder $query

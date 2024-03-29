@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_product', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('sites_categories', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('site_id');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('product_id');
+            $table->foreign('site_id')->references('id')->on('sites')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -25,10 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign('category_id');
-            $table->dropForeign('product_id');
-        });
-        Schema::dropIfExists('category_product');
+        Schema::dropIfExists('sites_categories');
     }
 };

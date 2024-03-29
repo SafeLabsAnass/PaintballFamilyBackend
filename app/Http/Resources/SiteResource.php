@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class SiteResource extends JsonResource
 {
     /**
      * @param Request $request
@@ -17,8 +17,11 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => $this->price,
+            'phone' => $this->phone,
+            'address' => $this->address,
             'created_at' => $this->created_at,
+            'categories' => SiteCategoryResource::collection($this->sitesCategories),
+            'users' => AuthResource::collection($this->users),
         ];
     }
 }

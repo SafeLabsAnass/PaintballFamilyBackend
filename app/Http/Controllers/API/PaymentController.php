@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Constants\AuthConstants;
-use App\Constants\CategoryConstants;
+use App\Constants\PaymentConstants;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
-use App\Http\Resources\CategoryResource;
+use App\Http\Requests\PaymentRequest;
+use App\Http\Resources\PaymentResource;
 use App\Http\Traits\Access;
 use App\Http\Traits\HttpResponses;
-use App\Models\Category;
+use App\Models\Payment;
 use Illuminate\Http\JsonResponse;
 
-class CategoryController extends Controller
+class PaymentController extends Controller
 {
     use Access;
     use HttpResponses;
@@ -23,19 +22,19 @@ class CategoryController extends Controller
     public function index(): JsonResponse
     {
         return $this->success(
-            CategoryResource::collection(Category::all())
+            PaymentResource::collection(Payment::all())
         );
     }
 
     /**
-     * @param CategoryRequest $request
+     * @param PaymentRequest $request
      * @return JsonResponse
      */
-    public function store(CategoryRequest $request): JsonResponse
+    public function store(PaymentRequest $request): JsonResponse
     {
         return $this->success(
-            new CategoryResource(Category::create($request->all())),
-            CategoryConstants::STORE
+            new PaymentResource(Payment::create($request->all())),
+            PaymentConstants::STORE
         );
     }
 
@@ -45,30 +44,30 @@ class CategoryController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $category = Category::where('id',$id)->first();
+        $payment = Payment::where('id',$id)->first();
 //        if (!$this->canAccess($category)) {
 //            return $this->error([], AuthConstants::PERMISSION);
 //        }
 
-        return $this->success(new CategoryResource($category));
+        return $this->success(new PaymentResource($payment));
     }
 
     /**
-     * @param CategoryRequest $request
+     * @param PaymentRequest $request
      * @param int $id
      * @return JsonResponse
      */
-    public function update(CategoryRequest $request, int $id): JsonResponse
+    public function update(PaymentRequest $request, int $id): JsonResponse
     {
 //        if (!$this->canAccess($category)) {
 //            return $this->error([], AuthConstants::PERMISSION);
 //        }
-        $category = Category::where('id',$id)->first();
-        $category->update($request->all());
+        $payment = Payment::where('id',$id)->first();
+        $payment->update($request->all());
 
         return $this->success(
-            new CategoryResource($category),
-            CategoryConstants::UPDATE
+            new PaymentResource($payment),
+            PaymentConstants::UPDATE
         );
     }
 
@@ -81,10 +80,10 @@ class CategoryController extends Controller
 //        if (!$this->canAccess($category)) {
 //            return $this->error([], AuthConstants::PERMISSION);
 //        }
-        $category = Category::where('id',$id)->first();
+        $payment = Payment::where('id',$id)->first();
 
-        $category->delete();
+        $payment->delete();
 
-        return $this->success([], CategoryConstants::DESTROY);
+        return $this->success([], PaymentConstants::DESTROY);
     }
 }

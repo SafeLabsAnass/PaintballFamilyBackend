@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class PaymentResource extends JsonResource
 {
     /**
      * @param Request $request
@@ -16,8 +15,7 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'price' => $this->price,
+            'type' => $this->type,
             'created_at' => $this->created_at,
         ];
     }

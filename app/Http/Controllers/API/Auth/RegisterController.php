@@ -6,6 +6,7 @@ use App\Constants\AuthConstants;
 use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\AuthResource;
 use App\Http\Traits\HttpResponses;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,6 @@ class RegisterController extends Controller
 
         event(new UserRegistered($user));
 
-        return $this->success($success, AuthConstants::REGISTER);
+        return $this->success(new AuthResource($success), AuthConstants::REGISTER);
     }
 }

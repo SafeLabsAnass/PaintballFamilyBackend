@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function index(): JsonResponse
     {
-        return $this->success(ProductResource::collection(Product::ForUser()->get()));
+        return $this->success(ProductResource::collection(Product::all()));
     }
 
     /**
@@ -32,67 +32,76 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request): JsonResponse
     {
-        $product = auth()->user()->products()->create($request->all());
+//        $product = auth()->user()->products()->create($request->all());
+//
+//        if (isset($request->categories)) {
+//            $categories = Category::ForUserByIds($request->categories);
+//
+//            if (!$categories->isEmpty()) {
+//                $product->categories()->attach($categories);
+//            }
+//        }
+        $category_name = $request->category;
+        $category = Category::where('name',$category_name)->first();
+        $product = new Product();
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->category_id = $category->id;
+        $product->save() ;
 
-        if (isset($request->categories)) {
-            $categories = Category::ForUserByIds($request->categories);
-
-            if (!$categories->isEmpty()) {
-                $product->categories()->attach($categories);
-            }
-        }
 
         return $this->success(new ProductResource($product), ProductConstants::STORE);
     }
 
     /**
-     * @param Product $product
+     * @param int $id
      * @return JsonResponse
      */
-    public function show(Product $product): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        if (!$this->canAccess($product)) {
-            return $this->error([], AuthConstants::PERMISSION);
-        }
+        $product = Product::where('id',$id)->first();
+//        if (!$this->canAccess($product)) {
+//            return $this->error([], AuthConstants::PERMISSION);
+//        }
 
         return $this->success(new ProductResource($product));
     }
 
     /**
      * @param ProductRequest $request
-     * @param Product $product
+     * @param int $id
      * @return JsonResponse
      */
-    public function update(ProductRequest $request, Product $product): JsonResponse
+    public function update(ProductRequest $request, int $id): JsonResponse
     {
-        if (!$this->canAccess($product)) {
-            return $this->error(AuthConstants::PERMISSION);
-        }
-
-        if (isset($request->categories)) {
-            $categories = Category::ForUserByIds($request->categories);
-
-            $product->categories()->detach();
-            if (!$categories->isEmpty()) {
-                $product->categories()->attach($categories);
-            }
-        }
-
+//        if (!$this->canAccess($product)) {
+//            return $this->error(AuthConstants::PERMISSION);
+//        }
+//
+//        if (isset($request->categories)) {
+//            $categories = Category::ForUserByIds($request->categories);
+//
+//            $product->categories()->detach();
+//            if (!$categories->isEmpty()) {
+//                $product->categories()->attach($categories);
+//            }
+//        }
+        $product = Product::where('id',$id)->first();
         $product->update($request->all());
 
         return $this->success(new ProductResource($product), ProductConstants::UPDATE);
     }
 
     /**
-     * @param Product $product
+     * @param int $id
      * @return JsonResponse
      */
-    public function destroy(Product $product): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        if (!$this->canAccess($product)) {
-            return $this->error(AuthConstants::PERMISSION);
-        }
-
+//        if (!$this->canAccess($product)) {
+//            return $this->error(AuthConstants::PERMISSION);
+//        }
+        $product = Product::where('id',$id)->first();
         $product->delete();
 
         return $this->success([], ProductConstants::DESTROY);
