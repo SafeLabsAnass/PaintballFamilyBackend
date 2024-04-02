@@ -28,19 +28,17 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AuthRequest $request)
+    public function store(Request $request)
     {
-        dump(request()->post('Auth',''));
-        return $this->success(
-        new AuthResource(User::create($request->all())),
-           AuthConstants::STORE
-        );
+//        dd($request->all());
+       new AuthResource(User::create($request->all()));
+       return back();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(int $id)
     {
         //
     }
@@ -70,7 +68,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect('/');
+        return redirect('/users');
     }
 
 }

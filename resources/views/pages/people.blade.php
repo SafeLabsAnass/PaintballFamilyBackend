@@ -449,37 +449,51 @@
                 <h2 class="col-10 mx-auto">Add People</h2>
             </div>
             <div class="modal-body p-0">
-                <form action="{{route('Auth.store')}}" method="post">
+
+                <form action="{{route('user.store')}}" method="post">
+                    @csrf
                     <div class="col-10 mx-auto form_container">
                         <div class="form-group">
-                            <label>First Name</label>
-                            <input type="text" class="form-control" value="Jimmy Taylor" name="first_name">
+                            <label>Username</label>
+                            <input type="text" class="form-control" name="username" >
                         </div>
                         <div class="form-group">
-                            <label>last_name</label>
-                            <input type="text" class="form-control" value="Jimmy Taylor" name="last_name">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" name="first_name">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" name="last_name">
                         </div>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input type="text" class="form-control" value="+1 987 645 5432">
+                            <input type="text" class="form-control" name="phone">
                         </div>
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input type="email" class="form-control" value="jimmytaylor1234@gmail.com">
+                            <input type="email" class="form-control" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <div class="form-group">
+                            <label>Site</label>
+                            <input type="text" class="form-control" name="site_id">
                         </div>
                         <div class="form-group">
                             <label>gender</label>
                             <select class="form-control" name="gender">
-                                <option>Female</option>
                                 <option>Male</option>
+                                <option>Female</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <div class="row no-gutters w-100">
-                            <div class="col-6"> <button type="file" class="btn Cencel" data-dismiss="modal"><a href="#">Cencel</a></button></div>
-                            <div class="col-6"> <button type="file" class="btn"><a href="#">Add People</a></button></div>
+                            <div class="col-6"> <button type="reset" class="btn Cencel" data-dismiss="modal">Cancel</button></div>
+                            <div class="col-6"> <button type="submit" class="btn">Add People</button></div>
                         </div>
                     </div>
                 </form>

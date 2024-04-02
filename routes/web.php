@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[UserController::class,'index']);
+Route::get('/',function (){return view('pages.dashboard');})->name('home');
+Route::get('/categories',function (){return view('pages.categories');})->name('categories');
+Route::get('/users',[UserController::class,'index'])->name('users');;
 Route::get('user/destroy/{id}',[UserController::class,'destroy']);
-Route::post('user/store/{id}',[UserController::class,'store']);
+Route::post('user/store',[UserController::class,'store'])->name('user.store');
 
 
