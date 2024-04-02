@@ -1,0 +1,228 @@
+/*// Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) {
+    #page_sign_in .container h2 {
+        font-size: 1.5rem !important;
+        font-weight: 500 !important;
+    }
+
+    #page_sign_in .container .logo_box {
+        max-width: 250px;
+        margin-bottom: 30px;
+    }
+
+    form .form-group label {
+        font-size: .9rem;
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    #page_sign_in .container {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 425px) {
+    #page_sign_in .container {
+        max-width: 300px;
+    }
+
+    #page_sign_in .container .logo_box {
+        max-width: 150px;
+        margin-bottom: 30px;
+    }
+
+    #page_sign_in .container h2 {
+        font-size: 1.1rem !important;
+    }
+
+    #page_sign_in .container button.btn {
+        height: 50px;
+        font-size: 1.3rem;
+    }
+
+
+    #sales_expenses .modal-footer button.btn {
+        height: 50px;
+        font-size: 1.3rem;
+    }
+}
+
+
+
+@media (max-width: 1250px) {
+    header .navbar .navbar-nav .nav-item {
+        padding: 0px 15px;
+    }
+
+    header .navbar .navbar-nav .nav-item .nav-link i {
+        font-size: 1.3rem;
+        min-width: 19px;
+    }
+
+    header .navbar .navbar-nav .nav-item .nav-link {
+        font-size: .9rem;
+    }
+
+    header .navbar .navbar-nav .nav-item.profile_img .img_box {
+        min-width: 45px;
+        height: 45px;
+        width: 45px;
+    }
+}
+
+@media (max-width: 1199px) {
+    header .navbar {
+        padding: 20px 0;
+    }
+
+    header .navbar .navbar-nav .nav-item {
+        width: 100%;
+        padding: 3px 15px;
+    }
+
+    header .navbar .navbar-nav .nav-item.active::after {
+        width: 100%;
+    }
+
+    header .navbar .navbar-nav .nav-item .nav-link i {
+        font-size: 1.4rem;
+        min-width: 25px;
+    }
+
+    header .navbar .navbar-nav .nav-item .nav-link {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .order_list {
+        margin-bottom: 27px;
+    }
+
+    .right_sidebar .order_list {
+        width: 100%;
+        overflow-x: scroll;
+    }
+
+    .right_sidebar .order_list .list_header {
+        min-width: 778px;
+    }
+
+    .right_sidebar .order_list li {
+        min-width: 778px;
+    }
+
+    .order_list ul li h3.order_num,
+    .order_list .list_header h2.order_num {
+        min-width: 109.48px;
+    }
+
+    .order_list ul li h3.Name,
+    .order_list .list_header h2.Name {
+        min-width: 156.4px;
+    }
+
+    .order_list ul li h3.Amount,
+    .order_list .list_header h2.Amount {
+        min-width: 86.1px;
+    }
+
+    .order_list ul li h3.Items,
+    .order_list .list_header h2.Items {
+        min-width: 78.2px;
+    }
+
+    .order_list ul li h3.Table,
+    .order_list .list_header h2.Table {
+        min-width: 83.84px;
+    }
+
+    .order_list ul li h3.Payment,
+    .order_list .list_header h2.Payment {
+        min-width: 117.3px;
+    }
+
+    .order_list .list_header h2.Action {
+        min-width: 140.75px;
+    }
+
+    .order_list ul li h3.Payment.Sales,
+    .order_list .list_header h2.Payment.Sales {
+        min-width: 85.3px;
+    }
+}
+
+@media (max-width: 991px) {
+    .right_sidebar .tab_footer .col-12 .row {
+        width: 100%;
+    }
+
+    .navigation {
+        margin-right: 0;
+        margin-left: auto;
+    }
+}
+
+
+
+@media (max-width:610px) {
+    .right_sidebar {
+        padding-left: 158px;
+        padding-right: 6px;
+    }
+
+    .right_sidebar .tab_header {
+        display: block;
+    }
+
+    .right_sidebar .tab_header h1 {
+        width: 100%;
+
+        padding-bottom: 20px;
+    }
+
+    .order_container {
+        column-count: 3;
+    }
+
+    .left_sidebar .nav .nav-item {
+        min-width: 144px;
+        padding: 13px 20px;
+        font-size: 1rem;
+    }
+
+    .right_sidebar .tab_header h1 {
+        display: block !important;
+    }
+
+    .right_sidebar .tab_header h1 button.btn {
+        margin: 0;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width:500px) {
+
+    .right_sidebar .tab_footer .col-12 .row {
+        display: block;
+    }
+
+    .navigation {
+        padding-top: 20px;
+    }
+
+    .navigation .justify-content-end {
+        justify-content: flex-start !important;
+    }
+
+    #page_orders_status .order_container {
+        column-count: 2;
+    }
+}
+
+@media (max-width:375px) {
+    #page_orders_status .order_container {
+        column-count: 1;
+    }
+}
