@@ -17,7 +17,6 @@ Route::post('register', RegisterController::class);
 Route::group(['middleware' => 'api.auth'], function () {
     Route::get('user', [LoginController::class, 'details']);
     Route::get('logout', [LoginController::class, 'logout']);
-
     Route::apiResource('product', ProductController::class);
     Route::get('product/show/{id}', [ProductController::class, 'show'])->name('product.show');
     Route::put('product/update/{id}', [ProductController::class, 'update'])->name('product.update');

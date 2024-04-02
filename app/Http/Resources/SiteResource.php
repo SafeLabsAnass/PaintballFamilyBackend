@@ -17,7 +17,7 @@ class SiteResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'phone' => $this->phone,
+             'phone' => $this->phone,
             'address' => $this->address,
             'created_at' => $this->created_at,
             'categories' => SiteCategoryResource::collection($this->sitesCategories),
