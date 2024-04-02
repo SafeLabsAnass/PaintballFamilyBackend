@@ -449,7 +449,7 @@
                 <h2 class="col-10 mx-auto">Add People</h2>
             </div>
             <div class="modal-body p-0">
-                <form action="{{route('Auth.store')}}" method="post">
+                <form action="{{url('user/store')}}" method="post">
                     <div class="col-10 mx-auto form_container">
                         <div class="form-group">
                             <label>First Name</label>

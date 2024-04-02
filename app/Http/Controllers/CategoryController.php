@@ -29,7 +29,8 @@ class CategoryController extends Controller
         return $this->success(
             new CategoryResource(Category::create($request->all())),
             CategoryConstants::STORE
-        );    }
+        );
+    }
 
     /**
      * Display the specified resource.
