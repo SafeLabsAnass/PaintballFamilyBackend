@@ -7,25 +7,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Datetimepicker CSS -->
+    <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
+
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/style.css')}}" type="text/css" rel="stylesheet">
 
     <!-- Responsive CSS -->
-    <link href="css/responsive.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/responsive.css')}}" type="text/css" rel="stylesheet">
 
     <!-- Font CSS -->
-    <link href="css/gogle_sans_font.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/gogle_sans_font.css')}}" type="text/css" rel="stylesheet">
 
     <!--  For icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.css">
     <!-- Page Title -->
     <title></title>
+
 
     <!--
 	 Owl-carousel CSS
@@ -39,8 +41,8 @@
 <header class="container-fluid ">
     <nav class="navbar navbar-expand-xl navbar-light align-items-center">
         <div class="nav-item">
-            <a class="navbar-brand nav-link px-2" href="dashboard.html">
-                <img src="images/logo.png" class="img-fluid">
+            <a class="navbar-brand nav-link px-2" href="{{route('home')}}">
+                <img src="{{ asset('images/logo.png')}}" class="img-fluid">
             </a>
         </div>
 
@@ -49,14 +51,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <ul class="navbar-nav mr-0 ml-auto d-flex align-items-center">
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="home.html"><i class="zmdi zmdi-assignment"></i> POS</a>--}}
+{{--                </li>--}}
                 <li class="nav-item">
-                    <a class="nav-link" href="home.html"><i class="zmdi zmdi-assignment"></i> POS</a>
+                    <a class="nav-link" href="{{route('categories')}}"><i class="zmdi zmdi-cutlery"></i> Items</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="items.html"><i class="zmdi zmdi-cutlery"></i> Items</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="people.html"><i class="zmdi zmdi-accounts-alt"></i> People</a>
+                    <a class="nav-link" href="{{route('users')}}"><i class="zmdi zmdi-accounts-alt"></i> People</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="sales_expenses.html"><i class="zmdi zmdi-collection-text"></i> Sales & Expenses</a>
