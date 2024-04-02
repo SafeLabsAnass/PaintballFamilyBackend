@@ -10,4 +10,8 @@ class AuthConstants
     public const LOGIN = 'User Login successfully.';
     public const LOGOUT = 'User Logout successfully.';
     public const PERMISSION = 'You don`t have permission.';
+    public const DESTROY = 'User removed successfully.';
+    public const STORE = 'User created successfully.';
+    public const UPDATE = 'User updated successfully.';
+
 }
