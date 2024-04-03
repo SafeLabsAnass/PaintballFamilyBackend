@@ -84,8 +84,8 @@
         <div class="left_sidebar">
             <!-- Nav Tabs Start -->
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav_food_items" data-toggle="tab" href="#food_items" role="tab" aria-controls="nav-home" aria-selected="true">Food Items</a>
-                <a class="nav-item nav-link" id="nav-Categories-tab" data-toggle="tab" href="#Categories" role="tab" aria-controls="nav-profile" aria-selected="false">Categories</a>
+                <a class="nav-item nav-link active" id="nav-Categories-tab" data-toggle="tab" href="#Categories" role="tab" aria-controls="nav-profile" aria-selected="true">Categories</a>
+                <a class="nav-item nav-link" id="nav_food_items" data-toggle="tab" href="#food_items" role="tab" aria-controls="nav-home" aria-selected="false">Food Items</a>
             </div>
             <!-- Nav Tabs End -->
         </div>
@@ -97,11 +97,11 @@
             <div class="tab-content" id="nav-tabContent">
 
                 <!-- Food Items Tab Content Start -->
-                <div class="tab-pane fade show active" id="food_items" role="tabpanel" aria-labelledby="nav_food_items">
+                <div class="tab-pane fade show" id="food_items" role="tabpanel" aria-labelledby="nav_food_items">
                     <div class="tab_header">
                         <h1 class="d-flex">
                             <span class="d-block" style="min-width: 161px;">Food Items</span>
-                            <button type="button" class="btn"><a href="upload_item.html">Add New</a></button>
+                            <button type="button" class="btn"><a href="{{route('upload_items')}}">Add New</a></button>
                         </h1>
                         <form class="search_box">
                             <div class="form-group d-flex">
@@ -127,215 +127,12 @@
 
                         <ul>
                             <li class="d-flex">
-                                <h3 class="text-center order_num Code">18754</h3>
-                                <h3 class="text-left Name"><strong>Cheese Burst Sandwich</strong></h3>
-                                <h3 class="text-center Amount Category">Fast Food</h3>
-                                <h3 class="text-center Items Options">3 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">112</h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-eye"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <h3 class="text-center order_num Code">18755</h3>
-                                <h3 class="text-left Name"><strong>Red Source Pasta</strong></h3>
-                                <h3 class="text-center Amount Category">Fast Food</h3>
-                                <h3 class="text-center Items Options">2 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">214</h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-eye"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <h3 class="text-center order_num Code">18756</h3>
-                                <h3 class="text-left Name"><strong>Sugar Free Coke</strong></h3>
-                                <h3 class="text-center Amount Category">Beverages</h3>
-                                <h3 class="text-center Items Options">4 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">98</h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-eye"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <h3 class="text-center order_num Code">18757</h3>
-                                <h3 class="text-left Name"><strong>Cassata Vanilla Ice Cream</strong></h3>
-                                <h3 class="text-center Amount Category">Dessert</h3>
-                                <h3 class="text-center Items Options">2 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">221</h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-eye"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <h3 class="text-center order_num Code">18758</h3>
-                                <h3 class="text-left Name"><strong>Hamm Burger</strong></h3>
-                                <h3 class="text-center Amount Category">Fast Food</h3>
-                                <h3 class="text-center Items Options">2 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">221</h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-eye"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <h3 class="text-center order_num Code">18759</h3>
-                                <h3 class="text-left Name"><strong>Rosted Chicken Legs</strong></h3>
-                                <h3 class="text-center Amount Category">Main Course</h3>
-                                <h3 class="text-center Items Options">0 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">99</h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-eye"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-
-                            <li class="d-flex no_option">
-                                <h3 class="text-center order_num Code">18760</h3>
-                                <h3 class="text-left Name">
-                                    <strong>
-                                        <i class="zmdi zmdi-eye-off"></i>
-                                        Rosted Chicken Legs
-                                    </strong></h3>
-                                <h3 class="text-center Amount Category">Main Course</h3>
-                                <h3 class="text-center Items Options">0 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">99</h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-eye"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <h3 class="text-center order_num Code">18761</h3>
-                                <h3 class="text-left Name"><strong>Sugar Free Coke</strong></h3>
-                                <h3 class="text-center Amount Category">Beverages</h3>
-                                <h3 class="text-center Items Options">4 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">98</h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-eye"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <h3 class="text-center order_num Code">18762</h3>
-                                <h3 class="text-left Name"><strong>Cassata Vanilla Ice Cream</strong></h3>
-                                <h3 class="text-center Amount Category">Dessert</h3>
-                                <h3 class="text-center Items Options">2 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">221</h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-eye"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <h3 class="text-center order_num Code">18763</h3>
-                                <h3 class="text-left Name"><strong>Hamm Burger</strong></h3>
-                                <h3 class="text-center Amount Category">Fast Food</h3>
-                                <h3 class="text-center Items Options">2 <i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price">$12.00</h3>
-                                <h3 class="text-center Payment Sales">221</h3>
+                                <h3 class="text-center order_num Code"></h3>
+                                <h3 class="text-left Name"><strong></strong></h3>
+                                <h3 class="text-center Amount Category"></h3>
+                                <h3 class="text-center Items Options"><i class="zmdi zmdi-storage"></i></h3>
+                                <h3 class="text-center Table Price"></h3>
+                                <h3 class="text-center Payment Sales"></h3>
                                 <div class="btn_container d-flex mr-0 ml-auto">
                                     <button type="button" class="btn">
                                         <a href="#"><i class="zmdi zmdi-eye"></i></a>
@@ -402,7 +199,7 @@
 
 
                 <!-- Categories Tab Content Start -->
-                <div class="tab-pane fade" id="Categories" role="tabpanel" aria-labelledby="nav-Categories-tab">
+                <div class="tab-pane fade show active" id="Categories" role="tabpanel" aria-labelledby="nav-Categories-tab">
                     <div class="tab_header">
                         <h1 class="d-flex align-items-center">
                             Categories
@@ -431,11 +228,11 @@
                         <ul>
                             <li class="d-flex">
                                 <h3 class="text-center Code icon">
-                                    <img src="images/ic_starter.png">
+                                    <img src="">
                                 </h3>
-                                <h3 class="text-left Name"><strong>Starter</strong></h3>
-                                <h3 class="text-center Category item_category">12</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
+                                <h3 class="text-left Name"><strong></strong></h3>
+                                <h3 class="text-center Category item_category"></h3>
+                                <h3 class="text-center Category created_on"></h3>
 
                                 <div class="btn_container d-flex mr-0 ml-auto">
                                     <button type="button" class="btn">
@@ -447,170 +244,6 @@
                                 </div>
                             </li>
 
-                            <li class="d-flex">
-                                <h3 class="text-center Code icon">
-                                    <img src="images/ic_fastfood.png">
-                                </h3>
-                                <h3 class="text-left Name"><strong>Fast Food</strong></h3>
-                                <h3 class="text-center Category item_category">28</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
-
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-
-                            <li class="d-flex">
-                                <h3 class="text-center Code icon">
-                                    <img src="images/ic_Dessert.png">
-                                </h3>
-                                <h3 class="text-left Name"><strong>Dessert</strong></h3>
-                                <h3 class="text-center Category item_category">18</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
-
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-
-
-                            <li class="d-flex">
-                                <h3 class="text-center Code icon">
-                                    <img src="images/ic_Beverages.png">
-                                </h3>
-                                <h3 class="text-left Name"><strong>Baverages</strong></h3>
-                                <h3 class="text-center Category item_category">23</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
-
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-
-
-                            <li class="d-flex">
-                                <h3 class="text-center Code icon">
-                                    <img src="images/ic_maincourse.png">
-                                </h3>
-                                <h3 class="text-left Name"><strong>Main Course</strong></h3>
-                                <h3 class="text-center Category item_category">35</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
-
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <h3 class="text-center Code icon">
-                                    <img src="images/ic_starter.png">
-                                </h3>
-                                <h3 class="text-left Name"><strong>Starter</strong></h3>
-                                <h3 class="text-center Category item_category">12</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
-
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-
-                            <li class="d-flex">
-                                <h3 class="text-center Code icon">
-                                    <img src="images/ic_fastfood.png">
-                                </h3>
-                                <h3 class="text-left Name"><strong>Fast Food</strong></h3>
-                                <h3 class="text-center Category item_category">28</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
-
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-
-                            <li class="d-flex">
-                                <h3 class="text-center Code icon">
-                                    <img src="images/ic_Dessert.png">
-                                </h3>
-                                <h3 class="text-left Name"><strong>Dessert</strong></h3>
-                                <h3 class="text-center Category item_category">18</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
-
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-
-
-                            <li class="d-flex">
-                                <h3 class="text-center Code icon">
-                                    <img src="images/ic_Beverages.png">
-                                </h3>
-                                <h3 class="text-left Name"><strong>Baverages</strong></h3>
-                                <h3 class="text-center Category item_category">23</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
-
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
-
-
-                            <li class="d-flex">
-                                <h3 class="text-center Code icon">
-                                    <img src="images/ic_maincourse.png">
-                                </h3>
-                                <h3 class="text-left Name"><strong>Main Course</strong></h3>
-                                <h3 class="text-center Category item_category">35</h3>
-                                <h3 class="text-center Category created_on">12 June 2020 12:30 pm</h3>
-
-                                <div class="btn_container d-flex mr-0 ml-auto">
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
-                                    </button>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                     <!-- Tab Footer start -->
@@ -671,32 +304,42 @@
                     <h2 class="col-10 mx-auto">Add Category</h2>
                 </div>
                 <div class="modal-body p-0">
-                    <form>
+                    <form action="{{route('category.store')}}" method="post" enctype="multipart/form-data">
+                        @csrf
                         <div class="col-10 mx-auto form_container">
                             <div class="row pb-5">
-                                <div class="col-12 col-lg-5 col-md-6 col-sm-12">
-                                    <div class="img_box">
-                                        <i class="zmdi zmdi-image-alt"></i>
-                                        <p>Upload Icon</p>
+                                <div class="col-10 col-lg-5 col-md-6 col-sm-10 ">
+                                    <div class="upload-box mx-auto">
+                                        <label for="img" class="img m-0 active">
+                                            <i class="zmdi zmdi-image-alt"></i>
+                                            <input id="img" type="file" name="image">
+                                            <span>Upload items image</span>
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-7 col-md-6 col-sm-12 pt-2">
+                                <div class="col-12 col-lg-7 col-md-6 col-sm-12 pt-2 ml-8">
                                     <div class="d-flex info">
-                                        <i class="zmdi zmdi-info-outline d-block text-white"></i>
-                                        <p>Icon Should have in <br>1:1 ratio for better viewing <br> experience.</p>
+                                        @if(isset($imagePath))
+                                            <h2>Preview Image:</h2>
+                                            <img src="{{ $imagePath }}" alt="Category Image">
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Add Category</label>
-                                <input type="name" class="form-control" value="Italian Food">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="name">
                             </div>
                         </div>
 
                         <div class="modal-footer">
                             <div class="row no-gutters w-100">
-                                <div class="col-6"> <button type="file" class="btn Cencel" data-dismiss="modal"><a href="#">Cencel</a></button></div>
-                                <div class="col-6"> <button type="file" class="btn"><a href="#">Add Category</a></button></div>
+                                <div class="col-6">
+                                    <button type="reset" class="btn Cencel" data-dismiss="modal">Cancel</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn">Add Category</button>
+                                </div>
                             </div>
                         </div>
                     </form>

@@ -3,64 +3,104 @@
 namespace App\Http\Controllers;
 
 use App\Constants\CategoryConstants;
+use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Traits\Access;
+use App\Http\Traits\HttpResponses;
 use App\Models\Category;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    use Access;
+    use HttpResponses;
 
     /**
-     * Show the form for creating a new resource.
+     * @return JsonResponse
      */
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function index(): JsonResponse
     {
         return $this->success(
-            new CategoryResource(Category::create($request->all())),
-            CategoryConstants::STORE
+            CategoryResource::collection(Category::all())
         );
     }
 
     /**
-     * Display the specified resource.
+     * @param CategoryRequest $request
+     * @return RedirectResponse
      */
-    public function show(Category $category)
+    public function store(Request $request): RedirectResponse
     {
-        //
+//        dd($request->all());
+        request()->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = request()->image->getClientOriginalName();
+        request()->image->move(storage_path('app/public'), $imageName);
+        $category = new Category();
+        $category->name = $request->name;
+        $category->image = $imageName;
+        $category->save();
+        return back();
+    }
+    public function upload()
+    {
+        request()->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = request()->image->getClientOriginalName();
+        request()->image->move(storage_path('app/public'), $imageName);
+        return back();
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return JsonResponse
      */
-    public function edit(Category $category)
+    public function show(int $id): JsonResponse
     {
-        //
+        $category = Category::where('id',$id)->first();
+//        if (!$this->canAccess($category)) {
+//            return $this->error([], AuthConstants::PERMISSION);
+//        }
+
+        return $this->success(new CategoryResource($category));
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param CategoryRequest $request
+     * @param int $id
+     * @return JsonResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, int $id): JsonResponse
     {
-        //
+//        if (!$this->canAccess($category)) {
+//            return $this->error([], AuthConstants::PERMISSION);
+//        }
+        $category = Category::where('id',$id)->first();
+        $category->update($request->all());
+
+        return $this->success(
+            new CategoryResource($category),
+            CategoryConstants::UPDATE
+        );
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param int $id
+     * @return JsonResponse
      */
-    public function destroy(Category $category)
+    public function destroy(int $id): JsonResponse
     {
-        //
+//        if (!$this->canAccess($category)) {
+//            return $this->error([], AuthConstants::PERMISSION);
+//        }
+        $category = Category::where('id',$id)->first();
+
+        $category->delete();
+
+        return $this->success([], CategoryConstants::DESTROY);
     }
 }
