@@ -100,7 +100,7 @@
                 <div class="tab-pane fade show" id="food_items" role="tabpanel" aria-labelledby="nav_food_items">
                     <div class="tab_header">
                         <h1 class="d-flex">
-                            <span class="d-block" style="min-width: 161px;">Food Items</span>
+                            <span class="d-block" style="min-width: 161px;">Products</span>
                             <button type="button" class="btn"><a href="{{route('upload_items')}}">Add New</a></button>
                         </h1>
                         <form class="search_box">
@@ -126,12 +126,13 @@
                         </div>
 
                         <ul>
+                            @foreach($items[1] as $product)
                             <li class="d-flex">
                                 <h3 class="text-center order_num Code"></h3>
-                                <h3 class="text-left Name"><strong></strong></h3>
-                                <h3 class="text-center Amount Category"></h3>
+                                <h3 class="text-left Name"><strong>{{$product->name}}</strong></h3>
+                                <h3 class="text-center Amount Category">{{$product->category_id}}</h3>
                                 <h3 class="text-center Items Options"><i class="zmdi zmdi-storage"></i></h3>
-                                <h3 class="text-center Table Price"></h3>
+                                <h3 class="text-center Table Price">{{$product->price}}</h3>
                                 <h3 class="text-center Payment Sales"></h3>
                                 <div class="btn_container d-flex mr-0 ml-auto">
                                     <button type="button" class="btn">
@@ -148,6 +149,7 @@
                                     </button>
                                 </div>
                             </li>
+                            @endforeach
                         </ul>
                     </div>
                     <!-- Order List End -->
@@ -225,10 +227,10 @@
                         </div>
 
                         <ul>
-                            @foreach($categories as $category)
+                            @foreach($items[0] as $category)
                             <li class="d-flex">
                                 <h3 class="text-center Code icon">
-                                    <img src="">
+                                    <img src="http://127.0.0.1:8000/storage/{{$category->image}}">
                                 </h3>
                                 <h3 class="text-left Name"><strong>{{$category->name}}</strong></h3>
                                 <h3 class="text-center Category created_on">{{$category->created_at}}</h3>

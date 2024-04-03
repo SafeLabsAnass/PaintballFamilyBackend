@@ -8,6 +8,7 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Traits\Access;
 use App\Http\Traits\HttpResponses;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class CategoryController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('pages.categories')->with('categories',Category::all());
+        return view('pages.categories')->with('items',[Category::all(),Product::all()]);
     }
 
     /**

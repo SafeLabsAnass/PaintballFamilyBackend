@@ -78,132 +78,63 @@
 
     <!-- Body Wrapper Start -->
     <div class="body_wrapper container-fluid">
-        <div class="row">
+        <div class="row ml-5">
             <!-- Left Sidebar Start -->
             <div class="col" style="max-width: 250px">
-                <div class="upload text-center my-4">
-                    <a class="back-link" href="items.html"><i class="zmdi zmdi-arrow-left"></i> Back</a>
-                    <div class="upload-box mt-5 mb-4 mx-auto">
-                        <label for="img" class="img m-0 active">
-                            <i class="zmdi zmdi-image-alt"></i>
-                            <input id="img" type="file">
-                            <span>Upload items image</span>
-                        </label>
-                    </div>
-                </div>
+            <div class="upload text-center my-4">
+                <a class="back-link" href="{{route('categories')}}"><i class="zmdi zmdi-arrow-left"></i> Back</a>
+            </div>
             </div>
 
-            <div class="col">
+            <div class="col ml-5">
                 <div class="row no-gutters">
                     <div class="col m-1">
                         <div class="bg-second p-4">
-                            <h3 class="mt-0 mb-5 text-white">Upload an items</h3>
-                            <form>
-                                <div class="form-group">
-                                    <label>Item Name</label>
-                                    <input type="text" class="form-control" placeholder="" required="" value="Cream Pancake">
-                                </div>
+                            <h3 class="mt-0 mb-5 text-white">Upload a product</h3>
+                            <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <div class="col" style="max-width: 250px">
+                                        <div class="upload-box mt-5 mb-4 mx-auto">
+                                            <label for="img" class="img m-0 active">
+                                                <i class="zmdi zmdi-image-alt"></i>
+                                                <input id="img" type="file" name="image">
+                                                <span>Upload product image</span>
+                                            </label>
+                                        </div>
+                                    </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Item Name</label>
-                                            <input type="text" class="form-control" placeholder="" required="" value="Cream Pancake">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" placeholder="" required="" name="name">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Item Price (In $)</label>
-                                            <input type="text" class="form-control" placeholder="" required="" value="Cream Pancake">
+                                            <label>Price (In $)</label>
+                                            <input type="text" class="form-control" placeholder="" required="" name="price">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Choose Items Category</label>
-                                    <select class="form-control" style="background: var(--bg-color)! important;">
-                                        <option>Fast Foot</option>
-                                        <option>Dinner Foot</option>
+                                    <label>Choose Product Category</label>
+                                    <select name="category" class="form-control" style="background: var(--bg-color)! important;">
+                                        @foreach($categories as $category)
+                                        <option>{{$category->name}}</option>
+                                            @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Item description</label>
-                                    <textarea class="form-control" style="min-height: 100px;max-height: 100px;"></textarea>
+                                    <textarea name="description" class="form-control" style="min-height: 100px;max-height: 100px;"></textarea>
 
                                 </div>
-                                <div class="form-group">
-                                    <label>Add Ingredients (Separated by commas)</label>
-                                    <select class="form-control tokenizer" multiple="multiple">
-                                        <option selected="selected">Flour</option>
-                                        <option selected="selected">Sugar</option>
-                                        <option selected="selected">Salt</option>
-                                        <option selected="selected">Egg</option>
-                                        <option selected="selected">Butter Milk</option>
-                                        <option selected="selected">Butter</option>
-                                    </select>
+                                <button type="submit" class="btn btn-outline-primary btn-lg rounded-pill">Add Product</button>
 
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Serve for</label>
-                                            <select class="form-control" style="background: var(--bg-color)! important;">
-                                                <option>2 People</option>
-                                                <option>Dinner Foot</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Cook time (in min)</label>
-                                            <input type="text" class="form-control" placeholder="" required="" value="12">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Energy (in kcal)</label>
-                                            <input type="text" class="form-control" placeholder="" required="" value="227">
-                                        </div>
-                                    </div>
-                                </div>
                             </form>
                         </div>
                     </div>
                     <div class="col m-1 second-box">
-                        <div class="bg-second p-4">
-                            <h3 class="mt-0 mb-5 text-white">Add option <small>(Optional)</small></h3>
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div class="form-group">
-                                            <label>Option</label>
-                                            <input type="text" class="form-control" placeholder="" required="" value="Cream Pancake">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Price (In $)</label>
-                                            <input type="text" class="form-control" placeholder="" required="" value="22">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="showmore"></div>
-                                <button class="btn-outline-success d-block py-2 px-5" type="button" id="addmore"><i class="zmdi zmdi-plus"></i> Add More</button>
-                                <div class="modal-footer">
-                                    <div class="row no-gutters w-100">
-                                        <div class="col-12">
-                                            <div class="d-flex align-items-center px-4 text-white py-2" style="background: #4f5159; ">
-                                                Item in stock
-                                                <label class="switch ml-auto my-1">
-                                                    <input type="checkbox">
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12"> <button type="file" class="btn"><small>Upload Items</small></button></div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
