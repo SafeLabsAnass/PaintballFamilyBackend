@@ -23,5 +23,5 @@ Route::get('/upload_items',function (){return view('pages.upload_items');})->nam
 Route::get('/users',[UserController::class,'index'])->name('users');;
 Route::get('user/destroy/{id}',[UserController::class,'destroy']);
 Route::post('user/store',[UserController::class,'store'])->name('user.store');
-
+Route::get('user/show/{id}',[UserController::class,'show'])->name('user.show');
 
