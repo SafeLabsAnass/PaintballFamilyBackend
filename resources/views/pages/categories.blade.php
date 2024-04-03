@@ -100,7 +100,7 @@
                 <div class="tab-pane fade show" id="food_items" role="tabpanel" aria-labelledby="nav_food_items">
                     <div class="tab_header">
                         <h1 class="d-flex">
-                            <span class="d-block" style="min-width: 161px;">Food Items</span>
+                            <span class="d-block" style="min-width: 161px;">Products</span>
                             <button type="button" class="btn"><a href="{{route('upload_items')}}">Add New</a></button>
                         </h1>
                         <form class="search_box">
