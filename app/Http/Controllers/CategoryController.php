@@ -18,13 +18,11 @@ class CategoryController extends Controller
     use HttpResponses;
 
     /**
-     * @return JsonResponse
+     * @return
      */
-    public function index(): JsonResponse
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return $this->success(
-            CategoryResource::collection(Category::all())
-        );
+        return view('pages.categories')->with('categories',Category::all());
     }
 
     /**
