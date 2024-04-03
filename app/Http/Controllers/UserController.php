@@ -40,16 +40,18 @@ class UserController extends Controller
      */
     public function show(int $id)
     {
-        //
-    }
+        $people = User::where('id',$id)->first();
+
+        return response()->json($people);    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
     {
-        //
+
     }
+
 
     /**
      * Update the specified resource in storage.

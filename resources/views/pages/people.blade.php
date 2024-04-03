@@ -136,11 +136,33 @@
                                 <button type="button" class="btn">
                                     <a href="{{url('user/destroy/'.$user->id)}}" ><i class="zmdi zmdi-delete"></i></a>
                                 </button>
-                                <button type="button" class="btn">
-                                    <a data-toggle="modal" data-target="#add_people"><i class="zmdi zmdi-edit"></i></a>
-                                </button>
+                                    <form action="{{route('user.show',$user->id)}}" method="get">
+                                        @csrf
+                                    <button class="btn" type="submit" data-toggle="modal" data-target="#add_people"><i class="zmdi zmdi-edit mb-5"></i></button>
+                                    </form>
                             </div>
                         </li>
+                            <script>
+                                let people = '';
+                                $(document).ready(function() {
+                                    $('#add_people').on('show.bs.modal', function(e) {
+                                        $.ajax({
+                                            url: "{{ route('user.show',$user->id) }}",
+                                            type: "GET",
+                                            success: function(response) {
+                                                // Update modal content with the data received
+                                                // Example: $('#modal-body').html(response);
+                                                people = response
+                                                document.getElementById('username').value=response['username']
+                                                // alert (response);
+                                            },
+                                            error: function(xhr, status, error) {
+                                                // Handle errors
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
                         @endforeach
 
                     </ul>
@@ -455,23 +477,23 @@
                     <div class="col-10 mx-auto form_container">
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" class="form-control" name="username" >
+                            <input type="text" class="form-control" name="username" id="username" >
                         </div>
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" class="form-control" name="first_name">
+                            <input type="text" class="form-control" name="first_name" id="first_name">
                         </div>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" class="form-control" name="last_name">
+                            <input type="text" class="form-control" name="last_name" id="last_name">
                         </div>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input type="text" class="form-control" name="phone">
+                            <input type="text" class="form-control" name="phone" id="phone">
                         </div>
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input type="email" class="form-control" name="email">
+                            <input type="email" class="form-control" name="email" id="email">
                         </div>
                         <div class="form-group">
                             <label>Password</label>
@@ -479,11 +501,11 @@
                         </div>
                         <div class="form-group">
                             <label>Site</label>
-                            <input type="text" class="form-control" name="site_id">
+                            <input type="text" class="form-control" name="site_id" id="site_id">
                         </div>
                         <div class="form-group">
                             <label>gender</label>
-                            <select class="form-control" name="gender">
+                            <select class="form-control" name="gender" id="gwnder">
                                 <option>Male</option>
                                 <option>Female</option>
                             </select>
