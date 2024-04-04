@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use PHPUnit\Metadata\PostCondition;
 
 class ProductController extends Controller
 {
@@ -81,8 +82,11 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(int $id)
     {
-        //
+        $product = Product::where($id);
+        $product->delete();
+        return redirect('/categories');
+
     }
 }

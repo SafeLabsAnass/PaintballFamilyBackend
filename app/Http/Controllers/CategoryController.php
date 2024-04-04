@@ -9,9 +9,14 @@ use App\Http\Traits\Access;
 use App\Http\Traits\HttpResponses;
 use App\Models\Category;
 use App\Models\Product;
+use ErrorException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use MongoDB\Driver\Session;
 
 class CategoryController extends Controller
 {
@@ -19,12 +24,13 @@ class CategoryController extends Controller
     use HttpResponses;
 
     /**
-     * @return
+     * @return View|\Illuminate\Foundation\Application|Factory|Application
      */
-    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        return view('pages.categories')->with('items',[Category::all(),Product::all()]);
-    }
+            $items = [Category::all(), Product::all()];
+                return view('pages.categories')->with('items', $items);
+        }
 
     /**
      * @param CategoryRequest $request
@@ -56,50 +62,31 @@ class CategoryController extends Controller
 
     /**
      * @param int $id
-     * @return JsonResponse
+     * @return
      */
-    public function show(int $id): JsonResponse
+    public function show(int $id)
     {
-        $category = Category::where('id',$id)->first();
-//        if (!$this->canAccess($category)) {
-//            return $this->error([], AuthConstants::PERMISSION);
-//        }
 
-        return $this->success(new CategoryResource($category));
     }
 
     /**
-     * @param CategoryRequest $request
+     * @param Request $request
      * @param int $id
-     * @return JsonResponse
+     * @return
      */
-    public function update(CategoryRequest $request, int $id): JsonResponse
+    public function update(Request $request, int $id)
     {
-//        if (!$this->canAccess($category)) {
-//            return $this->error([], AuthConstants::PERMISSION);
-//        }
-        $category = Category::where('id',$id)->first();
-        $category->update($request->all());
-
-        return $this->success(
-            new CategoryResource($category),
-            CategoryConstants::UPDATE
-        );
     }
 
     /**
      * @param int $id
-     * @return JsonResponse
+     * @return
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(int $id)
     {
-//        if (!$this->canAccess($category)) {
-//            return $this->error([], AuthConstants::PERMISSION);
-//        }
-        $category = Category::where('id',$id)->first();
+            $category = Category::find($id);
+            $category->delete();
+        return redirect('/categories');
 
-        $category->delete();
-
-        return $this->success([], CategoryConstants::DESTROY);
     }
 }

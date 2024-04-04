@@ -31,8 +31,8 @@ Route::get('user/destroy/{id}',[UserController::class,'destroy']);
 Route::post('user/store',[UserController::class,'store'])->name('user.store');
 Route::get('user/show/{id}',[UserController::class,'show'])->name('user.show');
 Route::get('/products',[ProductController::class,'index'])->name('products');
-Route::get('product/destroy/{id}',[ProductController::class,'destroy']);
+Route::get('product/destroy/{id}',[ProductController::class,'destroy'])->name('product.destroy');
 Route::post('product/store',[ProductController::class,'store'])->name('product.store');
 Route::post('product/image-upload',[ProductController::class,'upload'])->name('product.imageUpload');
 Route::get('product/show/{id}',[ProductController::class,'show'])->name('product.show');
-
+Route::get('category/destroy/{id}',[CategoryController::class,'destroy'])->name('category.destroy');

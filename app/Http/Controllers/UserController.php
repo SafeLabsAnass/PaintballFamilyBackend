@@ -69,8 +69,8 @@ class UserController extends Controller
         $user = User::where('id',$id)->first();
 
         $user->delete();
+return redirect('/users');
 
-        return redirect('/users');
     }
 
 }

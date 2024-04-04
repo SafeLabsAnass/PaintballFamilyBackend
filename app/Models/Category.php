@@ -20,6 +20,10 @@ class Category extends Model
         'name',
     ];
 
+    public static function where(string $string, int $id)
+    {
+    }
+
     public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Product::class);

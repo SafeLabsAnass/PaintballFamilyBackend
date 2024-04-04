@@ -116,7 +116,7 @@
                     <!-- Order List Start -->
                     <div class="order_list">
                         <div class="list_header d-flex">
-                            <h2 class="text-center order_num Code">Code</h2>
+                            <h2 class="text-center order_num Code">Image</h2>
                             <h2 class="text-left Name">item Name</h2>
                             <h2 class="text-center Amount Category">Category</h2>
                             <h2 class="text-center Items Options">Options</h2>
@@ -128,7 +128,7 @@
                         <ul>
                             @foreach($items[1] as $product)
                             <li class="d-flex">
-                                <h3 class="text-center order_num Code"></h3>
+                                <h3 class="text-center order_num Image"> <img width="70" height="70" src="http://127.0.0.1:8000/storage/{{$product->image}}" alt=""></h3>
                                 <h3 class="text-left Name"><strong>{{$product->name}}</strong></h3>
                                 <h3 class="text-center Amount Category">{{$product->category_id}}</h3>
                                 <h3 class="text-center Items Options"><i class="zmdi zmdi-storage"></i></h3>
@@ -142,7 +142,7 @@
                                         <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
                                     </button>
                                     <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="{{url('product/destroy/{id}',$product->id)}}"><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
                                         <a href="#"><i class="zmdi zmdi-edit"></i></a>
@@ -237,11 +237,12 @@
 
                                 <div class="btn_container d-flex mr-0 ml-auto">
                                     <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="{{route('category.destroy',$category->id)}}"><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
                                         <a href="#"><i class="zmdi zmdi-edit"></i></a>
                                     </button>
+
                                 </div>
                             </li>
                             @endforeach
