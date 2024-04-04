@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id');
             $table->string('name');
+            $table->boolean('isSelected')->default(false);
+            $table->integer('count')->default(0);
             $table->comment('image');
             $table->comment('description');
             $table->float('price');

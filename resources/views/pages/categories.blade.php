@@ -230,7 +230,7 @@
                             @foreach($items[0] as $category)
                             <li class="d-flex">
                                 <h3 class="text-center Code icon">
-                                    <img src="http://127.0.0.1:8000/storage/{{$category->image}}">
+                                    <img src="http://192.168.10.11:8000/storage/{{$category->image}}">
                                 </h3>
                                 <h3 class="text-left Name"><strong>{{$category->name}}</strong></h3>
                                 <h3 class="text-center Category created_on">{{$category->created_at}}</h3>
