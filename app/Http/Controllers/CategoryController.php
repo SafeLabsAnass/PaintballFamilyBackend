@@ -66,7 +66,10 @@ class CategoryController extends Controller
      */
     public function show(int $id)
     {
-
+        $product = Category::where('id', $id)->first();
+        $categories = Category::all();
+        return
+            view('pages.update_items')->with('items', [$categories, $product]);
     }
 
     /**
@@ -76,6 +79,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, int $id)
     {
+
     }
 
     /**

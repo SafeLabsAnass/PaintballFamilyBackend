@@ -142,10 +142,10 @@
                                         <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
                                     </button>
                                     <button type="button" class="btn">
-                                        <a href="{{url('product/destroy/{id}',$product->id)}}"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="{{route('product.destroy',$product->id)}}"><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="{{route('update_items',$product->id)}}"><i class="zmdi zmdi-edit"></i></a>
                                     </button>
                                 </div>
                             </li>
@@ -230,7 +230,7 @@
                             @foreach($items[0] as $category)
                             <li class="d-flex">
                                 <h3 class="text-center Code icon">
-                                    <img src="http://192.168.10.11:8000/storage/{{$category->image}}">
+                                    <img src="http://127.0.0.1:8000/storage/{{$category->image}}">
                                 </h3>
                                 <h3 class="text-left Name"><strong>{{$category->name}}</strong></h3>
                                 <h3 class="text-center Category created_on">{{$category->created_at}}</h3>
@@ -240,7 +240,7 @@
                                         <a href="{{route('category.destroy',$category->id)}}"><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="{{route('category.show',$category->id)}}"><i class="zmdi zmdi-edit"></i></a>
                                     </button>
 
                                 </div>

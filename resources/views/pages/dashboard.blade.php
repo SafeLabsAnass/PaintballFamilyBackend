@@ -61,7 +61,7 @@
                     <a class="nav-link" href="{{route('users')}}"><i class="zmdi zmdi-accounts-alt"></i> People</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="sales_expenses.html"><i class="zmdi zmdi-collection-text"></i> Sales & Expenses</a>
+                    <a class="nav-link" href="{{route('sales')}}"><i class="zmdi zmdi-collection-text"></i> Sales</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="setting.html"><i class="zmdi zmdi-settings"></i> Settings</a>
