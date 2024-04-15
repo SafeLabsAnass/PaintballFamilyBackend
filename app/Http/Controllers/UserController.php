@@ -42,7 +42,8 @@ class UserController extends Controller
     {
         $people = User::where('id',$id)->first();
 
-        return response()->json($people);    }
+        return response()->json(['status'=>'success','data'=>$people]);
+    }
 
     /**
      * Show the form for editing the specified resource.

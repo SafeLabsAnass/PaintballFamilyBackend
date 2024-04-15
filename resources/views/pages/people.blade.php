@@ -7,6 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{csrf_token()}}">
 
     <!-- Datetimepicker CSS -->
     <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
@@ -28,7 +29,39 @@
 
     <!-- Page Title -->
     <title></title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+          integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function show(id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/user/show/'+id.toString(),
+                dataType: 'json',
+                success: function (response) {
+                    if(response.data)
+                     document.getElementById('username_edited').value = response.data.username
+                     document.getElementById('first_name_edited').value = response.data.first_name
+                     document.getElementById('last_name_edited').value = response.data.last_name
+                     document.getElementById('phone_edited').value = response.data.phone
+                     document.getElementById('email_edited').value = response.data.email
+                     document.getElementById('site_id_edited').value = response.data.site_id
+                     document.getElementById('gender_edited').value = response.data.gender
+                },
+                error: function(xhr, status, error) {
+                        console.log(status);
+                    // Handle errors here
+                }
+            })
+        }
+    </script>
 
 </head>
 
@@ -93,33 +126,70 @@
                                 <button type="button" class="btn">
                                     <a href="{{url('user/destroy/'.$user->id)}}" ><i class="zmdi zmdi-delete"></i></a>
                                 </button>
-                                    <form action="{{route('user.show',$user->id)}}" method="get">
                                         @csrf
-                                    <button class="btn" type="submit" data-toggle="modal" data-target="#add_people"><i class="zmdi zmdi-edit mb-5"></i></button>
-                                    </form>
+                                    <button class="btn" type="button" data-toggle="modal" data-target="#edit_people" onclick="show({{$user->id}})"><i class="zmdi zmdi-edit mb-5"></i></button>
                             </div>
+
                         </li>
-                            <script>
-                                let people = '';
-                                $(document).ready(function() {
-                                    $('#add_people').on('show.bs.modal', function(e) {
-                                        $.ajax({
-                                            url: "{{ route('user.show',$user->id) }}",
-                                            type: "GET",
-                                            success: function(response) {
-                                                // Update modal content with the data received
-                                                // Example: $('#modal-body').html(response);
-                                                people = response
-                                                document.getElementById('username').value=response['username']
-                                                // alert (response);
-                                            },
-                                            error: function(xhr, status, error) {
-                                                // Handle errors
-                                            }
-                                        });
-                                    });
-                                });
-                            </script>
+                            <div class="modal fade add_category_model add_expenses receipt_model px-0" id="edit_people" tabindex="-1" role="dialog" aria-labelledby="receipt_modelTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header px-0">
+                                            <h2 class="col-10 mx-auto">Edit People</h2>
+                                        </div>
+                                        <div class="modal-body p-0">
+
+                                            <form action="{{route('user.edit',$user->id)}}" method="POST">
+                                                @csrf
+                                                <div class="col-10 mx-auto form_container">
+                                                    <div class="form-group">
+                                                        <label>Username</label>
+                                                        <input type="text" class="form-control" name="username" id="username_edited" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>First Name</label>
+                                                        <input type="text" class="form-control" name="first_name" id="first_name_edited">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Last Name</label>
+                                                        <input type="text" class="form-control" name="last_name" id="last_name_edited">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Phone Number</label>
+                                                        <input type="text" class="form-control" name="phone" id="phone_edited">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Email Address</label>
+                                                        <input type="email" class="form-control" name="email" id="email_edited">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Site</label>
+                                                        <input type="text" class="form-control" name="site_id" id="site_id_edited">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>gender</label>
+                                                        <select class="form-control" name="gender" id="gender_edited">
+                                                            <option>Male</option>
+                                                            <option>Female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <div class="row no-gutters w-100">
+                                                        <div class="col-6"> <button type="reset" class="btn Cencel" data-dismiss="modal">Cancel</button></div>
+                                                        <div class="col-6"> <button type="submit" class="btn">Edit People</button></div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
                         @endforeach
 
                     </ul>
@@ -361,7 +431,7 @@
                                     <a href="#"><i class="zmdi zmdi-delete"></i></a>
                                 </button>
                                 <button type="button" class="btn">
-                                    <a data-toggle="modal" data-target="#add_people"><i class="zmdi zmdi-edit"></i></a>
+                                    <a data-toggle="modal" data-target="#edit_people"><i class="zmdi zmdi-edit"></i></a>
                                 </button>
                             </div>
                         </li>
@@ -482,13 +552,14 @@
     </div>
 </div>
 <!-- Add people Modal End  -->
-
 <!-- Require Javascript Start -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!-- Require Javascript End -->
 <script src="{{ asset('js/jquery.datetimepicker.full.js')}}"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+
 
 <script>
     $("#datetime").datetimepicker();
