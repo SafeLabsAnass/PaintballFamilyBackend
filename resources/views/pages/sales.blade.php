@@ -4,23 +4,24 @@
 <head>
 
     <!-- Required meta tags -->
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Datetimepicker CSS -->
-    <link href="css/jquery.datetimepicker.min.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/style.css')}}" type="text/css" rel="stylesheet">
 
     <!-- Responsive CSS -->
-    <link href="css/responsive.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/responsive.css')}}" type="text/css" rel="stylesheet">
 
     <!-- Font CSS -->
-    <link href="css/gogle_sans_font.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/gogle_sans_font.css')}}" type="text/css" rel="stylesheet">
 
     <!--  For icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
@@ -28,52 +29,11 @@
     <!-- Page Title -->
     <title></title>
 
+
 </head>
 
-<body id="sales_expenses">
-<!-- Header Start -->
-<header class="container-fluid ">
-    <nav class="navbar navbar-expand-xl navbar-light align-items-center">
-        <div class="nav-item">
-            <a class="navbar-brand nav-link px-2" href="dashboard.html">
-                <img src="images/logo.png" class="img-fluid">
-            </a>
-        </div>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="zmdi zmdi-menu"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <ul class="navbar-nav mr-0 ml-auto d-flex align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="home.html"><i class="zmdi zmdi-assignment"></i> POS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="items.html"><i class="zmdi zmdi-cutlery"></i> Items</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="people.html"><i class="zmdi zmdi-accounts-alt"></i> People</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="sales_expenses.html"><i class="zmdi zmdi-collection-text"></i> Sales</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="setting.html"><i class="zmdi zmdi-settings"></i> Settings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="orders_status.html"><i class="zmdi zmdi-hourglass-alt"></i> Orders Status</a>
-                </li>
-                <li class="nav-item profile_img">
-                    <a href="index.html" class="img_box center_img">
-                        <img src="images/profile.png" class="crop_img">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
-
-<div class="header_spacebar"></div>
+<body id="page_home">
+@include('navbar')
 <!-- Header End -->
 
 <!-- Body Wrapper Start -->
@@ -113,20 +73,20 @@
                         <h2 class="text-center Name">Name</h2>
                         <h2 class="text-center User">User</h2>
                         <h2 class="text-center Client">Client</h2>
-                        <h2 class="text-left Payment">Payment</h2>
+                        <h2 class="text-center Payment">Payment</h2>
                         <h2 class="text-center CreatedAt">CreatedAt</h2>
-                        <h2 class="text-right Action">Action</h2>
+                        <h2 class="text-right ml-auto Action">Action</h2>
                     </div>
 
                     <ul>
                         @foreach($sales as $sale)
                         <li class="d-flex">
                             <h3 class="text-center Name">{{$sale->name}}</h3>
-                            <h3 class="text-left User"><strong>{{$sale->user_id}}</strong></h3>
+                            <h3 class="text-center User"><strong>{{\App\Models\User::where('id',$sale->user_id)->first()->username}}</strong></h3>
                             <h3 class="text-center Client">{{$sale->client_name}}</h3>
-                            <h3 class="text-center Payment">{{$sale->payment_id}}</h3>
+                            <h3 class="text-center Payment">{{\App\Models\Payment::where('id', $sale->payment_id)->first()->type}}</h3>
                             <h3 class="text-center CreatedAt">{{$sale->created_at}}</h3>
-                            <div class="btn_container d-flex mr-0 ml-auto">
+                            <div class="btn_container d-flex ml-auto">
                                 <button type="button" class="btn">
                                     <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-print"></i></a>
                                 </button>
@@ -135,7 +95,7 @@
                                 </button>
 
                                 <button type="button" class="btn">
-                                    <a href="{{route('sale.show.{id}',$sale->id)}}"><i class="zmdi zmdi-edit"></i></a>
+                                    <a href="{{route('sale.show',$sale->id)}}" data-toggle="modal" data-target="#add_people"><i class="zmdi zmdi-edit"></i></a>
                                 </button>
                             </div>
                         </li>

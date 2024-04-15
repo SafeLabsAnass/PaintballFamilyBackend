@@ -4,6 +4,7 @@
 <head>
 
     <!-- Required meta tags -->
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -28,54 +29,11 @@
     <!-- Page Title -->
     <title></title>
 
+
 </head>
 
-<body id="page_items">
-
-<!-- Header Start -->
-<header class="container-fluid ">
-    <nav class="navbar navbar-expand-xl navbar-light align-items-center">
-        <div class="nav-item">
-            <a class="navbar-brand nav-link px-2" href="dashboard.html">
-                <img src="{{ asset('images/logo.png')}}" class="img-fluid" alt="">
-            </a>
-        </div>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="zmdi zmdi-menu"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <ul class="navbar-nav mr-0 ml-auto d-flex align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="home.html"><i class="zmdi zmdi-assignment"></i> POS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="items.html"><i class="zmdi zmdi-cutlery"></i> Items</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="people.html"><i class="zmdi zmdi-accounts-alt"></i> People</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="sales_expenses.html"><i class="zmdi zmdi-collection-text"></i> Sales & Expenses</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="setting.html"><i class="zmdi zmdi-settings"></i> Settings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="orders_status.html"><i class="zmdi zmdi-hourglass-alt"></i> Orders Status</a>
-                </li>
-                <li class="nav-item profile_img">
-                    <a href="" class="img_box center_img">
-                        <img src="{{ asset('images/profile.png')}}" class="crop_img" alt="">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
-
-<div class="header_spacebar"></div>
-<!-- Header End -->
+<body id="page_home">
+@include('navbar')
 
 <!-- Body Wrapper Start -->
 <div class="body_wrapper">
@@ -83,9 +41,8 @@
     <div class="left_sidebar">
         <!-- Nav Tabs Start -->
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav_customers_items" data-toggle="tab" href="#customers" role="tab" aria-controls="nav-home" aria-selected="true">Customers</a>
-            <a class="nav-item nav-link" id="nav_waiters_tab" data-toggle="tab" href="#waiters" role="tab" aria-controls="nav-profile" aria-selected="false">Waiters</a>
-            <a class="nav-item nav-link" id="nav_admins_tab" data-toggle="tab" href="#admins" role="tab" aria-controls="nav-profile" aria-selected="false">Admins</a>
+            <a class="nav-item nav-link active" id="nav_customers_items" data-toggle="tab" href="#customers" role="tab" aria-controls="nav-home" aria-selected="true">Admins</a>
+            <a class="nav-item nav-link" id="nav_admins_tab" data-toggle="tab" href="#admins" role="tab" aria-controls="nav-profile" aria-selected="false">Clients</a>
         </div>
         <!-- Nav Tabs End -->
     </div>

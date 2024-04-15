@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',function (){return view('pages.dashboard');})->name('home');
+//Route::get('/settings',function (){return view('pages.setting');})->name('settings');
 Route::get('/categories',[CategoryController::class, 'index'])->name('categories');
 Route::post('category/store',[CategoryController::class,'store'])->name('category.store');
 Route::get('category/image-upload',[CategoryController::class,'upload'])->name('category.imageUpload.');
@@ -37,7 +38,7 @@ Route::get('/sales',function (){
 })->name('sales');
 
 Route::get('/update_items/{id}',[ProductController::class,'edit'])->name('update_items');
-Route::get('/users',[UserController::class,'index'])->name('users');
+Route::get('/peoples',[UserController::class,'index'])->name('peoples');
 Route::get('user/destroy/{id}',[UserController::class,'destroy']);
 Route::post('user/store',[UserController::class,'store'])->name('user.store');
 Route::get('user/show/{id}',[UserController::class,'show'])->name('user.show');
