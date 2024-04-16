@@ -25,7 +25,7 @@ class LoginController extends Controller
 
             $success = $user->createToken('MyApp')->plainTextToken;
 
-            return $this->success(['token' => $success], AuthConstants::LOGIN);
+            return $this->success(['token' => $success,'user'=>$user], AuthConstants::LOGIN);
         }
 
         return $this->error([], AuthConstants::VALIDATION);

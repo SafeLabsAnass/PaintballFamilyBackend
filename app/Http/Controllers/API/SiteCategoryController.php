@@ -13,6 +13,7 @@ use App\Models\Site;
 use App\Models\SiteCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SiteCategoryController extends Controller
 {
@@ -64,7 +65,7 @@ class SiteCategoryController extends Controller
         $site_name = $request->site;
         $site = Site::where('name', $site_name)->first();
         $category_name = $request->category;
-        $category = Category::where('name', $category_name)->first();
+        $category = DB::table('categories')->where('name', $category_name)->first();
         $siteCategory->site_id = $site->id;
         $siteCategory->category_id = $category->id;
         $siteCategory->update();

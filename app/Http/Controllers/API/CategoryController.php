@@ -11,6 +11,7 @@ use App\Http\Traits\Access;
 use App\Http\Traits\HttpResponses;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -45,12 +46,13 @@ class CategoryController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $category = Category::where('id',$id)->first();
+        $category = DB::table('categories')->where('id',$id)->first();
+        $category_ = Category::find($category->id);
 //        if (!$this->canAccess($category)) {
 //            return $this->error([], AuthConstants::PERMISSION);
 //        }
 
-        return $this->success(new CategoryResource($category));
+        return $this->success(new CategoryResource($category_));
     }
 
     /**
@@ -63,11 +65,12 @@ class CategoryController extends Controller
 //        if (!$this->canAccess($category)) {
 //            return $this->error([], AuthConstants::PERMISSION);
 //        }
-        $category = Category::where('id',$id)->first();
-        $category->update($request->all());
+        $category = DB::table('categories')->where('id',$id)->first();
+        $category_ = Category::find($category->id);
+        $category_->update($request->all());
 
         return $this->success(
-            new CategoryResource($category),
+            new CategoryResource($category_),
             CategoryConstants::UPDATE
         );
     }
@@ -81,9 +84,9 @@ class CategoryController extends Controller
 //        if (!$this->canAccess($category)) {
 //            return $this->error([], AuthConstants::PERMISSION);
 //        }
-        $category = Category::where('id',$id)->first();
-
-        $category->delete();
+        $category = DB::table('categories')->where('id',$id)->first();
+        $category_ = Category::find($category->id);
+        $category_->delete();
 
         return $this->success([], CategoryConstants::DESTROY);
     }

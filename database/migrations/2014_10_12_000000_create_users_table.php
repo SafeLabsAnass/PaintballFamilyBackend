@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('gender');
             $table->string('avatar');
+            $table->boolean('auth')->default(false);
             $table->string('email')->unique();
             $table->unsignedBigInteger('site_id');
             $table->timestamp('email_verified_at')->nullable();

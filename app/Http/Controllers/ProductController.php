@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use PHPUnit\Metadata\PostCondition;
 
@@ -36,7 +37,7 @@ class ProductController extends Controller
         ]);
         $imageName = request()->image->getClientOriginalName();
         request()->image->move(storage_path('app/public'), $imageName);
-        $category = Category::where('name',$request->category)->first();
+        $category = DB::table('categories')->where('name',$request->category)->first();
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
@@ -53,7 +54,7 @@ class ProductController extends Controller
         $imageName = request()->image->getClientOriginalName();
         Session::put('imageName',$imageName);
         request()->image->move(storage_path('app/public'), $imageName);
-        return back();
+        return redirect('/categories');
     }
     /**
      * Display the specified resource.

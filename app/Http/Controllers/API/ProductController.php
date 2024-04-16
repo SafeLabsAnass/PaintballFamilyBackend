@@ -12,6 +12,7 @@ use App\Http\Traits\HttpResponses;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -42,7 +43,7 @@ class ProductController extends Controller
 //            }
 //        }
         $category_name = $request->category;
-        $category = Category::where('name',$category_name)->first();
+        $category = DB::table('categories')->where('name',$category_name)->first();
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;

@@ -128,7 +128,7 @@
                         <ul>
                             @foreach($items[1] as $product)
                             <li class="d-flex">
-                                <h3 class="text-center order_num Image"> <img width="70" height="70" src="http://127.0.0.1:8000/storage/{{$product->image}}" alt=""></h3>
+                                <h3 class="text-center order_num Image"> <img width="70" height="70" src="http://192.168.10.11:8000/storage/{{$product->image}}" alt=""></h3>
                                 <h3 class="text-left Name"><strong>{{$product->name}}</strong></h3>
                                 <h3 class="text-center Amount Category">{{$product->category_id}}</h3>
                                 <h3 class="text-center Items Options"><i class="zmdi zmdi-storage"></i></h3>

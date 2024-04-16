@@ -10,22 +10,32 @@ use App\Http\Resources\AuthResource;
 use App\Http\Traits\HttpResponses;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
     use HttpResponses;
 
     /**
-     * @param RegisterRequest $request
+     * @param Request $request
      * @return JsonResponse
      */
-    public function __invoke(RegisterRequest $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
+        $user = new User();
+        $user->username = $input['username'];
+        $user->first_name = $input['first_name'];
+        $user->last_name = $input['last_name'];
+        $user->phone = $input['phone'];
+        $user->email = $input['email'];
+        $user->gender = $input['gender'];
+        $user->site_id = $input['site_id'];
+        $user->password = $input['password'];
+        $user->save();
         $success['token'] = $user->createToken('MyApp')->plainTextToken;
-        $success['name'] = $user->name;
+        $success['username'] = $user->username;
 
         event(new UserRegistered($user));
 
