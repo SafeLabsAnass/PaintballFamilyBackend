@@ -1,83 +1,38 @@
 <!doctype html>
 <html lang="en">
-
 <head>
 
+    <!-- Required meta tags -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Datetimepicker CSS -->
+    <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
+
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/style.css')}}" type="text/css" rel="stylesheet">
 
     <!-- Responsive CSS -->
-    <link href="css/responsive.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/responsive.css')}}" type="text/css" rel="stylesheet">
 
     <!-- Font CSS -->
-    <link href="css/gogle_sans_font.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/gogle_sans_font.css')}}" type="text/css" rel="stylesheet">
 
     <!--  For icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.css">
     <!-- Page Title -->
     <title></title>
 
-    <!--
-	 Owl-carousel CSS
-	<link href="css/owl.carousel.min.css" type="text/css" rel="stylesheet">
--->
 
 </head>
 
 <body id="page_home">
-<!-- Header Start -->
-<header class="container-fluid ">
-    <nav class="navbar navbar-expand-xl navbar-light align-items-center">
-        <div class="nav-item">
-            <a class="navbar-brand nav-link px-2" href="dashboard.html">
-                <img src="images/logo.png" class="img-fluid">
-            </a>
-        </div>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="zmdi zmdi-menu"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <ul class="navbar-nav mr-0 ml-auto d-flex align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="home.html"><i class="zmdi zmdi-assignment"></i> POS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="items.html"><i class="zmdi zmdi-cutlery"></i> Items</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="people.html"><i class="zmdi zmdi-accounts-alt"></i> People</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="sales_expenses.html"><i class="zmdi zmdi-collection-text"></i> Sales & Expenses</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="setting.html"><i class="zmdi zmdi-settings"></i> Settings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="orders_status.html"><i class="zmdi zmdi-hourglass-alt"></i> Orders Status</a>
-                </li>
-                <li class="nav-item profile_img">
-                    <a href="index.html" class="img_box center_img">
-                        <img src="images/profile.png" class="crop_img">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
-
-<div class="header_spacebar"></div>
+@include('navbar')
 <!-- Header End -->
 
 <!-- Body Wrapper Start -->
@@ -87,12 +42,14 @@
         <!-- Tab Bottons Start -->
         <div class="tab_btn_container d-flex w-100">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-order1" data-toggle="tab" href="#order1" role="tab" aria-controls="order1" aria-selected="true">
+                <a class="nav-item nav-link active" id="nav-order1" data-toggle="tab" href="#order1" role="tab"
+                   aria-controls="order1" aria-selected="true">
                     <strong>1</strong>
                     <span>2:30</span>
                 </a>
 
-                <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab" aria-controls="order2" aria-selected="false"><strong>2</strong>
+                <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab"
+                   aria-controls="order2" aria-selected="false"><strong>2</strong>
                     <span>0:42</span>
                 </a>
             </div>
@@ -300,37 +257,45 @@
             <div class="tab_btn_container">
                 <div class="nav nav-tabs owl-carousel" id="nav-tab" role="tablist">
 
-                    <a class="nav-item nav-link active" id="nav-order1" data-toggle="tab" href="#order1" role="tab" aria-controls="order1" aria-selected="true">
+                    <a class="nav-item nav-link active" id="nav-order1" data-toggle="tab" href="#order1" role="tab"
+                       aria-controls="order1" aria-selected="true">
                         <img src="images/ic_fastfood.png">
                         <h5>FastFood</h5>
                     </a>
 
-                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab" aria-controls="order2" aria-selected="false">
+                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab"
+                       aria-controls="order2" aria-selected="false">
                         <img src="images/ic_starter.png">
                         <h5>Starter</h5>
                     </a>
-                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab" aria-controls="order2" aria-selected="false">
+                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab"
+                       aria-controls="order2" aria-selected="false">
                         <img src="images/ic_maincourse.png">
                         <h5>Main Cource</h5>
                     </a>
-                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab" aria-controls="order2" aria-selected="false">
+                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab"
+                       aria-controls="order2" aria-selected="false">
                         <img src="images/ic_Beverages.png">
                         <h5>Beverages</h5>
                     </a>
-                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab" aria-controls="order2" aria-selected="false">
+                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab"
+                       aria-controls="order2" aria-selected="false">
                         <img src="images/ic_Dessert.png">
                         <h5>Dessert</h5>
                     </a>
-                    <a class="nav-item nav-link active" id="nav-order1" data-toggle="tab" href="#order1" role="tab" aria-controls="order1" aria-selected="true">
+                    <a class="nav-item nav-link active" id="nav-order1" data-toggle="tab" href="#order1" role="tab"
+                       aria-controls="order1" aria-selected="true">
                         <img src="images/ic_fastfood.png">
                         <h5>FastFood</h5>
                     </a>
 
-                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab" aria-controls="order2" aria-selected="false">
+                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab"
+                       aria-controls="order2" aria-selected="false">
                         <img src="images/ic_starter.png">
                         <h5>Starter</h5>
                     </a>
-                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab" aria-controls="order2" aria-selected="false">
+                    <a class="nav-item nav-link" id="nav-order2" data-toggle="tab" href="#order2" role="tab"
+                       aria-controls="order2" aria-selected="false">
                         <img src="images/ic_maincourse.png">
                         <h5>Main Cource</h5>
                     </a>
@@ -543,9 +508,15 @@
 <!-- Body Wrapper End -->
 
 <!-- Require Javascript Start -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/owl.carousel.min.js"></script>
@@ -569,9 +540,9 @@
     })
 </script>
 <script type="text/javascript">
-    jQuery(function($) {
+    jQuery(function ($) {
         var path = window.location.href;
-        $('a.nav-link').each(function() {
+        $('a.nav-link').each(function () {
             if (this.href === path) {
                 $(this).closest('.nav-item').addClass('active');
             }

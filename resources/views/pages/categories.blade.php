@@ -34,48 +34,7 @@
 
 <body id="page_items">
     <!-- Header Start -->
-    <header class="container-fluid ">
-        <nav class="navbar navbar-expand-xl navbar-light align-items-center">
-            <div class="nav-item">
-                <a class="navbar-brand nav-link px-2" href="dashboard.html">
-                    <img src="{{ asset('images/logo.png')}}" class="img-fluid">
-                </a>
-            </div>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="zmdi zmdi-menu"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <ul class="navbar-nav mr-0 ml-auto d-flex align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="home.html"><i class="zmdi zmdi-assignment"></i> POS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="items.html"><i class="zmdi zmdi-cutlery"></i> Items</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="people.html"><i class="zmdi zmdi-accounts-alt"></i> People</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="sales_expenses.html"><i class="zmdi zmdi-collection-text"></i> Sales & Expenses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="setting.html"><i class="zmdi zmdi-settings"></i> Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="orders_status.html"><i class="zmdi zmdi-hourglass-alt"></i> Orders Status</a>
-                    </li>
-                    <li class="nav-item profile_img">
-                        <a href="index.html" class="img_box center_img">
-                            <img src="images/profile.png" class="crop_img">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <div class="header_spacebar"></div>
+    @include('navbar')
     <!-- Header End -->
 
     <!-- Body Wrapper Start -->
@@ -142,10 +101,10 @@
                                         <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-image"></i></a>
                                     </button>
                                     <button type="button" class="btn">
-                                        <a href="{{url('product/destroy/{id}',$product->id)}}"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="{{route('product.destroy',$product->id)}}"><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="{{route('update_items',$product->id)}}"><i class="zmdi zmdi-edit"></i></a>
                                     </button>
                                 </div>
                             </li>
@@ -230,7 +189,7 @@
                             @foreach($items[0] as $category)
                             <li class="d-flex">
                                 <h3 class="text-center Code icon">
-                                    <img src="http://192.168.10.11:8000/storage/{{$category->image}}">
+                                    <img src="http://127.0.0.1:8000/storage/{{$category->image}}">
                                 </h3>
                                 <h3 class="text-left Name"><strong>{{$category->name}}</strong></h3>
                                 <h3 class="text-center Category created_on">{{$category->created_at}}</h3>
@@ -240,7 +199,7 @@
                                         <a href="{{route('category.destroy',$category->id)}}"><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
-                                        <a href="#"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="{{route('category.show',$category->id)}}"><i class="zmdi zmdi-edit"></i></a>
                                     </button>
 
                                 </div>
