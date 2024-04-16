@@ -42,7 +42,7 @@ Route::get('/peoples',[UserController::class,'index'])->name('peoples');
 Route::get('user/destroy/{id}',[UserController::class,'destroy']);
 Route::post('user/store',[UserController::class,'store'])->name('user.store');
 Route::get('user/show/{id}',[UserController::class,'show'])->name('user.show');
-Route::get('user/edit/{id}',[UserController::class,'edit'])->name('user.edit');
+Route::post('user/edit/{id}',[UserController::class,'edit'])->name('user.edit');
 Route::get('/products',[ProductController::class,'index'])->name('products');
 Route::get('product/destroy/{id}',[ProductController::class,'destroy'])->name('product.destroy');
 Route::post('product/store',[ProductController::class,'store'])->name('product.store');

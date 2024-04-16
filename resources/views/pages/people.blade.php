@@ -29,11 +29,7 @@
 
     <!-- Page Title -->
     <title></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-          integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-            crossorigin="anonymous"></script>
+
     <script type="text/javascript">
         function show(id) {
             $.ajaxSetup({
@@ -46,14 +42,15 @@
                 url: '/user/show/'+id.toString(),
                 dataType: 'json',
                 success: function (response) {
-                    if(response.data)
-                     document.getElementById('username_edited').value = response.data.username
-                     document.getElementById('first_name_edited').value = response.data.first_name
-                     document.getElementById('last_name_edited').value = response.data.last_name
-                     document.getElementById('phone_edited').value = response.data.phone
-                     document.getElementById('email_edited').value = response.data.email
-                     document.getElementById('site_id_edited').value = response.data.site_id
-                     document.getElementById('gender_edited').value = response.data.gender
+                    if(response.data) {
+                        document.getElementById('username_edited').value = response.data[0].username
+                        document.getElementById('first_name_edited').value = response.data[0].first_name
+                        document.getElementById('last_name_edited').value = response.data[0].last_name
+                        document.getElementById('phone_edited').value = response.data[0].phone
+                        document.getElementById('email_edited').value = response.data[0].email
+                        document.getElementById('site_edited').value = response.data[0].site
+                        document.getElementById('gender_edited').value = response.data[0].gender
+                    }
                 },
                 error: function(xhr, status, error) {
                         console.log(status);
@@ -115,7 +112,7 @@
                     </div>
 
                     <ul>
-                        @foreach($users as $user)
+                        @foreach($items[0] as $user)
                         <li class="d-flex">
                             <h3 class="text-center order_num Code people">{{$user->id}}</h3>
                             <h3 class="text-left Name"><strong>{{$user->first_name}} {{$user->last_name}}</strong></h3>
@@ -139,7 +136,7 @@
                                         </div>
                                         <div class="modal-body p-0">
 
-                                            <form action="{{route('user.edit',$user->id)}}" method="POST">
+                                            <form action="{{route('user.edit',$user->id)}}" method="POST" id="editForm" onsubmit="edit();">
                                                 @csrf
                                                 <div class="col-10 mx-auto form_container">
                                                     <div class="form-group">
@@ -164,7 +161,11 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Site</label>
-                                                        <input type="text" class="form-control" name="site_id" id="site_id_edited">
+                                                        <select class="form-control" style="background: var(--bg-color)! important;" name="site" id="site_edited">
+                                                            @foreach($items[1] as $site)
+                                                                <option>{{$site->name}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>gender</label>
@@ -175,7 +176,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="modal-footer">
+                                                <div class="modal-footer mb-5">
                                                     <div class="row no-gutters w-100">
                                                         <div class="col-6"> <button type="reset" class="btn Cencel" data-dismiss="modal">Cancel</button></div>
                                                         <div class="col-6"> <button type="submit" class="btn">Edit People</button></div>
@@ -298,21 +299,6 @@
                                 </button>
                             </div>
                         </li>
-                        <li class="d-flex">
-                            <h3 class="text-center order_num Code people">3</h3>
-                            <h3 class="text-left Name"><strong>Jimmy Taylor</strong></h3>
-                            <h3 class="text-left phone">+1 987 675 5432</h3>
-                            <h3 class="text-left email">jimmytaylor1234@gmail.com</h3>
-                            <h3 class="text-left text-muted created">12 June 2020 12:30 pm</h3>
-                            <div class="btn_container d-flex mr-0 ml-auto">
-                                <button type="button" class="btn">
-                                    <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                </button>
-                                <button type="button" class="btn">
-                                    <a data-toggle="modal" data-target="#add_people"><i class="zmdi zmdi-edit"></i></a>
-                                </button>
-                            </div>
-                        </li>
 
                     </ul>
                 </div>
@@ -331,10 +317,6 @@
                                         <label for="exampleFormControlSelect1">Item per page</label>
                                         <select class="form-control mx-3" id="exampleFormControlSelect1" style="max-width: 80px;">
                                             <option>10</option>
-                                            <option>15</option>
-                                            <option>20</option>
-                                            <option>25</option>
-                                            <option>30</option>
                                         </select>
                                     </div>
                                 </form>
@@ -405,37 +387,6 @@
                                 </button>
                             </div>
                         </li>
-                        <li class="d-flex">
-                            <h3 class="text-center order_num Code people">2</h3>
-                            <h3 class="text-left Name"><strong>Jimmy Taylor</strong></h3>
-                            <h3 class="text-left phone">+1 987 675 5432</h3>
-                            <h3 class="text-left email">jimmytaylor1234@gmail.com</h3>
-                            <h3 class="text-left text-muted created">12 June 2020 12:30 pm</h3>
-                            <div class="btn_container d-flex mr-0 ml-auto">
-                                <button type="button" class="btn">
-                                    <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                </button>
-                                <button type="button" class="btn">
-                                    <a data-toggle="modal" data-target="#add_people"><i class="zmdi zmdi-edit"></i></a>
-                                </button>
-                            </div>
-                        </li>
-                        <li class="d-flex">
-                            <h3 class="text-center order_num Code people">3</h3>
-                            <h3 class="text-left Name"><strong>Jimmy Taylor</strong></h3>
-                            <h3 class="text-left phone">+1 987 675 5432</h3>
-                            <h3 class="text-left email">jimmytaylor1234@gmail.com</h3>
-                            <h3 class="text-left text-muted created">12 June 2020 12:30 pm</h3>
-                            <div class="btn_container d-flex mr-0 ml-auto">
-                                <button type="button" class="btn">
-                                    <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                </button>
-                                <button type="button" class="btn">
-                                    <a data-toggle="modal" data-target="#edit_people"><i class="zmdi zmdi-edit"></i></a>
-                                </button>
-                            </div>
-                        </li>
-
                     </ul>
                 </div>
                 <!-- Order List End -->
@@ -453,11 +404,6 @@
                                         <label for="exampleFormControlSelect1">Item per page</label>
                                         <select class="form-control mx-3" id="exampleFormControlSelect1" style="max-width: 80px;">
                                             <option>10</option>
-                                            <option>15</option>
-                                            <option>20</option>
-                                            <option>25</option>
-                                            <option>30</option>
-                                        </select>
                                     </div>
                                 </form>
 
@@ -559,11 +505,61 @@
 <!-- Require Javascript End -->
 <script src="{{ asset('js/jquery.datetimepicker.full.js')}}"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>
-    $("#datetime").datetimepicker();
+<script type="text/javascript">
+    function edit() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $('#editForm').serialize(),
+            dataType: 'json',
+            success: function (data) {
+                if (data.status) {
+                    Swal.fire({
+                        position: 'Modification réussie',
+                        icon: 'success',
+                        title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
+                        showConfirmButton: false,
+                        timer: 2500,
+                        onOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    window.location = data.redirect;
+                }
+            },
+            error: function (data) {
+                console.log(data)
+                if (data.status) {
+                    Swal.fire({
+                        position: 'Oops...',
+                        icon: 'error',
+                        title: 'Les donnees entrants sont similaire avec les anciennes !',
+                        showConfirmButton: false,
+                        timer: 4500,
+                        onOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                }
+            }
+        })
+    }
 </script>
+
 <script type="text/javascript">
     jQuery(function($) {
         var path = window.location.href;

@@ -14,7 +14,7 @@ class AuthResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $site=Site::where('name',$this->site)->first();
+        $site=Site::where('id',$this->site_id)->first();
         return [
             'id' => $this->id,
             'username' => $this->username,
@@ -24,7 +24,7 @@ class AuthResource extends JsonResource
             'gender' => $this->gender,
             'avatar' => $this->avatar,
             'email' => $this->email,
-            'site_id' => $this->site_id,
+            'site' => $site->name,
             'created_at' => $this->created_at,
         ];
     }
