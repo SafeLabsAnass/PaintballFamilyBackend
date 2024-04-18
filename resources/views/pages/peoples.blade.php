@@ -135,7 +135,7 @@
                                         </div>
                                         <div class="modal-body p-0">
 
-                                            <form action="{{route('user.edit',$user->id)}}" method="POST" id="editForm" onsubmit="edit();">
+                                            <form action="{{route('user.edit',$user->id)}}" method="POST" id="editForm" onsubmit="return editForm();">
                                                 @csrf
                                                 <div class="col-10 mx-auto form_container">
                                                     <div class="form-group">
@@ -194,6 +194,7 @@
 
                     </ul>
                 </div>
+
                 <!-- Order List End -->
 
                 <!-- Tab Footer start -->
@@ -261,7 +262,7 @@
                         </div>
                     </div>
 
-                    <div class="modal-footer">
+                    <div class="modal-footer mb-5">
                         <div class="row no-gutters w-100">
                             <div class="col-6"> <button type="reset" class="btn Cencel" data-dismiss="modal">Cancel</button></div>
                             <div class="col-6"> <button type="submit" class="btn">Add People</button></div>
@@ -289,52 +290,55 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function editForm() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                url: $(this).attr('action'),
+                data: $('#editForm').serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status) {
+                        Swal.fire({
+                            position: 'Modification réussie',
+                            icon: 'success',
+                            title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
+                            showConfirmButton: false,
+                            timer: 2500,
+                            onOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        console.log(response)
+                        // window.location = response.redirect
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr)
+                    console.log(status)
+                    console.log(error)
 
-<script type="text/javascript">
-    function edit() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $('#editForm').serialize(),
-            dataType: 'json',
-            success: function (data) {
-                if (data.status) {
-                    Swal.fire({
-                        position: 'Modification réussie',
-                        icon: 'success',
-                        title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
-                        showConfirmButton: false,
-                        timer: 2500,
-                        onOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                    window.location = data.redirect;
+                    // if (response.status) {
+                    //     Swal.fire({
+                    //         position: 'Oops...',
+                    //         icon: 'error',
+                    //         title: 'Les donnees entrants sont similaire avec les anciennes !',
+                    //         showConfirmButton: false,
+                    //         timer: 4500,
+                    //     });
+                    //
+                    // }
                 }
-            },
-            error: function (data) {
-                console.log(data)
-                if (data.status) {
-                    Swal.fire({
-                        position: 'Oops...',
-                        icon: 'error',
-                        title: 'Les donnees entrants sont similaire avec les anciennes !',
-                        showConfirmButton: false,
-                        timer: 4500,
-                        onOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                }
-            }
-        })
-    }
-</script>
+            })
+        }
+    </script>
+
 
 <script type="text/javascript">
     jQuery(function($) {
@@ -346,6 +350,7 @@
         });
     });
 </script>
+</div>
 </body>
 
 </html>
