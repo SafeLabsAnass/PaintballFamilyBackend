@@ -122,8 +122,7 @@
                                 <button type="button" class="btn">
                                     <a href="{{url('user/destroy/'.$user->id)}}" ><i class="zmdi zmdi-delete"></i></a>
                                 </button>
-                                        @csrf
-                                    <button class="btn" type="button" data-toggle="modal" data-target="#edit_people" onclick="show({{$user->id}})"><i class="zmdi zmdi-edit mb-5"></i></button>
+                                    <button class="btn" type="button" id="btn_show" data-toggle="modal" data-target="#edit_people" onclick="show({{$user->id}})"><i class="zmdi zmdi-edit mb-5"></i></button>
                             </div>
 
                         </li>
@@ -135,7 +134,7 @@
                                         </div>
                                         <div class="modal-body p-0">
 
-                                            <form action="{{route('user.edit',$user->id)}}" method="POST" id="editForm" onsubmit="edit();">
+                                            <form action="{{route('user.edit',$user->id)}}" method="POST" id="editForm" onsubmit="edit({{$user->id}});">
                                                 @csrf
                                                 <div class="col-10 mx-auto form_container">
                                                     <div class="form-group">
@@ -178,7 +177,9 @@
                                                 <div class="modal-footer mb-5">
                                                     <div class="row no-gutters w-100">
                                                         <div class="col-6"> <button type="reset" class="btn Cencel" data-dismiss="modal">Cancel</button></div>
-                                                        <div class="col-6"> <button type="submit" class="btn">Edit People</button></div>
+                                                        <div class="col-6">
+                                                            <button type="submit" class="btn">Edit People</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </form>
@@ -211,6 +212,56 @@
 </div>
 <!-- Body Wrapper End -->
 
+    <script type="text/javascript">
+        function edit(id) {
+            const btn_show = document.getElementById('btn_show');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/user/edit/'+id.toString(),
+                data: $('#editForm').serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status==="success") {
+                        Swal.fire({
+                            position: 'Modification réussie',
+                            icon: 'success',
+                            title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
+                            showConfirmButton: false,
+                            timer: 6000,
+                            onOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        window.location = data.redirect;
+                    }
+                    else{
+                        if (data.status) {
+                            Swal.fire({
+                                position: 'Oops...',
+                                icon: 'error',
+                                title: 'Les donnees entrants sont similaire avec les anciennes !',
+                                showConfirmButton: false,
+                                timer: 6000,
+                                onOpen: () => {
+                                    Swal.showLoading()
+                                }
+                            });
+                            window.location = data.redirect
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+
+                }
+            })
+        }
+    </script>
 
 <!-- Add people  Modal Start  -->
 <div class="modal fade add_category_model add_expenses receipt_model px-0" id="add_people" tabindex="-1" role="dialog" aria-labelledby="receipt_modelTitle" aria-hidden="true">
@@ -290,51 +341,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script type="text/javascript">
-    function edit() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $('#editForm').serialize(),
-            dataType: 'json',
-            success: function (data) {
-                if (data.status) {
-                    Swal.fire({
-                        position: 'Modification réussie',
-                        icon: 'success',
-                        title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
-                        showConfirmButton: false,
-                        timer: 2500,
-                        onOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                    window.location = data.redirect;
-                }
-            },
-            error: function (data) {
-                console.log(data)
-                if (data.status) {
-                    Swal.fire({
-                        position: 'Oops...',
-                        icon: 'error',
-                        title: 'Les donnees entrants sont similaire avec les anciennes !',
-                        showConfirmButton: false,
-                        timer: 4500,
-                        onOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                }
-            }
-        })
-    }
-</script>
 
 <script type="text/javascript">
     jQuery(function($) {

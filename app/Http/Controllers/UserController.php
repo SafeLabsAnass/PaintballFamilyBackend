@@ -59,11 +59,11 @@ class UserController extends Controller
             && $site->id == $user->site_id && $request->gender== $user->gender) {
             return response()->json([
                 "status" => 'error',
-                "redirect" => redirect()->route('peoples')
-            ]);
+                "redirect" => url('/peoples')
+            ],202);
         }
         else{
-            $user->username= $request->name;
+            $user->username= $request->username;
             $user->first_name = $request->first_name ;
             $user->last_name = $request->last_name ;
             $user->gender = $request->gender ;
@@ -72,7 +72,7 @@ class UserController extends Controller
             return response()->json([
                 "status" => 'success',
                 "redirect" => url('/peoples')
-            ]);
+            ],201);
         }
     }
 
