@@ -34,8 +34,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
 //        dd($request->all());
-       new AuthResource(User::create($request->all()));
-       return back();
+        new AuthResource(User::create($request->all()));
+        return back();
     }
 
     /**
@@ -88,7 +88,7 @@ class UserController extends Controller
         $user = User::where('id',$id)->first();
 
         $user->delete();
-return redirect('/users');
+        return redirect('/users');
 
     }
 
