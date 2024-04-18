@@ -20,7 +20,7 @@ class UserController extends Controller
     {
         $users=User::all();
         $sites=Site::all();
-        return view('pages.peoples')->with('items',[AuthResource::collection($users),$sites]);
+        return view('pages.people')->with('items',[AuthResource::collection($users),$sites]);
     }
 
     /**
@@ -34,17 +34,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
 //        dd($request->all());
-        $user = new User();
-        $user->username = $request['username'];
-        $user->first_name = $request['first_name'];
-        $user->last_name = $request['last_name'];
-        $user->phone = $request['phone'];
-        $user->email = $request['email'];
-        $user->gender = $request['gender'];
-        $user->site_id = $request['site_id'];
-        $user->password = $request['password'];
-        $user->save();
-        return back();
+       new AuthResource(User::create($request->all()));
+       return back();
     }
 
     /**
@@ -68,9 +59,8 @@ class UserController extends Controller
             && $site->id == $user->site_id && $request->gender== $user->gender) {
             return response()->json([
                 "status" => 'error',
-                'message' => 'Operation failed',
                 "redirect" => url('/peoples')
-            ]   );
+            ],202);
         }
         else{
             $user->username= $request->username;
@@ -81,9 +71,8 @@ class UserController extends Controller
             $user->update();
             return response()->json([
                 "status" => 'success',
-                'message' => 'Operation success',
                 "redirect" => url('/peoples')
-            ]);
+            ],201);
         }
     }
 
@@ -99,7 +88,7 @@ class UserController extends Controller
         $user = User::where('id',$id)->first();
 
         $user->delete();
-return redirect('/peoples/');
+return redirect('/users');
 
     }
 
