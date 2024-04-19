@@ -44,17 +44,19 @@ class ProductController extends Controller
         $product->category_id = $category->id;
         $product->image = $imageName;
         $product->save();
-        return back();
+        return redirect('/categories');
     }
-    public function upload(): \Illuminate\Http\RedirectResponse
+    public function upload(Request $request): \Illuminate\Http\JsonResponse
     {
         request()->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:200048',
         ]);
         $imageName = request()->image->getClientOriginalName();
         Session::put('imageName',$imageName);
         request()->image->move(storage_path('app/public'), $imageName);
-        return redirect('/categories');
+        return response()->json([ "status" => 'success',
+            "image" => $imageName
+        ],201);
     }
     /**
      * Display the specified resource.
@@ -85,7 +87,7 @@ class ProductController extends Controller
      */
     public function destroy(int $id)
     {
-        $product = Product::where($id);
+        $product = Product::where('id',$id);
         $product->delete();
         return redirect('/categories');
 

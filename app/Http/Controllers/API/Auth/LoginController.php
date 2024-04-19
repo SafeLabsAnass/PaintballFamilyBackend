@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Http\Traits\HttpResponses;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -32,11 +33,11 @@ class LoginController extends Controller
     }
 
     /**
-     * @return JsonResponse
+     * @return
      */
-    public function logout(): JsonResponse
+    public function logout()
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         $user->tokens()->delete();
 

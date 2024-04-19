@@ -213,6 +213,23 @@
 <!-- Body Wrapper End -->
 
     <script type="text/javascript">
+        let counter = 0;
+        let increment = 1000;
+        let intervalTime = 3000;
+        console.log(counter)
+        function incrementCounter() {
+            counter+=increment
+        }
+        function updateTime() {
+            let currentTime = new Date();
+            let currentSeconds = currentTime.getSeconds();
+
+            // Check if the second has changed to avoid multiple increments in the same second
+            if (currentSeconds !== updateTime.lastSecond) {
+                updateTime.lastSecond = currentSeconds; // Update lastSecond
+                incrementCounter(); // Call increment function
+            }
+        }
         function edit(id) {
             const btn_show = document.getElementById('btn_show');
             $.ajaxSetup({
@@ -232,8 +249,8 @@
                             icon: 'success',
                             title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
                             showConfirmButton: false,
-                            timer: 6000,
-                            onOpen: () => {
+                            timer: 3000,
+                            didOpen: () => {
                                 Swal.showLoading();
                             }
                         });
@@ -246,12 +263,15 @@
                                 icon: 'error',
                                 title: 'Les donnees entrants sont similaire avec les anciennes !',
                                 showConfirmButton: false,
-                                timer: 6000,
-                                onOpen: () => {
+                                timer: 1000,
+                                didOpen: () => {
                                     Swal.showLoading()
-                                }
+                                    window.location = data.redirect
+                                },
+
                             });
-                            window.location = data.redirect
+
+                            // window.location.reload();
                         }
                     }
                 },
@@ -352,6 +372,7 @@
         });
     });
 </script>
+</div>
 </body>
 
 </html>

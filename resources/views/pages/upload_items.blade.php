@@ -93,14 +93,17 @@
                             <h3 class="mt-0 mb-5 text-white">Upload a product</h3>
                             <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
                                 @csrf
-                                <div class="col" style="max-width: 250px">
-                                        <div class="upload-box mt-5 mb-4 mx-auto">
+                                <div class="row" style="max-width: 600px">
+                                    <div class="upload-box mt-1 mr-4 mb-3 mx-auto">
                                             <label for="img" class="img m-0 active">
                                                 <i class="zmdi zmdi-image-alt"></i>
                                                 <input id="img" type="file" name="image">
                                                 <span>Upload product image</span>
                                             </label>
                                         </div>
+                                    <div class="upload-box  mt-1 ml-4 mb-3  mx-auto">
+                                        <center><img id="preview" src="#" alt="Image Preview" style="max-width: 200px; max-height: 200px; display: none;"></center>
+                                    </div>
                                     </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -172,6 +175,20 @@
                     $(this).closest('.nav-item').addClass('active');
                 }
             });
+        });
+    </script>
+    <script>
+        document.getElementById('img').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                document.getElementById('preview').style.display = 'block';
+                document.getElementById('preview').src = e.target.result;
+                // You can access the image data here via e.target.result
+            };
+
+            reader.readAsDataURL(file);
         });
     </script>
 

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',function (){return view('pages.dashboard');})->name('home');
+Route::get('login',function (){return view('pages.auth.login');})->name('login');
 //Route::get('/settings',function (){return view('pages.setting');})->name('settings');
 Route::get('/categories',[CategoryController::class, 'index'])->name('categories');
 Route::post('category/store',[CategoryController::class,'store'])->name('category.store');
@@ -46,10 +47,14 @@ Route::post('user/edit/{id}',[UserController::class,'edit'])->name('user.edit');
 Route::get('/products',[ProductController::class,'index'])->name('products');
 Route::get('product/destroy/{id}',[ProductController::class,'destroy'])->name('product.destroy');
 Route::post('product/store',[ProductController::class,'store'])->name('product.store');
-Route::post('product/image-upload',[ProductController::class,'upload'])->name('product.imageUpload');
+Route::get('product/image-upload',[ProductController::class,'upload'])->name('product.imageUpload');
 Route::get('product/show/{id}',[ProductController::class,'show'])->name('product.show');
 Route::post('product/update/{id}',[ProductController::class,'update'])->name('product.update');
 Route::get('category/destroy/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
 Route::get('sale/destroy/{id}',[SaleController::class,'destroy'])->name('sale.destroy');
 Route::get('sale/show/{id}',[saleController::class,'show'])->name('sale.show');
 Route::get('category/show/{id}',[categoryController::class,'show'])->name('category.show');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

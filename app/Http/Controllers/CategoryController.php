@@ -48,7 +48,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->image = $imageName;
         $category->save();
-        return back();
+        return redirect('/categories');
     }
     public function upload()
     {

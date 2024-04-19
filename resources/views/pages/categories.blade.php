@@ -78,22 +78,17 @@
                             <h2 class="text-center order_num Code">Image</h2>
                             <h2 class="text-left Name">item Name</h2>
                             <h2 class="text-center Amount Category">Category</h2>
-                            <h2 class="text-center Items Options">Options</h2>
                             <h2 class="text-center Table Price">Price</h2>
-                            <h2 class="text-center Payment Sales ">Sales</h2>
-                            <h2 class="text-right Action">Action</h2>
                         </div>
 
                         <ul>
                             @foreach($items[1] as $product)
                             <li class="d-flex">
-                                <h3 class="text-center order_num Image"> <img width="70" height="70" src="http://192.168.10.11:8000/storage/{{$product->image}}" alt=""></h3>
+                                <h3 class="text-center order_num Image"> <img width="70" height="70" src="http://192.168.1.17:8000/storage/{{$product->image}}" alt=""></h3>
                                 <h3 class="text-left Name"><strong>{{$product->name}}</strong></h3>
-                                <h3 class="text-center Amount Category">{{$product->category_id}}</h3>
-                                <h3 class="text-center Items Options"><i class="zmdi zmdi-storage"></i></h3>
+                                <h3 class="text-center Amount Category">{{DB::table('categories')->where('id',$product->category_id)->first()->name}}</h3>
                                 <h3 class="text-center Table Price">{{$product->price}}</h3>
-                                <h3 class="text-center Payment Sales"></h3>
-                                <div class="btn_container d-flex mr-0 ml-auto">
+                                <div class="btn_container d-flex ml-auto">
                                     <button type="button" class="btn">
                                         <a href="#"><i class="zmdi zmdi-eye"></i></a>
                                     </button>
@@ -182,14 +177,13 @@
                             <h2 class="text-center Code icon">Icon</h2>
                             <h2 class="text-left Name">Category Name</h2>
                             <h2 class="text-center Category created_on">Created on</h2>
-                            <h2 class="text-right Action">Action</h2>
                         </div>
 
                         <ul>
                             @foreach($items[0] as $category)
                             <li class="d-flex">
                                 <h3 class="text-center Code icon">
-                                    <img src="http://127.0.0.1:8000/storage/{{$category->image}}">
+                                    <img src="http://192.168.1.17:8000/storage/{{$category->image}}">
                                 </h3>
                                 <h3 class="text-left Name"><strong>{{$category->name}}</strong></h3>
                                 <h3 class="text-center Category created_on">{{$category->created_at}}</h3>

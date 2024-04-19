@@ -20,7 +20,7 @@ class UserController extends Controller
     {
         $users=User::all();
         $sites=Site::all();
-        return view('pages.people')->with('items',[AuthResource::collection($users),$sites]);
+        return view('pages.peoples')->with('items',[AuthResource::collection($users),$sites]);
     }
 
     /**
@@ -59,7 +59,7 @@ class UserController extends Controller
             && $site->id == $user->site_id && $request->gender== $user->gender) {
             return response()->json([
                 "status" => 'error',
-                "redirect" => url('/peoples')
+                "redirect" => route('peoples')
             ],202);
         }
         else{
@@ -71,7 +71,7 @@ class UserController extends Controller
             $user->update();
             return response()->json([
                 "status" => 'success',
-                "redirect" => url('/peoples')
+                "redirect" => redirect('peoples')
             ],201);
         }
     }

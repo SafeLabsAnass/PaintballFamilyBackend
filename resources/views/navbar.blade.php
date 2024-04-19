@@ -18,7 +18,7 @@
                     <a class="nav-link" href="{{route('categories')}}"><i class="zmdi zmdi-cutlery"></i> Categories</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('peoples')}}"><i class="zmdi zmdi-accounts-alt"></i> People</a>
+                    <a class="nav-link" href="{{route('peoples')}}"><i class="zmdi zmdi-accounts-alt"></i> Users</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('sales')}}"><i class="zmdi zmdi-collection-text"></i> Sales</a>
@@ -27,7 +27,7 @@
 {{--                    <a class="nav-link" href="{{route('settings')}}"><i class="zmdi zmdi-settings"></i> Settings</a>--}}
 {{--                </li>--}}
                 <li class="nav-item profile_img">
-                    <a href="index.html" class="img_box center_img">
+                    <a href="{{route('login')}}" class="img_box center_img">
                         <img src="images/profile.png" class="crop_img">
                     </a>
                 </li>
