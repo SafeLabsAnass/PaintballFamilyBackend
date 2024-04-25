@@ -95,45 +95,6 @@
                     <!-- Order List End -->
 
                     <!-- Tab Footer start -->
-{{--                    <div class="tab_footer">--}}
-{{--                        <div class="row no-gutter align-items-center">--}}
-{{--                            <div class="col-12 col-md-12 col-lg-4 pb-3">--}}
-{{--                                <h2>Showing 1 to 10 of 126 item</h2>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-12 col-md-12 col-lg-8 pb-3">--}}
-{{--                                <div class="row align-items-center">--}}
-{{--                                    <form class="col-7">--}}
-{{--                                        <div class="form-group d-flex align-items-center">--}}
-{{--                                            <label for="exampleFormControlSelect1">Item per page</label>--}}
-{{--                                            <select class="form-control mx-3" id="exampleFormControlSelect1" style="max-width: 80px;">--}}
-{{--                                                <option>10</option>--}}
-{{--                                                <option>15</option>--}}
-{{--                                                <option>20</option>--}}
-{{--                                                <option>25</option>--}}
-{{--                                                <option>30</option>--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                    </form>--}}
-
-{{--                                    <nav class="navigation col-5" aria-label="Page navigation example">--}}
-{{--                                        <ul class="pagination justify-content-end mb-0">--}}
-{{--                                            <li class="page-item disabled">--}}
-{{--                                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="zmdi zmdi-chevron-left"></i></a>--}}
-{{--                                            </li>--}}
-{{--                                            <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
-{{--                                            <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
-{{--                                            <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
-{{--                                            <li class="page-item">--}}
-{{--                                                <a class="page-link" href="#"><i class="zmdi zmdi-chevron-right"></i></a>--}}
-{{--                                            </li>--}}
-{{--                                        </ul>--}}
-{{--                                    </nav>--}}
-
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                    <!-- Tab Footer End -->
                 </div>
                 <!-- Food Items Tab Content End -->
 
@@ -179,45 +140,6 @@
                         </ul>
                     </div>
                     <!-- Tab Footer start -->
-{{--                    <div class="tab_footer">--}}
-{{--                        <div class="row no-gutter align-items-center">--}}
-{{--                            <div class="col-12 col-md-12 col-lg-4 pb-3">--}}
-{{--                                <h2>Showing 1 to 10 of 126 item</h2>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-12 col-md-12 col-lg-8 pb-3">--}}
-{{--                                <div class="row align-items-center">--}}
-{{--                                    <form class="col-7">--}}
-{{--                                        <div class="form-group d-flex align-items-center">--}}
-{{--                                            <label for="exampleFormControlSelect1">Item per page</label>--}}
-{{--                                            <select class="form-control mx-3" id="exampleFormControlSelect1" style="max-width: 80px;">--}}
-{{--                                                <option>10</option>--}}
-{{--                                                <option>15</option>--}}
-{{--                                                <option>20</option>--}}
-{{--                                                <option>25</option>--}}
-{{--                                                <option>30</option>--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                    </form>--}}
-
-{{--                                    <nav class="navigation col-5" aria-label="Page navigation example">--}}
-{{--                                        <ul class="pagination justify-content-end mb-0">--}}
-{{--                                            <li class="page-item disabled">--}}
-{{--                                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="zmdi zmdi-chevron-left"></i></a>--}}
-{{--                                            </li>--}}
-{{--                                            <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
-{{--                                            <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
-{{--                                            <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
-{{--                                            <li class="page-item">--}}
-{{--                                                <a class="page-link" href="#"><i class="zmdi zmdi-chevron-right"></i></a>--}}
-{{--                                            </li>--}}
-{{--                                        </ul>--}}
-{{--                                    </nav>--}}
-
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                    <!-- Tab Footer End -->
                 </div>
                 <!-- Categories Tab Content Start -->
             </div>

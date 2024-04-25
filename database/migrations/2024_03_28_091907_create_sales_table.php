@@ -16,7 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('payment_id');
             $table->unsignedBigInteger('product_id')->default(0);
+            $table->float('amount_given');
             $table->float('total_paid');
+            $table->float('income');
             $table->string('client_name');
             $table->string('matricule');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

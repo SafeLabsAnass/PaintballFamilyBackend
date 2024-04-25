@@ -55,22 +55,10 @@ class PaymentController extends Controller
      */
     public function edit(int $id, Request $request)
     {
-        $payment = Payment::where('id',$id)->get();
-        if ($request->type==$payment->type) {
-            return response()->json([
-                "status" => 'error',
-                "redirect" => route('payments')
-            ],202);
-        }
-        else{
-            $payment->type= $request->type;
-            $payment->update();
-            return response()->json([
-                "status" => 'success',
-                "redirect" => redirect('payments')
-            ],201);
-        }
-
+        $payment = Payment::where('id',$id)->first();
+        $payment->type = $request->type;
+        $payment->save();
+        return redirect()->back();
     }
 
     /**

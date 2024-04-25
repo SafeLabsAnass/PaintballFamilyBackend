@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::get('sale/destroy/{id}', [SaleController::class, 'destroy'])->name('sale.destroy');
         Route::get('sale/show/{id}', [saleController::class, 'show'])->name('sale.show');
         Route::get('/payments', [PaymentController::class, 'index'])->name('payments');
+        Route::post('payments/store', [PaymentController::class, 'store'])->name('payment.store');
         Route::get('payments/destroy/{id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
         Route::get('payments/show/{id}', [PaymentController::class, 'show'])->name('payment.show');
         Route::post('payments/update/{id}', [PaymentController::class, 'edit'])->name('payment.edit');

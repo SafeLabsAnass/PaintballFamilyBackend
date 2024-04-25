@@ -14,6 +14,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use MongoDB\Driver\Session;
 
 class UserController extends Controller
 {
@@ -86,10 +87,10 @@ class UserController extends Controller
         $user = User::where('id', $id)->first();
         $site = DB::table('sites')->where('name',$request->site)->first();
         if ($request->username == $user->username && $request->first_name == $user->first_name && $request->last_name== $user->last_name
-            && $site->id == $user->site_id && $request->gender== $user->gender) {
+            && $site->id == $user->site_id && $request->gender== $user->gender && $request->phone== $user->phone) {
             return response()->json([
                 "status" => 'error',
-                "redirect" => route('peoples')
+                "redirect" => url('/peoples')
             ],202);
         }
         else{
@@ -97,11 +98,12 @@ class UserController extends Controller
             $user->first_name = $request->first_name ;
             $user->last_name = $request->last_name ;
             $user->gender = $request->gender ;
+            $user->phone = $request->phone ;
             $user->site_id = $site->id;
             $user->update();
             return response()->json([
                 "status" => 'success',
-                "redirect" => redirect('peoples')
+                "redirect" => url('/peoples')
             ],201);
         }
     }

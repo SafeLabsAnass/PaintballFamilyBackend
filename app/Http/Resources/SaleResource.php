@@ -24,6 +24,8 @@ class SaleResource extends JsonResource
             'matricule' => $this->matricule,
             'user' => $user->username,
             'payment_type' => $payment->type,
+            'amount_given' => $this->amount_given,
+            'income' => $this->income,
             'client_name' => $this->client_name,
             'total_paid' => $this->total_paid,
             'created_at' => $this->created_at,
