@@ -5,6 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{csrf_token()}}">
 
     <!-- Datetimepicker CSS -->
     <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
@@ -31,49 +32,7 @@
 
 <body id="page_items">
     <!-- Header Start -->
-    <header class="container-fluid ">
-        <nav class="navbar navbar-expand-xl navbar-light align-items-center">
-            <a class="navbar-brand px-2" href="#">
-                <img src="{{ asset('images/logo.png')}}" class="img-fluid">
-            </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="zmdi zmdi-menu"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <ul class="navbar-nav mr-0 ml-auto d-flex align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-assignment"></i> POS</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-cutlery"></i> Items</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-accounts-alt"></i> People</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-collection-text"></i> Sales & Expenses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-settings"></i> Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-hourglass-alt"></i> Orders Status</a>
-                    </li>
-
-                    <li class="nav-item profile_img">
-                        <a href="index.html" class="img_box center_img">
-                            <img src="{{ asset('images/profile.png')}}" class="crop_img" alt="">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <div class="header_spacebar"></div>
-    <!-- Header End -->
-
+    @include('navbar')
     <!-- Body Wrapper Start -->
     <div class="body_wrapper container-fluid">
         <div class="row ml-5">
@@ -89,28 +48,32 @@
                     <div class="col m-1">
                         <div class="bg-second p-4">
                             <h3 class="mt-0 mb-5 text-white">Update a product</h3>
-                            <form action="{{route('product.update',$items[1]->id)}}" method="post" enctype="multipart/form-data">
+                            <form action="{{route('product.update',$items[1]->id)}}" method="POST" id="editForm" enctype="multipart/form-data">
                                 @csrf
-                                <div class="col" style="max-width: 250px">
-                                        <div class="upload-box mt-5 mb-4 mx-auto">
-                                            <label for="img" class="img m-0 active">
-                                                <i class="zmdi zmdi-image-alt"></i>
-                                                <input id="img" type="file" name="image" value="{{$items[1]->image}}">
-                                                <span>Upload product image</span>
-                                            </label>
-                                        </div>
+                                <div class="row" style="max-width: 600px">
+                                    <div class="upload-box mt-1 mr-4 mb-3 mx-auto">
+                                        <label for="img" class="img m-0 active">
+                                            <i class="zmdi zmdi-image-alt"></i>
+                                            <input id="img" type="file" name="image">
+                                            <span>Upload product image</span>
+                                        </label>
                                     </div>
+                                    <div class="upload-box  mt-1 ml-4 mb-3  mx-auto">
+                                        <center><img id="preview" src="{{ config('app.url') }}/storage/{{$items[1]->image}}" alt="Image Preview" style="max-width: 200px; max-height: 200px;"></center>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Name</label>
+                                            <input id="imageTest" type="text" name="imageTest" value="{{$items[1]->image}}" style="display: none;">
                                             <input type="text" class="form-control" placeholder="" required="" name="name" value="{{$items[1]->name}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Price (In $)</label>
-                                            <input type="text" class="form-control" placeholder="" required="" name="price" value="{{$items[1]->price}}">
+                                            <input type="number" step="0.01" class="form-control" placeholder="" required=""  name="price" value="{{$items[1]->price}}">
                                         </div>
                                     </div>
                                 </div>
@@ -150,19 +113,83 @@
     <!-- Require Javascript End -->
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+          integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('js/jquery.datetimepicker.full.js')}}"></script>
     <script>
-        $("#datetime").datetimepicker();
+        document.getElementById('img').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            document.getElementById('imageTest').value = file.name
+            reader.onload = function(e) {
+                // document.getElementById('preview').style.display = 'block';
+                document.getElementById('preview').src = e.target.result;
+                // You can access the image data here via e.target.result
+            };
 
-        $(".tokenizer").select2({
-            tags: true,
-            tokenSeparators: [',', ' ']
-        })
-
-        $("#addmore").on('click', function() {
-            $('#showmore').append('<div class="row"><div class="col-md-8"><div class="form-group"><input type="text" class="form-control" placeholder="Add option" required=""></div></div><div class="col-md-4"><div class="form-group"><input type="text" class="form-control" placeholder="Add price" required=""></div></div></div>')
-        })
+            reader.readAsDataURL(file);
+        });
     </script>
+    <script type="text/javascript">
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Serialize the form data
+            const formData = new FormData(this);
+
+            // Make a POST request to your Laravel route
+            fetch('/product/update/'+{{$items[1]->id}}, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+                    // Handle the JSON response
+                    console.log(data); // Output the JSON response to the console
+
+                    // Example: Update UI based on the response
+                    if (data.status==='success') {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Vous êtes redirigé vers le tableau de categories',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            didOpen: () => {
+                                Swal.showLoading();
+                                window.location = data.redirect;
+                            }
+                        });
+                        window.location = data.redirect;
+                    } else {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Les donnees entrants sont similaire avec les anciennes !',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            didOpen: () => {
+                                Swal.showLoading()
+                                window.location = data.redirect
+                            },
+
+                        });
+
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Log any errors
+                });
+        });
+    </script>
+
 
     <script type="text/javascript">
         jQuery(function($) {

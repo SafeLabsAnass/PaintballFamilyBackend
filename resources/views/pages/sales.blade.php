@@ -43,6 +43,8 @@
         <!-- Nav Tabs Start -->
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-sales-tab" data-toggle="tab" href="#sales" role="tab" aria-controls="nav-home" aria-selected="true">Sales</a>
+            <a class="nav-item nav-link " id="nav-products-tab" data-toggle="tab" href="#products" role="tab"
+               aria-controls="nav-home" aria-selected="false">Products</a>
         </div>
         <!-- Nav Tabs End -->
     </div>
@@ -58,14 +60,6 @@
                 <div class="tab_header">
                     <h1>Sales</h1>
 
-                    <form class="search_box">
-                        <div class="form-group d-flex">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="zmdi zmdi-search"></i></div>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                    </form>
                 </div>
                 <!-- Order List Start -->
                 <div class="order_list">
@@ -73,29 +67,23 @@
                         <h2 class="text-center Name">Name</h2>
                         <h2 class="text-center User">User</h2>
                         <h2 class="text-center Client">Client</h2>
+                        <h2 class="text-center Client">Total Paid</h2>
                         <h2 class="text-center Payment">Payment</h2>
-                        <h2 class="text-center CreatedAt">CreatedAt</h2>
-                        <h2 class="text-right ml-auto Action">Action</h2>
+                        <h2 class="text-right CreatedAt">CreatedAt</h2>
                     </div>
 
                     <ul>
                         @foreach($sales as $sale)
                         <li class="d-flex">
-                            <h3 class="text-center Name">{{$sale->name}}</h3>
+                            <h3 class="text-center Name">{{$sale->matricule}}</h3>
                             <h3 class="text-center User"><strong>{{\App\Models\User::where('id',$sale->user_id)->first()->username}}</strong></h3>
                             <h3 class="text-center Client">{{$sale->client_name}}</h3>
+                            <h3 class="text-center Client">{{$sale->total_paid}} €</h3>
                             <h3 class="text-center Payment">{{\App\Models\Payment::where('id', $sale->payment_id)->first()->type}}</h3>
-                            <h3 class="text-center CreatedAt">{{$sale->created_at}}</h3>
+                            <h3 class="text-left CreatedAt">{{$sale->created_at}}</h3>
                             <div class="btn_container d-flex ml-auto">
                                 <button type="button" class="btn">
                                     <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-print"></i></a>
-                                </button>
-                                <button type="button" class="btn">
-                                    <a href="{{route('sale.destroy',$sale->id)}}"><i class="zmdi zmdi-delete"></i></a>
-                                </button>
-
-                                <button type="button" class="btn">
-                                    <a href="{{route('sale.show',$sale->id)}}" data-toggle="modal" data-target="#add_people"><i class="zmdi zmdi-edit"></i></a>
                                 </button>
                             </div>
                         </li>
@@ -105,44 +93,127 @@
                 <!-- Order List End -->
 
                 <!-- Tab Footer start -->
-                <div class="tab_footer">
-                    <div class="row no-gutter align-items-center">
-                        <div class="col-12 col-md-12 col-lg-4 pb-3">
-                            <h2>Showing 1 to 10 of 126 item</h2>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-8 pb-3">
-                            <div class="row align-items-center">
-                                <form class="col-7">
-                                    <div class="form-group d-flex align-items-center">
-                                        <label for="exampleFormControlSelect1">Item per page</label>
-                                        <select class="form-control mx-3" id="exampleFormControlSelect1" style="max-width: 80px;">
-                                            <option>10</option>
-                                            <option>15</option>
-                                            <option>20</option>
-                                            <option>25</option>
-                                            <option>30</option>
-                                        </select>
-                                    </div>
-                                </form>
+{{--                <div class="tab_footer">--}}
+{{--                    <div class="row no-gutter align-items-center">--}}
+{{--                        <div class="col-12 col-md-12 col-lg-4 pb-3">--}}
+{{--                            <h2>Showing 1 to 10 of 126 item</h2>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-12 col-md-12 col-lg-8 pb-3">--}}
+{{--                            <div class="row align-items-center">--}}
+{{--                                <form class="col-7">--}}
+{{--                                    <div class="form-group d-flex align-items-center">--}}
+{{--                                        <label for="exampleFormControlSelect1">Item per page</label>--}}
+{{--                                        <select class="form-control mx-3" id="exampleFormControlSelect1" style="max-width: 80px;">--}}
+{{--                                            <option>10</option>--}}
+{{--                                            <option>15</option>--}}
+{{--                                            <option>20</option>--}}
+{{--                                            <option>25</option>--}}
+{{--                                            <option>30</option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
 
-                                <nav class="navigation col-5" aria-label="Page navigation example">
-                                    <ul class="pagination justify-content-end mb-0">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="zmdi zmdi-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#"><i class="zmdi zmdi-chevron-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
+{{--                                <nav class="navigation col-5" aria-label="Page navigation example">--}}
+{{--                                    <ul class="pagination justify-content-end mb-0">--}}
+{{--                                        <li class="page-item disabled">--}}
+{{--                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="zmdi zmdi-chevron-left"></i></a>--}}
+{{--                                        </li>--}}
+{{--                                        <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
+{{--                                        <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
+{{--                                        <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
+{{--                                        <li class="page-item">--}}
+{{--                                            <a class="page-link" href="#"><i class="zmdi zmdi-chevron-right"></i></a>--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                </nav>--}}
 
-                            </div>
-                        </div>
-                    </div>
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+                <!-- Tab Footer End -->
+            </div>
+            <div class="tab-pane fade show" id="products" role="tabpanel" aria-labelledby="nav-products-tab">
+                <div class="tab_header">
+                    <h1>Products</h1>
                 </div>
+                <!-- Order List Start -->
+                <div class="order_list">
+                    <div class="list_header d-flex">
+                        <h2 class="text-center order_num">Matricule</h2>
+                        <h2 class="text-left Name">Product</h2>
+                        <h2 class="text-center Amount">Price</h2>
+                        <h2 class="text-center Table">Quantity</h2>
+                        <h2 class="text-center Items">Amount</h2>
+                        <h2 class="text-right Payment">CreatedAt</h2>
+                    </div>
+
+                    <ul>
+                        @foreach($sales as $sale)
+                            @foreach($sale->salesProducts as $sp)
+                                <li class="d-flex">
+                                    <h3 class="text-center order_num">{{\App\Models\Sale::where('id',$sp->sale_id)->first()->matricule}}</h3>
+                                    <h3 class="text-left Name">{{\App\Models\Product::where('id',$sp->product_id)->first()->name}}</h3>
+                                    <h3 class="text-center Amount">
+                                        <strong>{{\App\Models\Product::where('id',$sp->product_id)->first()->price}} €</strong>
+                                    </h3>
+                                    <h3 class="text-center Table">{{$sp->quantity}}</h3>
+                                    <h3 class="text-center Items">{{$sp->amount}} €</h3>
+                                    <h3 class="text-right Payment">{{$sp->created_at}}</h3>
+                                    <div class="btn_container d-flex mr-0 ml-auto">
+                                        <button type="button" class="btn">
+                                            <a data-toggle="modal" data-target="#receipt_model"><i
+                                                    class="zmdi zmdi-print"></i></a>
+                                        </button>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @endforeach
+                    </ul>
+                </div>
+                <!-- Order List End -->
+
+                <!-- Tab Footer start -->
+{{--                <div class="tab_footer">--}}
+{{--                    <div class="row no-gutter align-items-center">--}}
+{{--                        <div class="col-12 col-md-12 col-lg-4 pb-3">--}}
+{{--                            <h2>Showing 1 to 10 of 126 item</h2>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-12 col-md-12 col-lg-8 pb-3">--}}
+{{--                            <div class="row align-items-center">--}}
+{{--                                <form class="col-7">--}}
+{{--                                    <div class="form-group d-flex align-items-center">--}}
+{{--                                        <label for="exampleFormControlSelect1">Item per page</label>--}}
+{{--                                        <select class="form-control mx-3" id="exampleFormControlSelect1"--}}
+{{--                                                style="max-width: 80px;">--}}
+{{--                                            <option>10</option>--}}
+{{--                                            <option>15</option>--}}
+{{--                                            <option>20</option>--}}
+{{--                                            <option>25</option>--}}
+{{--                                            <option>30</option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
+
+{{--                                <nav class="navigation col-5" aria-label="Page navigation example">--}}
+{{--                                    <ul class="pagination justify-content-end mb-0">--}}
+{{--                                        <li class="page-item disabled">--}}
+{{--                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i--}}
+{{--                                                    class="zmdi zmdi-chevron-left"></i></a>--}}
+{{--                                        </li>--}}
+{{--                                        <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
+{{--                                        <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
+{{--                                        <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
+{{--                                        <li class="page-item">--}}
+{{--                                            <a class="page-link" href="#"><i class="zmdi zmdi-chevron-right"></i></a>--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                </nav>--}}
+
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <!-- Tab Footer End -->
             </div>
             <!-- Sales Tab Content End -->

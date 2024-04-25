@@ -10,18 +10,20 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('category_id');
-            $table->string('name');
-            $table->boolean('isSelected')->default(false);
-            $table->integer('count')->default(0);
-            $table->comment('image');
-            $table->comment('description');
-            $table->float('price');
-            $table->timestamps();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-        });
+        if (!Schema::hasTable('products')) {
+            Schema::create('products', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->unsignedBigInteger('category_id');
+                $table->string('name');
+                $table->boolean('isSelected')->default(false);
+                $table->integer('count')->default(0);
+                $table->comment('image');
+                $table->comment('description');
+                $table->float('price');
+                $table->timestamps();
+                $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            });
+        }
     }
 
     /**

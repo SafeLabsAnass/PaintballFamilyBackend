@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        if (!Schema::hasTable('users')) {Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username');
             $table->string('first_name');
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->foreign('site_id')->references('id')->on('sites')->onDelete('cascade');
             $table->timestamps();
         });
+    }
     }
 
     /**

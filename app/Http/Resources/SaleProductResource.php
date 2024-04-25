@@ -20,6 +20,7 @@ class SaleProductResource extends JsonResource
         return [
             'id' => $this->id,
             'product' => $product->name,
+            'price' => $product->price,
             'quantity' => $this->quantity,
             'amount' => $this->amount,
             'created_at' => $this->created_at,

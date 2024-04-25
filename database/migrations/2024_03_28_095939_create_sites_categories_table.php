@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sites_categories', function (Blueprint $table) {
+        if (!Schema::hasTable('sites_categories')) {Schema::create('sites_categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('site_id');
             $table->unsignedBigInteger('category_id');
@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
+    }
     }
 
     /**

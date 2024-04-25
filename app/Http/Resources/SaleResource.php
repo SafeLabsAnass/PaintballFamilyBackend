@@ -21,10 +21,11 @@ class SaleResource extends JsonResource
         $user = User::where('id',$this->user_id)->first();
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'matricule' => $this->matricule,
             'user' => $user->username,
             'payment_type' => $payment->type,
             'client_name' => $this->client_name,
+            'total_paid' => $this->total_paid,
             'created_at' => $this->created_at,
             'sales_products' => SaleProductResource::collection($this->salesProducts),
 

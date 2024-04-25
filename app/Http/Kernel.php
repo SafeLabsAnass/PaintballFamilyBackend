@@ -19,10 +19,10 @@ class Kernel extends HttpKernel
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        'revalidate' => \App\Http\Middleware\PreventBackHistory::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
-
     /**
      * The application's route middleware groups.
      *
@@ -65,5 +65,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'api.auth' => \App\Http\Middleware\ApiAuthenticate::class,
+    ];
+    protected $routeMiddleware = [
+        'role' => \App\Http\Middleware\Role::class,
     ];
 }

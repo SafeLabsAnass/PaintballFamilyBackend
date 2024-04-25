@@ -33,47 +33,8 @@
 
 <body id="page_items">
     <!-- Header Start -->
-    <header class="container-fluid ">
-        <nav class="navbar navbar-expand-xl navbar-light align-items-center">
-            <a class="navbar-brand px-2" href="#">
-                <img src="images/logo.png" class="img-fluid">
-            </a>
+    @include('navbar')
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="zmdi zmdi-menu"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <ul class="navbar-nav mr-0 ml-auto d-flex align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-assignment"></i> POS</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-cutlery"></i> Items</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-accounts-alt"></i> People</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-collection-text"></i> Sales & Expenses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-settings"></i> Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="zmdi zmdi-hourglass-alt"></i> Orders Status</a>
-                    </li>
-
-                    <li class="nav-item profile_img">
-                        <a href="index.html" class="img_box center_img">
-                            <img src="images/profile.png" class="crop_img">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <div class="header_spacebar"></div>
     <!-- Header End -->
 
     <!-- Body Wrapper Start -->
@@ -153,19 +114,6 @@
     <!-- Require Javascript End -->
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-    <script src="js/jquery.datetimepicker.full.js"></script>
-    <script>
-        $("#datetime").datetimepicker();
-
-        $(".tokenizer").select2({
-            tags: true,
-            tokenSeparators: [',', ' ']
-        })
-
-        $("#addmore").on('click', function() {
-            $('#showmore').append('<div class="row"><div class="col-md-8"><div class="form-group"><input type="text" class="form-control" placeholder="Add option" required=""></div></div><div class="col-md-4"><div class="form-group"><input type="text" class="form-control" placeholder="Add price" required=""></div></div></div>')
-        })
-    </script>
 
     <script type="text/javascript">
         jQuery(function($) {

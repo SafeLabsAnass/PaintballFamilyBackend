@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales', function (Blueprint $table) {
+        if (!Schema::hasTable('sales')) {Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('payment_id');
             $table->unsignedBigInteger('product_id')->default(0);
+            $table->float('total_paid');
             $table->string('client_name');
-            $table->string('name');
+            $table->string('matricule');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
+    }
     }
 
     /**

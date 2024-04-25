@@ -47,6 +47,7 @@ class SaleController extends Controller
         $sale->save() ;
 
 
+
         return $this->success(
             new SaleResource($sale),
             SaleConstants::STORE

@@ -14,7 +14,7 @@ class Sale extends Model
         'user_id',
         'payment_id',
         'client_name',
-        'name',
+        'matricule',
 
     ];
     public function salesProducts(): \Illuminate\Database\Eloquent\Relations\HasMany

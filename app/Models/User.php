@@ -2,18 +2,25 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laratrust\Contracts\LaratrustUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
-class User extends Authenticatable
+use Laratrust\Traits\HasRolesAndPermissions;
+use Laratrust\Traits\HasLaratrustEvents;
+use Laratrust\Traits\HasLaratrustScopes;
+use Laratrust\Traits\DynamicUserRelationshipCalls;
+class User extends Authenticatable implements LaratrustUser
 {
+    use HasRolesAndPermissions;
+    use HasLaratrustScopes;
+    use DynamicUserRelationshipCalls;
+    use HasLaratrustEvents;
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+
 
 
     /**

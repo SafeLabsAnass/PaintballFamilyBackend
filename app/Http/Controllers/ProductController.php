@@ -46,40 +46,58 @@ class ProductController extends Controller
         $product->save();
         return redirect('/categories');
     }
-    public function upload(Request $request): \Illuminate\Http\JsonResponse
-    {
-        request()->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:200048',
-        ]);
-        $imageName = request()->image->getClientOriginalName();
-        Session::put('imageName',$imageName);
-        request()->image->move(storage_path('app/public'), $imageName);
-        return response()->json([ "status" => 'success',
-            "image" => $imageName
-        ],201);
-    }
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(int $id)
     {
-        //
+        $product = Product::where('id', $id)->first();
+        $categories = Category::all();
+        return
+            view('pages.update_product')->with('items', [$categories,$product]);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, int $id)
     {
-        //
+        $product = Product::find($id);
+        $category=DB::table('categories')->where('name',$request->category)->first();
+        if ($request->name == $product->name && $request->imageTest == $product->image && (double)$request->price == $product->price
+        && $request->category == $category->name && $request->description == $product->description) {
+            return response()->json([
+                "status" => 'error',
+                "redirect" => route('product.show', $id)
+            ], 201);
+        } else {
+            $product->name = $request->name;
+            if (file_exists(storage_path('app/public' . '/' . $request->imageTest))) {
+                $product->image = $request->imageTest;
+            } else {
+                request()->validate([
+                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+                $imageName = request()->image->getClientOriginalName();
+                request()->image->move(storage_path('app/public'), $imageName);
+                $product->image = $imageName;
+
+            }
+            $product->category_id = $category->id;
+            $product->price = $request->price;
+            $product->description = $request->description;
+            $product->save();
+            return response()->json([
+                "status" => 'success',
+                "redirect" => route('categories')
+            ], 201);
+        }
+
     }
 
     /**

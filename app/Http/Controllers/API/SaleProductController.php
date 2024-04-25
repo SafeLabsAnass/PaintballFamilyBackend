@@ -34,15 +34,18 @@ class SaleProductController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+
         $product_name = $request->product_name;
-        $sale_name = $request->sale_name;
+        $matricule = $request->matricule;
         $product = Product::where('name',$product_name)->first();
-        $sale = Sale::where('name',$sale_name)->first();
+        $sale = Sale::where('matricule',$matricule)->first();
+        $total_paid = 0.0;
         if (SaleProduct::where('product_id',$product->id)->first()!=null){
             $saleProduct = SaleProduct::where('product_id',$product->id)->first();
             $saleProduct->quantity += $request->quantity;
             $saleProduct->amount *= $saleProduct->quantity;
             $saleProduct->update();
+            $total_paid += $saleProduct->amount;
         }
         else {
             $saleProduct = new SaleProduct();
@@ -51,7 +54,15 @@ class SaleProductController extends Controller
             $saleProduct->product_id = $product->id;
             $saleProduct->sale_id = $sale->id;
             $saleProduct->save();
+            $total_paid += $saleProduct->amount;
         }
+        if($sale->total_paid!=0){
+            $sale->total_paid += $total_paid;
+        }
+        else{
+            $sale->total_paid = $total_paid;
+        }
+        $sale->save();
 
         return $this->success(new SaleProductResource($saleProduct), SaleProductConstants::STORE);
     }
@@ -80,6 +91,7 @@ class SaleProductController extends Controller
         }
         $saleProduct = SaleProduct::where('id',$id)->first();
         $check_product = Product::where('id',$saleProduct->product_id )->first();
+        $total_paid = 0.0;
         if ($request->product != $check_product->name ){
             $product = Product::where('name',$request->product)->first();
             $productSale = SaleProduct::where('product_id',$product->name)->first();
@@ -101,7 +113,15 @@ class SaleProductController extends Controller
             $saleProduct->amount = $saleProduct->quantity*$check_product->price;
         }
         $saleProduct->update();
-
+        $total_paid = $saleProduct->amount;
+        $sale = Sale::find($saleProduct->sale_id);
+        if($sale->total_paid!=0){
+            $sale->total_paid += $total_paid;
+        }
+        else{
+            $sale->total_paid = $total_paid;
+        }
+        $sale->save();
         return $this->success(
             new SaleProductResource($saleProduct),
             SaleProductConstants::UPDATE

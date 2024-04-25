@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_products', function (Blueprint $table) {
+        if (!Schema::hasTable('sales_products')) {Schema::create('sales_products', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
             $table->unsignedBigInteger('sale_id');
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
+    }
     }
 
     /**

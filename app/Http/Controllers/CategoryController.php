@@ -16,7 +16,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use MongoDB\Driver\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -50,15 +51,6 @@ class CategoryController extends Controller
         $category->save();
         return redirect('/categories');
     }
-    public function upload()
-    {
-        request()->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $imageName = request()->image->getClientOriginalName();
-        request()->image->move(storage_path('app/public'), $imageName);
-        return back();
-    }
 
     /**
      * @param int $id
@@ -66,19 +58,43 @@ class CategoryController extends Controller
      */
     public function show(int $id)
     {
-        $product = Category::where('id', $id)->first();
-        $categories = Category::all();
+        $categorie = DB::table('categories')->where('id', $id)->first();
         return
-            view('pages.update_items')->with('items', [$categories, $product]);
+            view('pages.update_category')->with('categorie', $categorie);
     }
 
     /**
      * @param Request $request
      * @param int $id
-     * @return
+     * @return JsonResponse
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): JsonResponse
     {
+        $category = Category::find($id);
+        if ($request->name == $category->name && $request->imageTest == $category->image) {
+            return response()->json([
+                "status" => 'error',
+                "redirect" => route('update_category', $id)
+            ], 201);
+        } else {
+            $category->name = $request->name;
+            if (file_exists(storage_path('app/public' . '/' . $request->imageTest))) {
+                $category->image = $request->imageTest;
+            } else {
+                request()->validate([
+                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+                $imageName = request()->image->getClientOriginalName();
+                request()->image->move(storage_path('app/public'), $imageName);
+                $category->image = $imageName;
+
+            }
+            $category->save();
+            return response()->json([
+                "status" => 'success',
+                "redirect" => route('categories')
+            ], 201);
+        }
 
     }
 
