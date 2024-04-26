@@ -91,14 +91,14 @@
                 <!-- Order List Start -->
                 <div class="order_list">
                     <div class="list_header d-flex">
-                        <h2 class="text-center Name">Name</h2>
+                        <h2 class="text-left Name ml-3">Name</h2>
                         <h2 class="text-right CreatedAt">CreatedAt</h2>
                     </div>
 
                     <ul>
                         @foreach($payments as $payment)
                         <li class="d-flex">
-                            <h3 class="text-center Name">{{$payment->type}}</h3>
+                            <h3 class="text-left Name ml-3">{{$payment->type}}</h3>
                             <h3 class="text-left CreatedAt">{{$payment->created_at}}</h3>
                             <div class="btn_container d-flex ml-auto">
                                 <button type="button" class="btn">

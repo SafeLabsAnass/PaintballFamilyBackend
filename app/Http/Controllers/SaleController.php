@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SaleResource;
 use App\Models\SaLe;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,7 @@ class SaleController extends Controller
     {
         $sale = SaLe::where('id',$id)->first();
 
-        return response()->json($sale);
+        return response()->json(new SaleResource($sale));
     }
 
     /**

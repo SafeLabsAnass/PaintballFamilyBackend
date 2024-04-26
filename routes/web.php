@@ -26,7 +26,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::middleware('role:superadministrator')->group(function () {
         Route::get('/home', function () {
-            return view('pages.dashboard');
+            $items = new stdClass();
+            $items->categories = Category::all()->count();
+            $items->sales = Sale::all()->count();
+            $items->products = Product::all()->count();
+            return view('pages.dashboard')->with('items',$items);
         })->name('home');
         Route::get('/upload_product', function () {
             $categories = Category::all();

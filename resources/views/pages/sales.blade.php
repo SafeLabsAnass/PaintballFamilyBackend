@@ -29,6 +29,71 @@
     <!-- Page Title -->
     <title></title>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#receipt_model').on('hidden.bs.modal', function () {
+                const productList = document.getElementById("product-list");
+                productList.innerHTML = ''
+                // will only come inside after the modal is shown
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        function showSale(id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/sale/show/' + id.toString(),
+                dataType: 'json',
+                success: function (response) {
+                    if (response) {
+                        if(id===response.id) {
+                            const date = new Date(response?.created_at);
+                            document.getElementById('matricule').textContent = response?.matricule
+                            document.getElementById('user').textContent = 'by ' + response?.user
+                            document.getElementById('adresse').textContent = response?.adresse
+                            document.getElementById('payment_type').textContent = response?.payment_type
+                            document.getElementById('client_name').textContent = response?.client_name
+                            document.getElementById('created_at').textContent = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear() + ', at ' + date.getHours() + 'h:' + date.getMinutes() + 'min'
+                            document.getElementById('total_paid').textContent = response?.total_paid + ' €'
+                            document.getElementById('income').textContent = response?.income + ' €'
+                            document.getElementById('amount_given').textContent = response?.amount_given + ' €'
+                            const productList = document.getElementById("product-list");
+                            response?.sales_products.forEach(product => {
+                                const li = document.createElement("li");
+                                // Create li element
+                                li.classList.add("d-flex");
+                                // Set innerHTML of li with product details
+                                li.innerHTML = `<h4>${product.product}</h4>
+                                <h3></h3>
+                                <h5 class="mr-0 ml-auto">${product.price} € x ${product.quantity}</h5>`;
+
+                                // Append li to ul
+                                productList.appendChild(li);
+                            });
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(status);
+                    console.log(error);
+                    console.log(xhr);
+                    // Handle errors here
+                }
+            })
+        }
+    </script>
 
 </head>
 
@@ -43,8 +108,8 @@
         <!-- Nav Tabs Start -->
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-sales-tab" data-toggle="tab" href="#sales" role="tab" aria-controls="nav-home" aria-selected="true">Sales</a>
-            <a class="nav-item nav-link " id="nav-products-tab" data-toggle="tab" href="#products" role="tab"
-               aria-controls="nav-home" aria-selected="false">Products</a>
+{{--            <a class="nav-item nav-link " id="nav-products-tab" data-toggle="tab" href="#products" role="tab"--}}
+{{--               aria-controls="nav-home" aria-selected="false">Products</a>--}}
         </div>
         <!-- Nav Tabs End -->
     </div>
@@ -64,26 +129,29 @@
                 <!-- Order List Start -->
                 <div class="order_list">
                     <div class="list_header d-flex">
-                        <h2 class="text-center Name">Name</h2>
-                        <h2 class="text-center User">User</h2>
-                        <h2 class="text-center Client">Client</h2>
-                        <h2 class="text-center Client">Total Paid</h2>
-                        <h2 class="text-center Payment">Payment</h2>
-                        <h2 class="text-right CreatedAt">CreatedAt</h2>
+                        <h2 class="text-center order_num">Name</h2>
+                        <h2 class="text-center Name">User</h2>
+                        <h2 class="text-center Amount">Client</h2>
+                        <h2 class="text-center Table">Total Paid</h2>
+                        <h2 class="text-center Items">Payment</h2>
+                        <h2 class="text-center CreatedAt" style="position: relative; left: 6.2%">CreatedAt</h2>
                     </div>
 
                     <ul>
                         @foreach($sales as $sale)
                         <li class="d-flex">
-                            <h3 class="text-center Name">{{$sale->matricule}}</h3>
-                            <h3 class="text-center User"><strong>{{\App\Models\User::where('id',$sale->user_id)->first()->username}}</strong></h3>
-                            <h3 class="text-center Client">{{$sale->client_name}}</h3>
-                            <h3 class="text-center Client">{{$sale->total_paid}} €</h3>
-                            <h3 class="text-center Payment">{{\App\Models\Payment::where('id', $sale->payment_id)->first()->type}}</h3>
-                            <h3 class="text-left CreatedAt">{{$sale->created_at}}</h3>
+                            <h3 class="text-center order_num">{{$sale->matricule}}</h3>
+                            <h3 class="text-center Name">
+                                <strong>{{\App\Models\User::where('id',$sale->user_id)->first()->username}}</strong>
+                            </h3>
+                            <h3 class="text-center Amount">{{$sale->client_name}}</h3>
+                            <h3 class="text-center Table">{{$sale->total_paid}} €</h3>
+                            <h3 class="text-center Items">{{\App\Models\Payment::where('id', $sale->payment_id)->first()->type}}</h3>
+                            <h3 class="text-center text-muted CreatedAt"
+                                style="position: relative; left: 6.2%">{{$sale->created_at}}</h3>
                             <div class="btn_container d-flex ml-auto">
-                                <button type="button" class="btn">
-                                    <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-print"></i></a>
+                                <button type="button" class="btn" onclick="showSale({{$sale->id}})">
+                                    <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-eye"></i></a>
                                 </button>
                             </div>
                         </li>
@@ -93,129 +161,50 @@
                 <!-- Order List End -->
 
                 <!-- Tab Footer start -->
-{{--                <div class="tab_footer">--}}
-{{--                    <div class="row no-gutter align-items-center">--}}
-{{--                        <div class="col-12 col-md-12 col-lg-4 pb-3">--}}
-{{--                            <h2>Showing 1 to 10 of 126 item</h2>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-12 col-md-12 col-lg-8 pb-3">--}}
-{{--                            <div class="row align-items-center">--}}
-{{--                                <form class="col-7">--}}
-{{--                                    <div class="form-group d-flex align-items-center">--}}
-{{--                                        <label for="exampleFormControlSelect1">Item per page</label>--}}
-{{--                                        <select class="form-control mx-3" id="exampleFormControlSelect1" style="max-width: 80px;">--}}
-{{--                                            <option>10</option>--}}
-{{--                                            <option>15</option>--}}
-{{--                                            <option>20</option>--}}
-{{--                                            <option>25</option>--}}
-{{--                                            <option>30</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </form>--}}
-
-{{--                                <nav class="navigation col-5" aria-label="Page navigation example">--}}
-{{--                                    <ul class="pagination justify-content-end mb-0">--}}
-{{--                                        <li class="page-item disabled">--}}
-{{--                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="zmdi zmdi-chevron-left"></i></a>--}}
-{{--                                        </li>--}}
-{{--                                        <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
-{{--                                        <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
-{{--                                        <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
-{{--                                        <li class="page-item">--}}
-{{--                                            <a class="page-link" href="#"><i class="zmdi zmdi-chevron-right"></i></a>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                </nav>--}}
-
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-                <!-- Tab Footer End -->
             </div>
-            <div class="tab-pane fade show" id="products" role="tabpanel" aria-labelledby="nav-products-tab">
-                <div class="tab_header">
-                    <h1>Products</h1>
-                </div>
-                <!-- Order List Start -->
-                <div class="order_list">
-                    <div class="list_header d-flex">
-                        <h2 class="text-center order_num">Matricule</h2>
-                        <h2 class="text-left Name">Product</h2>
-                        <h2 class="text-center Amount">Price</h2>
-                        <h2 class="text-center Table">Quantity</h2>
-                        <h2 class="text-center Items">Amount</h2>
-                        <h2 class="text-right Payment">CreatedAt</h2>
-                    </div>
-
-                    <ul>
-                        @foreach($sales as $sale)
-                            @foreach($sale->salesProducts as $sp)
-                                <li class="d-flex">
-                                    <h3 class="text-center order_num">{{\App\Models\Sale::where('id',$sp->sale_id)->first()->matricule}}</h3>
-                                    <h3 class="text-left Name">{{\App\Models\Product::where('id',$sp->product_id)->first()->name}}</h3>
-                                    <h3 class="text-center Amount">
-                                        <strong>{{\App\Models\Product::where('id',$sp->product_id)->first()->price}} €</strong>
-                                    </h3>
-                                    <h3 class="text-center Table">{{$sp->quantity}}</h3>
-                                    <h3 class="text-center Items">{{$sp->amount}} €</h3>
-                                    <h3 class="text-right Payment">{{$sp->created_at}}</h3>
-                                    <div class="btn_container d-flex mr-0 ml-auto">
-                                        <button type="button" class="btn">
-                                            <a data-toggle="modal" data-target="#receipt_model"><i
-                                                    class="zmdi zmdi-print"></i></a>
-                                        </button>
-                                    </div>
-                                </li>
-                            @endforeach
-                        @endforeach
-                    </ul>
-                </div>
-                <!-- Order List End -->
-
-                <!-- Tab Footer start -->
-{{--                <div class="tab_footer">--}}
-{{--                    <div class="row no-gutter align-items-center">--}}
-{{--                        <div class="col-12 col-md-12 col-lg-4 pb-3">--}}
-{{--                            <h2>Showing 1 to 10 of 126 item</h2>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-12 col-md-12 col-lg-8 pb-3">--}}
-{{--                            <div class="row align-items-center">--}}
-{{--                                <form class="col-7">--}}
-{{--                                    <div class="form-group d-flex align-items-center">--}}
-{{--                                        <label for="exampleFormControlSelect1">Item per page</label>--}}
-{{--                                        <select class="form-control mx-3" id="exampleFormControlSelect1"--}}
-{{--                                                style="max-width: 80px;">--}}
-{{--                                            <option>10</option>--}}
-{{--                                            <option>15</option>--}}
-{{--                                            <option>20</option>--}}
-{{--                                            <option>25</option>--}}
-{{--                                            <option>30</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </form>--}}
-
-{{--                                <nav class="navigation col-5" aria-label="Page navigation example">--}}
-{{--                                    <ul class="pagination justify-content-end mb-0">--}}
-{{--                                        <li class="page-item disabled">--}}
-{{--                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i--}}
-{{--                                                    class="zmdi zmdi-chevron-left"></i></a>--}}
-{{--                                        </li>--}}
-{{--                                        <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
-{{--                                        <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
-{{--                                        <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
-{{--                                        <li class="page-item">--}}
-{{--                                            <a class="page-link" href="#"><i class="zmdi zmdi-chevron-right"></i></a>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                </nav>--}}
-
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+{{--            <div class="tab-pane fade show" id="products" role="tabpanel" aria-labelledby="nav-products-tab">--}}
+{{--                <div class="tab_header">--}}
+{{--                    <h1>Products</h1>--}}
 {{--                </div>--}}
-                <!-- Tab Footer End -->
-            </div>
+{{--                <!-- Order List Start -->--}}
+{{--                <div class="order_list">--}}
+{{--                    <div class="list_header d-flex">--}}
+{{--                        <h2 class="text-center order_num">Matricule</h2>--}}
+{{--                        <h2 class="text-left   Name">Product</h2>--}}
+{{--                        <h2 class="text-center Amount">Price</h2>--}}
+{{--                        <h2 class="text-center Table">Quantity</h2>--}}
+{{--                        <h2 class="text-center Items">Amount</h2>--}}
+{{--                        <h2 class="text-right  CreatedAt" style="position: relative; left: 4.5%">CreatedAt</h2>--}}
+{{--                    </div>--}}
+
+{{--                    <ul>--}}
+{{--                        @foreach($sales as $sale)--}}
+{{--                            @foreach($sale->salesProducts as $sp)--}}
+{{--                                <li class="d-flex">--}}
+{{--                                    <h3 class="text-center order_num">{{\App\Models\Sale::where('id',$sp->sale_id)->first()->matricule}}</h3>--}}
+{{--                                    <h3 class="text-left Name">{{\App\Models\Product::where('id',$sp->product_id)->first()->name}}</h3>--}}
+{{--                                    <h3 class="text-center Amount">--}}
+{{--                                        <strong>{{\App\Models\Product::where('id',$sp->product_id)->first()->price}} €</strong>--}}
+{{--                                    </h3>--}}
+{{--                                    <h3 class="text-center Table">{{$sp->quantity}}</h3>--}}
+{{--                                    <h3 class="text-center Items">{{$sp->amount}} €</h3>--}}
+{{--                                    <h3 class="text-right text-muted CreatedAt"--}}
+{{--                                        style="position: relative; left: 4.5%">{{$sp->created_at}}</h3>--}}
+{{--                                    <div class="btn_container d-flex mr-0 ml-auto">--}}
+{{--                                        <button type="button" class="btn">--}}
+{{--                                            <a data-toggle="modal" data-target="#receipt_model"><i--}}
+{{--                                                    class="zmdi zmdi-print"></i></a>--}}
+{{--                                        </button>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
+{{--                            @endforeach--}}
+{{--                        @endforeach--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--                <!-- Order List End -->--}}
+
+{{--                <!-- Tab Footer start -->--}}
+{{--            </div>--}}
             <!-- Sales Tab Content End -->
 
             <!-- Expenses Tab Content Start -->
@@ -238,12 +227,9 @@
                     </div>
                     <div class="col-12 col-lg-6 col-md-6 col-sm-6">
                         <div class="btn_container d-flex">
-                            <button type="button" class="btn">
-                                <a href="#"><i class="zmdi zmdi-download"></i></a>
-                            </button>
-                            <button type="button" class="btn">
-                                <a href="#"><i class="zmdi zmdi-print"></i></a>
-                            </button>
+{{--                            <button type="button" class="btn">--}}
+{{--                                <a href="#"><i class="zmdi zmdi-print"></i></a>--}}
+{{--                            </button>--}}
                         </div>
                     </div>
                 </div>
@@ -251,49 +237,27 @@
             </div>
             <div class="modal-body p-0">
                 <div class="about_restro text-center">
-                    <h3>Suzlon Restro</h3>
-                    <p>1024, Opera Park, New York, USA</p>
+                    <h3>Paintball Family</h3>
+                    <p id="adresse"></p>
                 </div>
                 <div class="about_customer">
-                    <h3 class="d-flex"><span>Jimmy Taylor</span> <span class="mr-0 ml-auto">Order num 00123</span></h3>
-                    <h3 class="d-flex"><span>20-06-2020, 11:50 am</span> <span class="mr-0 ml-auto">by admin1</span></h3>
+                    <h3 class="d-flex"><span id="client_name"></span><span class="mr-0 ml-auto" id="matricule"></span>
+                    </h3>
+                    <h3 class="d-flex"><span id="created_at"></span> <span class="mr-0 ml-auto" id="user"></span></h3>
                 </div>
-                <ul>
-                    <li class="d-flex">
-                        <h4>1</h4>
-                        <h3>Onion Sandwich</h3>
-                        <h5 class="mr-0 ml-auto">$12.00</h5>
-                    </li>
-                    <li class="d-flex">
-                        <h4>1</h4>
-                        <h3>Cheese garlic Pizza
-                            <span>With Extra Cheese</span>
-                        </h3>
-                        <h5 class="mr-0 ml-auto">$18.00
-                            <span class="text-right">$3.00</span>
-                        </h5>
-                    </li>
-                    <li class="d-flex">
-                        <h4>1</h4>
-                        <h3>Ham Burger</h3>
-                        <h5 class="mr-0 ml-auto">$10.00</h5>
-                    </li>
-                    <li class="d-flex">
-                        <h4>1</h4>
-                        <h3>Vanilla Ice Cream</h3>
-                        <h5 class="mr-0 ml-auto">$8.00</h5>
-                    </li>
+                <ul id="product-list">
                 </ul>
 
                 <div class="amount_details">
-                    <h3 class="d-flex">Sub Total <span class="ml-auto mr-0">$51.00</span></h3>
-                    <h3 class="d-flex">Tax (5%) <span class="ml-auto mr-0">$3.00</span></h3>
+                    <h3 class="d-flex">Amount Given <span class="ml-auto mr-0" id="amount_given"></span></h3>
+                    <h3 class="d-flex">Income<span class="ml-auto mr-0" id="income"></span></h3>
                 </div>
                 <div class="total_paid">
-                    <h3 class="d-flex align-items-center">Total Paid in <strong>Cash</strong> <span class="ml-auto mr-0">$54.00</span></h3>
+                    <h3 class="d-flex align-items-center">Total Paid in <strong id="payment_type"></strong> <span
+                            class="ml-auto mr-0" id="total_paid"></span></h3>
                 </div>
                 <div class="receipt_footer">
-                    <h2 class="text-center">Thank You For Visit <br> Suzlon Restro</h2>
+                    <h2 class="text-center">Thank You For Visit <br> Paintball Family</h2>
                 </div>
             </div>
 
@@ -306,102 +270,17 @@
 
 
 <!-- Add Expenses  Modal Start  -->
-<div class="modal fade add_expenses receipt_model px-0" id="add_expenses" tabindex="-1" role="dialog" aria-labelledby="receipt_modelTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header px-0">
-                <h2 class="col-10 mx-auto">Add Expense</h2>
-            </div>
-            <div class="modal-body p-0">
-                <form>
-                    <div class="col-10 mx-auto form_container">
-                        <div class="row">
-                            <div class="col-12 col-lg-6 col-md-6 col-sm-12 my-0">
-                                <div class="form-group">
-                                    <label>Date</label>
-                                    <div class="select_box d-flex">
-                                        <input mb-0 class="form-control" placeholder="Select Date" id="datetime">
-                                        <i class="zmdi zmdi-calendar-alt" style="font-size: 1.3rem; top: 10px;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6 col-md-6 col-sm-12 my-0">
-                                <div class="form-group">
-                                    <label>Expense type</label>
-                                    <div class="select_box d-flex">
-                                        <select class="form-control custom-select">
-                                            <option>Kichen</option>
-                                            <option>Account</option>
-                                            <option>Maintenace</option>
-                                            <option>Interior</option>
-                                        </select>
-                                        <i class="zmdi zmdi-caret-down"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label> Name</label>
-                            <input type="name" class="form-control" value="Opera Vegetables"name="name" id="name">
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12 col-lg-6 col-md-6 col-sm-12 my-0">
-                                <div class="form-group">
-                                    <label>user</label>
-                                    <input type="name" class="form-control" value="120"name="user" id="user_id">
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-lg-6 col-md-6 col-sm-12 my-0">
-                                <div class="form-group">
-                                    <label>payment</label>
-                                    <input type="name" class="form-control" value="VG24125"name="payment" id="payment">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Client</label>
-                            <div class="custom-file upload_file">
-                                <input class="form-control" id="customFile" value="Choose file"name="Client" id="client_name">
-                                <button type="file" class="btn"><a href="#">Upload file</a></button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>created At</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"name="created At" id="created At"></textarea>
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <div class="row no-gutters w-100">
-                            <div class="col-6"> <button type="file" class="btn Cencel" data-dismiss="modal"><a href="#">Cencel</a></button></div>
-                            <div class="col-6"> <button type="file" class="btn"><a href="#">Add Expense</a></button></div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
-</div>
-
 
 <!-- Add Expenses Modal End  -->
 
 
 <!-- Require Javascript Start -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <!-- Require Javascript End -->
-<script src="js/jquery.datetimepicker.full.js"></script>
-<script>
-    $("#datetime").datetimepicker();
-</script>
+
+
 <script type="text/javascript">
     jQuery(function($) {
         var path = window.location.href;

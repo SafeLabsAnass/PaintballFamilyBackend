@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Payment;
 use App\Models\SaleProduct;
+use App\Models\Site;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -19,10 +20,12 @@ class SaleResource extends JsonResource
     {
         $payment = Payment::where('id',$this->payment_id)->first();
         $user = User::where('id',$this->user_id)->first();
+        $site = Site::where('id',$user->site_id)->first();
         return [
             'id' => $this->id,
             'matricule' => $this->matricule,
             'user' => $user->username,
+            'adresse' => $site->adresse,
             'payment_type' => $payment->type,
             'amount_given' => $this->amount_given,
             'income' => $this->income,

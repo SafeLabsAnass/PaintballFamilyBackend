@@ -57,7 +57,7 @@
                                 <i class="zmdi zmdi-cutlery text-success"></i>
                                 <div class='ml-4'>
                                     <span class="text-muted">Total Sales</span>
-                                    <strong class="h1 d-block">128</strong>
+                                    <strong class="h1 d-block">{{$items->sales}}</strong>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                 <i class="zmdi zmdi-cutlery text-success"></i>
                                 <div class='ml-4'>
                                     <span class="text-muted">Total Categories</span>
-                                    <strong class="h1 d-block">128</strong>
+                                    <strong class="h1 d-block">{{$items->categories}}</strong>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                                 <i class="zmdi zmdi-cutlery text-success"></i>
                                 <div class='ml-4'>
                                     <span class="text-muted">Total Products</span>
-                                    <strong class="h1 d-block">128</strong>
+                                    <strong class="h1 d-block">{{$items->products}}</strong>
                                 </div>
                             </div>
                         </div>
