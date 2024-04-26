@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::get('user/show/{id}', [UserController::class, 'show'])->name('user.show');
         Route::post('user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
         Route::get('/products', [ProductController::class, 'index'])->name('products');
-        Route::get('product/destroy/{id}', [ProductController::class, 'destroy  '])->name('product.destroy');
+        Route::get('product/destroy/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
         Route::post('product/store', [ProductController::class, 'store'])->name('product.store');
         Route::get('product/show/{id}', [ProductController::class, 'show'])->name('product.show');
         Route::post('product/update/{id}', [ProductController::class, 'update'])->name('product.update');

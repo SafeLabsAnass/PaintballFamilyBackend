@@ -56,7 +56,7 @@
             <h2 class="text-white">Login to your Account</h2>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email</label>
-                <input type="text" class="form-control" placeholder="Enter Email" name="email">
+                <input type="email" class="form-control" placeholder="Enter Email" name="email">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
@@ -66,6 +66,14 @@
             <div class="form-group">
                 @if($admins==0)
                     <a class="nav-link" href="{{route('register')}}"><i class="zmdi zmdi-account-add"></i> Sign Up</a>
+                @endif
+            </div>
+            <div class="form-group">
+                @if (Route::has('password.request'))
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                       href="{{ route('password.request') }}">
+                        {{ __('Forgot your password?') }}
+                    </a>
                 @endif
             </div>
         </div>
