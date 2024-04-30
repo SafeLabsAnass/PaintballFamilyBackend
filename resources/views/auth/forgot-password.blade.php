@@ -59,15 +59,23 @@
         <div class="col-md-8 mt-5">
             <div class="card">
                 <center>
-                    <div class="card-header" style="font-size: x-large">{{ __('Register') }}</div>
+                    <div class="card-header" style="font-size: x-large">{{ __('Forget Password') }}</div>
                     <div class="logo_box mx-auto text-center">
                         <img src="{{ asset('images/logo.png')}}" width="300" height="300"
                              class="img-fluid mb-5 mt-5">
                     </div>
                 </center>
-
                 <div class="card-body">
-                    <form method="POST" id="forgetEmailForm" autocomplete="off" action="{{ route('password.email') }}">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                        <script>
+                            $(document).ready(function() {
+                                $('#modal--forgot--sifre').modal('show');
+                            });
+                        </script>
+                    @endif                    <form method="POST" id="forgetEmailForm" autocomplete="off" action="{{ route('password.email') }}">
                         @csrf
                         <div class="col-10 mx-auto pt-1 px-4 pt-1">
                             <div class="mb-4 text-sm text-gray-600"
@@ -79,13 +87,18 @@
 
                                 <div class="col-md-6">
                                     <input id="email" type="text"
-                                           class="form-control" name="email"
+                                           class="form-control @error('email') is-invalid @enderror" name="email"
                                            value="{{ old('Email') }}" required autocomplete="email" autofocus>
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button id="resetClick" type="submit" class="btn btn-primary">
                                         {{ __('Email Password Reset Link') }}
                                     </button>
                                 </div>
@@ -98,44 +111,11 @@
     </div>
 </div>
 <script>
-    document.getElementById('forgetEmailForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-        // Make a POST request to your Laravel route
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            }
+    $(function() {
+        $('#resetClick').click(function() {
+            $('body').addClass('cursor_wait');
         });
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('password.email') }}',
-            data: $('#forgetEmailForm').serialize(),
-            dataType: 'json',
-            success: function (data) {
-                if (data.status==="success") {
-                    window.location = data.redirect;
-                }
-                else{
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        title: data.message,
-                        showConfirmButton: false,
-                        timer: 3000,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                }
-            },
-            error: function (xhr, status, error) {
-                console.log(xhr)
-                console.log(status)
-                console.log(error)
-            }
-        })
     });
-
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

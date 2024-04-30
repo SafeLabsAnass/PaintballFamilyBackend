@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -25,13 +26,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::middleware('auth')->group(function () {
     Route::middleware('role:superadministrator')->group(function () {
-        Route::get('/home', function () {
-            $items = new stdClass();
-            $items->categories = Category::all()->count();
-            $items->sales = Sale::all()->count();
-            $items->products = Product::all()->count();
-            return view('pages.dashboard')->with('items',$items);
-        })->name('home');
+        Route::get('/home', [DashboardController::class,'statistics' ])->name('home');
+        Route::get('/home/chart', [DashboardController::class,'charts' ])->name('chart');
         Route::get('/upload_product', function () {
             $categories = Category::all();
             return

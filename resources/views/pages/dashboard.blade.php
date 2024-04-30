@@ -95,8 +95,8 @@
                             <img src="images/1.png" class="align-self-center mr-3" alt="" width="65" height="65"
                                  style="border-radius: 15px;">
                             <div class="media-body">
-                                <h5 class="my-1">Cream Pancake</h5>
-                                <span class="text-muted">124 times</span>
+                                <h5 class="my-1">{{$items->topProduct['product']}}</h5>
+                                <span class="text-muted">{{$items->topProduct['times']}}</span>
                             </div>
                         </div>
                     </div>
@@ -107,27 +107,22 @@
                         <h4 class="text-white mb-5">Payment Modes</h4>
 
                         <div class="progress-bar-box d-flex align-items-center mb-4">
-                            <span style="min-width: 120px;" class="h6 m-0">Cash</span>
+                            @foreach($items->paymentsStatistics as $payment)
+                                <span style="min-width: 120px;" class="h6 m-0">{{$payment['payment']['type']}}</span>
                             <div class="progress" style="height: 20px;width: 100%">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 64%"
-                                     aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar"
+                                     style="width: {{$payment['percent']}}%"
+                                     aria-valuenow="{{$payment['percent']}}" aria-valuemin="0"
+                                     aria-valuemax="100"></div>
                             </div>
-                            <span style="min-width: 100px;" class="text-right">22.8k <span
-                                    class="text-muted">(64%)</span></span>
-                        </div>
-                        <div class="progress-bar-box d-flex align-items-center mb-4">
-                            <span style="min-width: 120px;" class="h6 m-0">Credit Card</span>
-                            <div class="progress" style="height: 20px;width: 100%">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 31%"
-                                     aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <span style="min-width: 100px;" class="text-right">10.5k <span
-                                    class="text-muted">(31%)</span></span>
+                                <span style="min-width: 100px;"
+                                      class="text-right mr-5">{{$payment['totalPayment']}} <span
+                                        class="text-muted">({{$payment['percent']}}%)</span></span>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -154,17 +149,52 @@
 <script src="{{ asset('js/jquery.min.js')}}"></script>
 <script src="{{ asset('js/owl.carousel.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script>
+<script type="text/javascript">
+    let listDays = [];
+    let listCount = [];
+    let count
+    let listColors = []
+    function showChart() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            url: '/home/chart/',
+            dataType: 'json',
+            success: function (response) {
+                if (response) {
+                    for (let i = 0; i < response.items.lineChart.length ; i++) {
+                        listDays.push(response.items.lineChart[i].days.toString())
+                        listCount.push(response.items.lineChart[i].count)
+                    }
+                    count = response.items.lineChart.length
+                    for (let i = 0; i < count ; i++) {
+                        listColors.push("#28a745")
+                    }
+                    console.log(listDays,listCount,listColors)
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(status);
+                console.log(error);
+                console.log(xhr);
+                // Handle errors here
+            }
+        })
+    }
+    showChart();
     // Bar chart
     new Chart(document.getElementById("bar-chart"), {
         type: 'bar',
         data: {
-            labels: ["5 Jan", "10 Jan", "15 Jan", "20 Jan", "25 Jan","30 Jan"],
+            labels: listDays,
             datasets: [{
                 label: "Items",
-                backgroundColor: ["#28a745", "#28a745", "#28a745", "#28a745", "#28a745","#28a745"],
-                //                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                data: [478, 567, 634, 584, 483,600],
+                backgroundColor: listColors,
+                data: listCount,
                 position: 'outside'
             }]
         },

@@ -261,7 +261,9 @@
      position: relative;
      overflow: hidden;
  }
-
+ .cursor_wait {
+     cursor: wait
+ }
  .center_img img.crop_img {
      position: absolute;
      width: 100%;
