@@ -175,6 +175,28 @@
                         listColors.push("#28a745")
                     }
                     console.log(listDays,listCount,listColors)
+                    new Chart(document.getElementById("bar-chart"), {
+                        type: 'bar',
+                        data: {
+                            labels: listDays,
+                            datasets: [{
+                                label: "Items",
+                                backgroundColor: listColors,
+                                data: listCount,
+                                position: 'outside'
+                            }]
+                        },
+                        options: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                //                    display: true,
+                                //                    text: 'Predicted world population (millions) in 2050'
+                            }
+                        }
+                    });
+
                 }
             },
             error: function (xhr, status, error) {
@@ -187,27 +209,6 @@
     }
     showChart();
     // Bar chart
-    new Chart(document.getElementById("bar-chart"), {
-        type: 'bar',
-        data: {
-            labels: listDays,
-            datasets: [{
-                label: "Items",
-                backgroundColor: listColors,
-                data: listCount,
-                position: 'outside'
-            }]
-        },
-        options: {
-            legend: {
-                display: false
-            },
-            title: {
-                //                    display: true,
-                //                    text: 'Predicted world population (millions) in 2050'
-            }
-        }
-    });
 
 
     new Chart(document.getElementById("doughnut-chart"), {
