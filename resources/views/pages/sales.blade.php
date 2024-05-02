@@ -41,15 +41,9 @@
         $(document).ready(function() {
             document.getElementById('btn-click').addEventListener('click', function (event) {
                 event.preventDefault();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
                 $.ajax({
                     type: 'GET',
                     url: '/sale/show/' + sale_id,
-                    dataType: 'json',
                     success: function (response) {
                         if (response) {
                             if (sale_id === response.id) {
