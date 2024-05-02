@@ -45,6 +45,7 @@
 
         });
     </script>
+{{--    hello--}}
     <script type="text/javascript">
         let sale_id
         $(document).ready(function() {
