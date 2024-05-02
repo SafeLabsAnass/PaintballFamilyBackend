@@ -7,7 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="csrf-token" content="{{csrf_token()}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Datetimepicker CSS -->
     <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
@@ -88,106 +88,112 @@
                 }
             })
         }
-        function edit(id) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                url: 'user/edit/'+id.toString(),
-                data: $('#editForm').serialize(),
-                dataType: 'json',
-                success: function (data) {
-                    if (data.status==="success") {
-                        Swal.fire({
-                            position: 'Modification réussie',
-                            icon: 'success',
-                            title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
-                        });
-                        window.location = data.redirect;
+        $(document).ready(function() {
+            document.getElementById('editForm').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+                // Make a POST request to your Laravel route
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                    else{
-                        if (data.status) {
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: 'user/edit/' + user_id,
+                    data: $('#editForm').serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status === "success") {
                             Swal.fire({
-                                position: 'Oops...',
-                                icon: 'error',
-                                title: 'Les donnees entrants sont similaire avec les anciennes !',
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
                                 showConfirmButton: false,
-                                timer: 1000,
+                                timer: 3000,
                                 didOpen: () => {
-                                    Swal.showLoading()
-                                    window.location = data.redirect
-                                },
-
+                                    Swal.showLoading();
+                                }
                             });
+                            window.location = data.redirect;
+                        } else {
+                            if (data.status) {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'error',
+                                    title: 'Les donnees entrants sont similaire avec les anciennes !',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        window.location = data.redirect;
+                                    },
 
-                            // window.location.reload();
-                        }
-                    }
-                },
-                error: function (data) {
-                    console.log(data)
-
-                }
-            })
-        }
-        function editSuper(id) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                url: '/user/edit/'+id.toString(),
-                data: $('#editForm1').serialize(),
-                dataType: 'json',
-                success: function (data) {
-                    if (data.status==="success") {
-                        Swal.fire({
-                            position: 'Modification réussie',
-                            icon: 'success',
-                            title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            didOpen: () => {
-                                Swal.showLoading();
+                                });
+                                // window.location.reload();
                             }
-                        });
-                        window.location = data.redirect;
-                    }
-                    else{
-                        if (data.status) {
-                            Swal.fire({
-                                position: 'Oops...',
-                                icon: 'error',
-                                title: 'Les donnees entrants sont similaire avec les anciennes !',
-                                showConfirmButton: false,
-                                timer: 1000,
-                                didOpen: () => {
-                                    Swal.showLoading()
-                                    window.location = data.redirect
-                                },
-
-                            });
-
-                            // window.location.reload();
                         }
-                    }
-                },
-                error: function (data) {
-                    console.log(data)
+                    },
+                    error: function (data) {
+                        console.log(data)
 
-                }
-            })
-        }
+                    }
+                })
+            });
+        });
+
+        $(document).ready(function() {
+            document.getElementById('editForm1').addEventListener('submit', function (event) {
+                event.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/edit/' + user_id,
+                    data: $('#editForm1').serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status === "success") {
+                            Swal.fire({
+                                position: 'Modification réussie',
+                                icon: 'success',
+                                title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+                            window.location = data.redirect;
+                        } else {
+                            if (data.status) {
+                                Swal.fire({
+                                    position: 'Oops...',
+                                    icon: 'error',
+                                    title: 'Les donnees entrants sont similaire avec les anciennes !',
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        window.location = data.redirect
+                                    },
+
+                                });
+
+                                // window.location.reload();
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data)
+
+                    }
+                })
+            });
+        });
 
         $(document).ready(function () {
             $(".toggle-password-i").click(function () {
@@ -292,9 +298,7 @@
                                         </div>
                                         <div class="modal-body p-0">
 
-                                            <form id="editForm"
-                                                  onsubmit="edit(user_id);">
-                                                @csrf
+                                            <form id="editForm">
                                                 <div class="col-10 mx-auto form_container">
                                                     <div class="form-group">
                                                         <label>Username</label>
@@ -425,6 +429,7 @@
                             <div class="modal-body p-0">
 
                                 <form id="editForm1" onsubmit="editSuper(user_id);">
+
                                     <div class="col-10 mx-auto form_container">
                                         <div class="form-group">
                                             <label>Username</label>
