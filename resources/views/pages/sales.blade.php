@@ -46,54 +46,57 @@
         });
     </script>
     <script type="text/javascript">
-        function showSale(id) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'GET',
-                url: '/sale/show/' + id.toString(),
-                dataType: 'json',
-                success: function (response) {
-                    alert('hey')
-                    if (response) {
-                        if(id===response.id) {
-                            const date = new Date(response?.created_at);
-                            document.getElementById('matricule').textContent = response?.matricule
-                            document.getElementById('user').textContent = 'by ' + response?.user
-                            document.getElementById('adresse').textContent = response?.adresse
-                            document.getElementById('payment_type').textContent = response?.payment_type
-                            document.getElementById('client_name').textContent = response?.client_name
-                            document.getElementById('created_at').textContent = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear() + ', at ' + date.getHours() + 'h:' + date.getMinutes() + 'min'
-                            document.getElementById('total_paid').textContent = response?.total_paid + ' €'
-                            document.getElementById('income').textContent = response?.income + ' €'
-                            document.getElementById('amount_given').textContent = response?.amount_given + ' €'
-                            const productList = document.getElementById("product-list");
-                            response?.sales_products.forEach(product => {
-                                const li = document.createElement("li");
-                                // Create li element
-                                li.classList.add("d-flex");
-                                // Set innerHTML of li with product details
-                                li.innerHTML = `<h4>${product.product}</h4>
+        let sale_id
+        $(document).ready(function() {
+            document.getElementById('btn-click').addEventListener('click', function (event) {
+                event.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: '/sale/show/' + sale_id,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response) {
+                            if (sale_id === response.id) {
+                                const date = new Date(response?.created_at);
+                                document.getElementById('matricule').textContent = response?.matricule
+                                document.getElementById('user').textContent = 'by ' + response?.user
+                                document.getElementById('adresse').textContent = response?.adresse
+                                document.getElementById('payment_type').textContent = response?.payment_type
+                                document.getElementById('client_name').textContent = response?.client_name
+                                document.getElementById('created_at').textContent = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear() + ', at ' + date.getHours() + 'h:' + date.getMinutes() + 'min'
+                                document.getElementById('total_paid').textContent = response?.total_paid + ' €'
+                                document.getElementById('income').textContent = response?.income + ' €'
+                                document.getElementById('amount_given').textContent = response?.amount_given + ' €'
+                                const productList = document.getElementById("product-list");
+                                response?.sales_products.forEach(product => {
+                                    const li = document.createElement("li");
+                                    // Create li element
+                                    li.classList.add("d-flex");
+                                    // Set innerHTML of li with product details
+                                    li.innerHTML = `<h4>${product.product}</h4>
                                 <h3></h3>
                                 <h5 class="mr-0 ml-auto">${product.price} € x ${product.quantity}</h5>`;
 
-                                // Append li to ul
-                                productList.appendChild(li);
-                            });
+                                    // Append li to ul
+                                    productList.appendChild(li);
+                                });
+                            }
                         }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(status);
+                        console.log(error);
+                        console.log(xhr);
+                        // Handle errors here
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.log(status);
-                    console.log(error);
-                    console.log(xhr);
-                    // Handle errors here
-                }
-            })
-        }
+                })
+            });
+        });
     </script>
 
 </head>
@@ -151,7 +154,8 @@
                             <h3 class="text-center text-muted CreatedAt"
                                 style="position: relative; left: 6.2%">{{$sale->created_at}}</h3>
                             <div class="btn_container d-flex ml-auto">
-                                <button type="button" class="btn" onclick="showSale({{$sale->id}})">
+                                <button type="button" id="btn-click" class="btn" onclick="
+                                sale_id={{$sale->id}};">
                                     <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-eye"></i></a>
                                 </button>
                             </div>

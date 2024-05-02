@@ -113,9 +113,11 @@
                                 timer: 3000,
                                 didOpen: () => {
                                     Swal.showLoading();
+                                },
+                                didClose: ()=>{
+                                    window.location = data.redirect;
                                 }
                             });
-                            window.location = data.redirect;
                         } else {
                             if (data.status) {
                                 Swal.fire({
@@ -126,9 +128,7 @@
                                     timer: 3000,
                                     didOpen: () => {
                                         Swal.showLoading()
-                                        window.location = data.redirect;
                                     },
-
                                 });
                                 // window.location.reload();
                             }
@@ -158,31 +158,31 @@
                     success: function (data) {
                         if (data.status === "success") {
                             Swal.fire({
-                                position: 'Modification réussie',
+                                position: 'center',
                                 icon: 'success',
                                 title: 'Vous êtes redirigé vers le tableau d\'utilisateur',
                                 showConfirmButton: false,
                                 timer: 3000,
                                 didOpen: () => {
                                     Swal.showLoading();
+                                },
+                                didClose: ()=>{
+                                    window.location = data.redirect;
                                 }
+
                             });
-                            window.location = data.redirect;
                         } else {
                             if (data.status) {
                                 Swal.fire({
-                                    position: 'Oops...',
+                                    position: 'center',
                                     icon: 'error',
                                     title: 'Les donnees entrants sont similaire avec les anciennes !',
                                     showConfirmButton: false,
                                     timer: 1000,
                                     didOpen: () => {
                                         Swal.showLoading()
-                                        window.location = data.redirect
                                     },
-
                                 });
-
                                 // window.location.reload();
                             }
                         }
@@ -428,7 +428,7 @@
                             </div>
                             <div class="modal-body p-0">
 
-                                <form id="editForm1" onsubmit="editSuper(user_id);">
+                                <form id="editForm1">
 
                                     <div class="col-10 mx-auto form_container">
                                         <div class="form-group">
@@ -509,7 +509,6 @@
             <div class="modal-body p-0">
 
                 <form id="addForm">
-                    @csrf
                     <div class="col-10 mx-auto form_container">
                         <div class="form-group">
                             <label>Username</label>
@@ -625,8 +624,7 @@
                 </div>
                 <div class="modal-body p-0">
 
-                    <form action="{{route('user.store')}}" method="post">
-                        @csrf
+                    <form id="addForm1">
                         <div class="col-10 mx-auto form_container">
                             <div class="form-group">
                                 <label>Username</label>
@@ -711,6 +709,82 @@
     <script>
         $(document).ready(function() {
             document.getElementById('addForm').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+                // Make a POST request to your Laravel route
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('user.store')}}',
+                    data: $('#addForm').serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status === "success") {
+                            window.location = data.redirect;
+                        } else {
+
+                        }
+                    },
+                    error: function (data) {
+                        message = data.responseJSON;
+                        const list_message = [];
+                        if (message.errors) {
+                            if (message.errors.password) {
+                                for (let i = 0; i < message.errors.password.length; i++) {
+
+                                    list_message.push(message.errors.password[i]);
+                                }
+                            } else if (message.errors.email) {
+                                for (let i = 0; i < message.errors.email.length; i++) {
+
+                                    list_message.push(message.errors.email[i]);
+                                }
+                            } else if (message.errors.last_name) {
+                                for (let i = 0; i < message.errors.last_name.length; i++) {
+
+                                    list_message.push(message.errors.last_name[i]);
+                                }
+                            } else if (message.errors.first_name) {
+                                for (let i = 0; i < message.errors.first_name.length; i++) {
+
+                                    list_message.push(message.errors.first_name[i]);
+                                }
+                            } else if (message.errors.username) {
+                                for (let i = 0; i < message.errors.username.length; i++) {
+
+                                    list_message.push(message.errors.username[i]);
+                                }
+                            } else {
+                                for (let i = 0; i < message.errors.phone.length; i++) {
+                                    list_message.push(message.errors.phone[i]);
+                                }
+                            }
+                        }
+                        let message_error = ''
+                        list_message.map((data) => {
+                            message_error += data + ' '
+                        })
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: message_error,
+                            showConfirmButton: false,
+                            timer: 4000,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+
+                        });
+                    }
+                })
+            });
+        });
+        $(document).ready(function() {
+            document.getElementById('addForm1').addEventListener('submit', function (event) {
                 event.preventDefault(); // Prevent the default form submission
                 // Make a POST request to your Laravel route
 
