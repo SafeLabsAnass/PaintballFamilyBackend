@@ -40,7 +40,7 @@ class SaleController extends Controller
     {
         $sale = SaLe::where('id',$id)->first();
 
-        return response()->json(new SaleResource($sale));
+        return response()->json(new SaleResource($sale),201);
     }
 
     /**
