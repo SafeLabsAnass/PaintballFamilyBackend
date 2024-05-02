@@ -7,6 +7,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- Datetimepicker CSS -->
     <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
@@ -46,59 +48,6 @@
         });
     </script>
 {{--    hello--}}
-    <script type="text/javascript">
-        let sale_id
-        $(document).ready(function() {
-            document.getElementById('btn-click').addEventListener('click', function (event) {
-                event.preventDefault();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: 'GET',
-                    url: '/sale/show/' + sale_id,
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response) {
-                            if (sale_id === response.id) {
-                                const date = new Date(response?.created_at);
-                                document.getElementById('matricule').textContent = response?.matricule
-                                document.getElementById('user').textContent = 'by ' + response?.user
-                                document.getElementById('adresse').textContent = response?.adresse
-                                document.getElementById('payment_type').textContent = response?.payment_type
-                                document.getElementById('client_name').textContent = response?.client_name
-                                document.getElementById('created_at').textContent = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear() + ', at ' + date.getHours() + 'h:' + date.getMinutes() + 'min'
-                                document.getElementById('total_paid').textContent = response?.total_paid + ' €'
-                                document.getElementById('income').textContent = response?.income + ' €'
-                                document.getElementById('amount_given').textContent = response?.amount_given + ' €'
-                                const productList = document.getElementById("product-list");
-                                response?.sales_products.forEach(product => {
-                                    const li = document.createElement("li");
-                                    // Create li element
-                                    li.classList.add("d-flex");
-                                    // Set innerHTML of li with product details
-                                    li.innerHTML = `<h4>${product.product}</h4>
-                                <h3></h3>
-                                <h5 class="mr-0 ml-auto">${product.price} € x ${product.quantity}</h5>`;
-
-                                    // Append li to ul
-                                    productList.appendChild(li);
-                                });
-                            }
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(status);
-                        console.log(error);
-                        console.log(xhr);
-                        // Handle errors here
-                    }
-                })
-            });
-        });
-    </script>
 
 </head>
 
@@ -287,6 +236,59 @@
 <!-- Require Javascript End -->
 {{----}}
 
+<script type="text/javascript">
+    let sale_id
+    $(document).ready(function() {
+        document.getElementById('btn-click').addEventListener('click', function (event) {
+            event.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/sale/show/' + sale_id,
+                dataType: 'json',
+                success: function (response) {
+                    if (response) {
+                        if (sale_id === response.id) {
+                            const date = new Date(response?.created_at);
+                            document.getElementById('matricule').textContent = response?.matricule
+                            document.getElementById('user').textContent = 'by ' + response?.user
+                            document.getElementById('adresse').textContent = response?.adresse
+                            document.getElementById('payment_type').textContent = response?.payment_type
+                            document.getElementById('client_name').textContent = response?.client_name
+                            document.getElementById('created_at').textContent = date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear() + ', at ' + date.getHours() + 'h:' + date.getMinutes() + 'min'
+                            document.getElementById('total_paid').textContent = response?.total_paid + ' €'
+                            document.getElementById('income').textContent = response?.income + ' €'
+                            document.getElementById('amount_given').textContent = response?.amount_given + ' €'
+                            const productList = document.getElementById("product-list");
+                            response?.sales_products.forEach(product => {
+                                const li = document.createElement("li");
+                                // Create li element
+                                li.classList.add("d-flex");
+                                // Set innerHTML of li with product details
+                                li.innerHTML = `<h4>${product.product}</h4>
+                                <h3></h3>
+                                <h5 class="mr-0 ml-auto">${product.price} € x ${product.quantity}</h5>`;
+
+                                // Append li to ul
+                                productList.appendChild(li);
+                            });
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(status);
+                    console.log(error);
+                    console.log(xhr);
+                    // Handle errors here
+                }
+            })
+        });
+    });
+</script>
 
 <script type="text/javascript">
     jQuery(function($) {
