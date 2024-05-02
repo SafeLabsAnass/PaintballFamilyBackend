@@ -73,6 +73,7 @@ class SaleController extends Controller
                 } else {
                     $sale->total_paid = $total_paid;
                 }
+            $sale->update();
         }
         else{
             foreach ($request->list_panier as $item) {
