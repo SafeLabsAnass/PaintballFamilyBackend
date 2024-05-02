@@ -57,6 +57,7 @@
                 url: '/sale/show/' + id.toString(),
                 dataType: 'json',
                 success: function (response) {
+                    alert('hey')
                     if (response) {
                         if(id===response.id) {
                             const date = new Date(response?.created_at);
