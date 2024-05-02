@@ -62,7 +62,7 @@ class UserController extends Controller
         $user->roles()->save($role);
 //        return event(new Registered($user));
         if($message!='') {
-            return response()->json(['status' => 'error', 'message' => $message]);
+            return response()->json(['status' => 'error', 'message' => $message],200);
         }
         else{
             return response()->json(['status'=>'success','redirect'=>route('peoples')]);

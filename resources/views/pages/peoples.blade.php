@@ -30,7 +30,6 @@
     <!-- Page Title -->
     <title></title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script type="text/javascript">
         var user_id
         function show(id) {
@@ -97,7 +96,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: '/user/edit/'+id.toString(),
+                url: 'user/edit/'+id.toString(),
                 data: $('#editForm').serialize(),
                 dataType: 'json',
                 success: function (data) {
@@ -214,7 +213,6 @@
 
     </script>
 
-
 </head>
 
 <body id="page_home">
@@ -294,8 +292,9 @@
                                         </div>
                                         <div class="modal-body p-0">
 
-                                            <form method="POST" id="editForm"
+                                            <form id="editForm"
                                                   onsubmit="edit(user_id);">
+                                                @csrf
                                                 <div class="col-10 mx-auto form_container">
                                                     <div class="form-group">
                                                         <label>Username</label>
@@ -504,7 +503,7 @@
             </div>
             <div class="modal-body p-0">
 
-                <form action="{{ route('user.store') }}" method="POST" id="addForm">
+                <form id="addForm">
                     @csrf
                     <div class="col-10 mx-auto form_container">
                         <div class="form-group">
@@ -523,7 +522,7 @@
                             <label>First Name</label>
                             <input id="firstname" type="text"
                                    class="form-control @error('firstname') is-invalid @enderror" name="first_name"
-                                   value="{{ old('Frist Name') }}" required autocomplete="first_name" autofocus>
+                                   value="{{ old('firstname') }}" required autocomplete="first_name" autofocus>
                             @error('first_name')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -559,7 +558,7 @@
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input id="password" type="password" class="form-control" name="password_confirmation"
+                            <input id="password" type="password" class="form-control" name="password"
                                    required autocomplete="new-password">
                             <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password-i mr-2"></span>
                             <input type="text" class="form-control" name="role" style="display: none;"
@@ -688,95 +687,98 @@
 
     <!-- Add people Modal End  -->
 <!-- Require Javascript Start -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+{{--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>--}}
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!-- Require Javascript End -->
 <script src="{{ asset('js/jquery.datetimepicker.full.js')}}"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+{{--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
           integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-            crossorigin="anonymous"></script>
+{{--    <script src="https://code.jquery.com/jquery-3.7.1.js"--}}
+{{--            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="--}}
+{{--            crossorigin="anonymous"></script>--}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}}
     <script src="{{ asset('js/jquery.datetimepicker.full.js')}}"></script>
     <script>
-        document.getElementById('addForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission
-            // Make a POST request to your Laravel route
+        $(document).ready(function() {
+            document.getElementById('addForm').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+                // Make a POST request to your Laravel route
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                url: '/user/store/',
-                data: $('#addForm').serialize(),
-                dataType: 'json',
-                success: function (data) {
-                    if (data.status === "success") {
-                    } else {
-
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                },
-                error: function (data) {
-                    message = data.responseJSON;
-                    const list_message = [];
-                    if (message.errors) {
-                        if (message.errors.password) {
-                            for (let i = 0; i < message.errors.password.length; i++) {
-
-                                list_message.push(message.errors.password[i]);
-                            }
-                        } else if (message.errors.email) {
-                            for (let i = 0; i < message.errors.email.length; i++) {
-
-                                list_message.push(message.errors.email[i]);
-                            }
-                        } else if (message.errors.last_name) {
-                            for (let i = 0; i < message.errors.last_name.length; i++) {
-
-                                list_message.push(message.errors.last_name[i]);
-                            }
-                        } else if (message.errors.first_name) {
-                            for (let i = 0; i < message.errors.first_name.length; i++) {
-
-                                list_message.push(message.errors.first_name[i]);
-                            }
-                        } else if (message.errors.username) {
-                            for (let i = 0; i < message.errors.username.length; i++) {
-
-                                list_message.push(message.errors.username[i]);
-                            }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('user.store')}}',
+                    data: $('#addForm').serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status === "success") {
+                            window.location = data.redirect;
                         } else {
-                            for (let i = 0; i < message.errors.phone.length; i++) {
-                                list_message.push(message.errors.phone[i]);
+
+                        }
+                    },
+                    error: function (data) {
+                        message = data.responseJSON;
+                        const list_message = [];
+                        if (message.errors) {
+                            if (message.errors.password) {
+                                for (let i = 0; i < message.errors.password.length; i++) {
+
+                                    list_message.push(message.errors.password[i]);
+                                }
+                            } else if (message.errors.email) {
+                                for (let i = 0; i < message.errors.email.length; i++) {
+
+                                    list_message.push(message.errors.email[i]);
+                                }
+                            } else if (message.errors.last_name) {
+                                for (let i = 0; i < message.errors.last_name.length; i++) {
+
+                                    list_message.push(message.errors.last_name[i]);
+                                }
+                            } else if (message.errors.first_name) {
+                                for (let i = 0; i < message.errors.first_name.length; i++) {
+
+                                    list_message.push(message.errors.first_name[i]);
+                                }
+                            } else if (message.errors.username) {
+                                for (let i = 0; i < message.errors.username.length; i++) {
+
+                                    list_message.push(message.errors.username[i]);
+                                }
+                            } else {
+                                for (let i = 0; i < message.errors.phone.length; i++) {
+                                    list_message.push(message.errors.phone[i]);
+                                }
                             }
                         }
-                    }
-                    let message_error = ''
-                    list_message.map((data) => {
-                        message_error += data + ' '
-                    })
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        title: message_error,
-                        showConfirmButton: false,
-                        timer: 4000,
-                        didOpen: () => {
-                            Swal.showLoading()
-                        },
+                        let message_error = ''
+                        list_message.map((data) => {
+                            message_error += data + ' '
+                        })
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: message_error,
+                            showConfirmButton: false,
+                            timer: 4000,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
 
-                    });
-                }
-            })
+                        });
+                    }
+                })
+            });
         });
     </script>
 
