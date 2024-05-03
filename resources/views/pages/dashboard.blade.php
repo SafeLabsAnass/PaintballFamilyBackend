@@ -106,10 +106,10 @@
                     <div class="chart-area p-3 p-xl-4 mb-4">
                         <h4 class="text-white mb-5">Payment Modes</h4>
 
-                        <div class="progress-bar-box d-flex align-items-center mb-4">
                             @foreach($items->paymentsStatistics as $payment)
+                        <div class="progress-bar-box d-flex align-items-center mb-3">
                                 <span style="min-width: 120px;" class="h6 m-0">{{$payment['payment']['type']}}</span>
-                            <div class="progress" style="height: 20px;width: 100%">
+                            <div class="progress" style="height: 28px;width: 100%">
                                 <div class="progress-bar bg-success" role="progressbar"
                                      style="width: {{$payment['percent']}}%"
                                      aria-valuenow="{{$payment['percent']}}" aria-valuemin="0"
@@ -118,8 +118,8 @@
                                 <span style="min-width: 100px;"
                                       class="text-right mr-5">{{$payment['totalPayment']}} <span
                                         class="text-muted">({{$payment['percent']}}%)</span></span>
-                            @endforeach
                         </div>
+                            @endforeach
                     </div>
                 </div>
             </div>

@@ -30,6 +30,20 @@
     <!-- Page Title -->
     <title></title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        if({{\Illuminate\Support\Facades\Session::get('tabSuperOpened')}}==='superAdmin'){
+            $('#nav_customers_items').removeClass('active');
+            $('#nav_super_admin_items').addClass('active');
+            $('#customers').removeClass('active');
+            $('#super_admin').addClass('active');
+        }
+        else{
+            $('#nav_super_admin_items').removeClass('active');
+            $('#nav_customers_items').addClass('active');
+            $('#super_admin').removeClass('active');
+            $('#customers').addClass('active');
+        }
+    </script>
     <script type="text/javascript">
         var user_id
         function show(id) {
@@ -88,6 +102,7 @@
                 }
             })
         }
+        let tabOpened
         $(document).ready(function() {
             document.getElementById('editForm').addEventListener('submit', function (event) {
                 event.preventDefault(); // Prevent the default form submission
@@ -115,7 +130,7 @@
                                     Swal.showLoading();
                                 },
                                 didClose: ()=>{
-                                    window.location = data.redirect;
+                                    window.location = data.redirect
                                 }
                             });
                         } else {
@@ -157,6 +172,7 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.status === "success") {
+                            tabOpened = data.tabSuperOpened
                             Swal.fire({
                                 position: 'center',
                                 icon: 'success',
@@ -167,9 +183,8 @@
                                     Swal.showLoading();
                                 },
                                 didClose: ()=>{
-                                    window.location = data.redirect;
+                                    window.history.replaceState( {} , title, data.redirect );
                                 }
-
                             });
                         } else {
                             if (data.status) {
@@ -178,7 +193,7 @@
                                     icon: 'error',
                                     title: 'Les donnees entrants sont similaire avec les anciennes !',
                                     showConfirmButton: false,
-                                    timer: 1000,
+                                    timer: 3000,
                                     didOpen: () => {
                                         Swal.showLoading()
                                     },
@@ -193,6 +208,7 @@
                     }
                 })
             });
+
         });
 
         $(document).ready(function () {
@@ -206,6 +222,26 @@
                 }
             });
             $(".toggle-password-ii").click(function () {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                const input = $($(this).attr("toggle"));
+                if (input.attr("type") === "password") {
+                    input.attr("type", "text");
+                } else {
+                    input.attr("type", "password");
+                }
+            });
+        });
+        $(document).ready(function () {
+            $(".toggle-password-iii").click(function () {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                const input = $($(this).attr("toggle"));
+                if (input.attr("type") === "password") {
+                    input.attr("type", "text");
+                } else {
+                    input.attr("type", "password");
+                }
+            });
+            $(".toggle-password-iiiᵉ").click(function () {
                 $(this).toggleClass("fa-eye fa-eye-slash");
                 const input = $($(this).attr("toggle"));
                 if (input.attr("type") === "password") {
@@ -628,29 +664,73 @@
                         <div class="col-10 mx-auto form_container">
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control" name="username" id="username" required>
+                                <input id="username" type="text"
+                                       class="form-control @error('username') is-invalid @enderror" name="username"
+                                       value="{{ old('Username') }}" required autocomplete="username" autofocus>
+                                @error('username')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
                             </div>
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" class="form-control" name="first_name" id="first_name" required>
+                                <input id="firstname" type="text"
+                                       class="form-control @error('firstname') is-invalid @enderror" name="first_name"
+                                       value="{{ old('firstname') }}" required autocomplete="first_name" autofocus>
+                                @error('first_name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" class="form-control" name="last_name" id="last_name" required>
+                                <input id="lastname" type="text"
+                                       class="form-control @error('lastname') is-invalid @enderror" name="last_name"
+                                       value="{{ old('Last_name') }}" required autocomplete="last_name" autofocus>
+                                @error('phone')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label>Phone Number</label>
-                                <input type="text" class="form-control" name="phone" id="phone" required>
+                                <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror"
+                                       name="phone" value="{{ old('Phone') }}" required autocomplete="phone" autofocus>
                             </div>
                             <div class="form-group">
                                 <label>Email Address</label>
-                                <input type="email" class="form-control" name="email" id="email" required>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                       name="email" value="{{ old('email') }}" required autocomplete="email">
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" class="form-control" name="password" required>
+                                <input id="password1" type="password" class="form-control" name="password"
+                                       required autocomplete="new-password">
+                                <span toggle="#password1" class="fa fa-fw fa-eye field-icon toggle-password-iii mr-2"></span>
                                 <input type="text" class="form-control" name="role" style="display: none;"
                                        value="superadministrator">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input id="password-confirm1" type="password" class="form-control"
+                                       name="password_confirmation" required autocomplete="new-password">
+                                <span toggle="#password-confirm1"
+                                      class="fa fa-fw fa-eye field-icon toggle-password-iiiᵉ mr-2"></span>
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label>Site</label>
@@ -674,10 +754,10 @@
                         <div class="modal-footer">
                             <div class="row no-gutters w-100 mb-5">
                                 <div class="col-6">
-                                    <button type="reset" class="btn Cencel" data-dismiss="modal">Cancel</button>
+                                    <button type="reset" class="btn btn-warning" data-dismiss="modal">Cancel</button>
                                 </div>
                                 <div class="col-6">
-                                    <button type="submit" class="btn">Add Super Admin</button>
+                                    <button type="submit" class="btn btn-primary">Add Super Admin</button>
                                 </div>
                             </div>
                         </div>
@@ -796,7 +876,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '{{route('user.store')}}',
-                    data: $('#addForm').serialize(),
+                    data: $('#addForm1').serialize(),
                     dataType: 'json',
                     success: function (data) {
                         if (data.status === "success") {

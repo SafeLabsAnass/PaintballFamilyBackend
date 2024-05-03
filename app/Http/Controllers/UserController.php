@@ -10,11 +10,11 @@ use App\Models\Site;
 use App\Models\User;
 use http\Message;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use MongoDB\Driver\Session;
 
 class UserController extends Controller
 {
@@ -60,6 +60,7 @@ class UserController extends Controller
         $user->save();
         $role = Role::where('name',$request->role)->first();
         $user->roles()->save($role);
+        Session::put('tabSuperOpened','superAdmin');
 //        return event(new Registered($user));
         if($message!='') {
             return response()->json(['status' => 'error', 'message' => $message],200);
@@ -101,9 +102,10 @@ class UserController extends Controller
             $user->phone = $request->phone ;
             $user->site_id = $site->id;
             $user->update();
+            Session::put('tabSuperOpened','superAdmin');
             return response()->json([
                 "status" => 'success',
-                "redirect" => url('/peoples')
+                "redirect" => url('/peoples'),
             ],201);
         }
     }

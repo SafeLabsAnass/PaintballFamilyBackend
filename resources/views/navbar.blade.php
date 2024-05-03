@@ -15,7 +15,7 @@
                     <a class="nav-link" href="{{route('home')}}"><i class="zmdi zmdi-assignment"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('categories')}}"><i class="zmdi zmdi-cutlery"></i> Categories</a>
+                    <a class="nav-link" id="categories" href="{{route('categories')}}"><i class="zmdi zmdi-cutlery"></i> Categories</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('peoples')}}"><i class="zmdi zmdi-accounts-alt"></i> Users</a>
@@ -43,4 +43,13 @@
         </div>
     </nav>
 </header>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        document.getElementById('categories').addEventListener('onclick', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+                document.cookie = "tabProductOpened="
+            });
+    });
+</script>
 <div class="header_spacer"></div>

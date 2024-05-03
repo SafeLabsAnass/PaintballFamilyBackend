@@ -44,6 +44,9 @@ class ProductController extends Controller
         $product->category_id = $category->id;
         $product->image = $imageName;
         $product->save();
+        $cookie_name = "tabProductOpened";
+        $cookie_value = "product";
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
         return redirect('/categories');
     }
     /**
@@ -92,6 +95,9 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->description = $request->description;
             $product->save();
+            $cookie_name = "tabProductOpened";
+            $cookie_value = "product";
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
             return response()->json([
                 "status" => 'success',
                 "redirect" => route('categories')

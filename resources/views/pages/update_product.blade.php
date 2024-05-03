@@ -81,8 +81,16 @@
                                     <label>Choose Product Category</label>
                                     <select name="category" class="form-control" style="background: var(--bg-color)! important;">
                                         @foreach($items[0] as $category)
+                                            @if($category->name==DB::table('categories')->where('id',$items[1]->category_id)->first()->name)
                                         <option>{{$category->name}}</option>
+                                                @break
+                                            @endif
                                             @endforeach
+                                                @foreach($items[0] as $category)
+                                                    @if($category->name!=DB::table('categories')->where('id',$items[1]->category_id)->first()->name)
+                                                <option>{{$category->name}}</option>
+                                            @endif
+                                                @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -102,9 +110,6 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
     <!-- Require Javascript Start -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -138,55 +143,61 @@
         });
     </script>
     <script type="text/javascript">
-        document.getElementById('editForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+        $(document).ready(function() {
+            document.getElementById('editForm').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the default form submission
 
-            // Serialize the form data
-            const formData = new FormData(this);
+                // Serialize the form data
+                const formData = new FormData(this);
 
-            // Make a POST request to your Laravel route
-            fetch('/product/update/'+{{$items[1]->id}}, {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json()) // Parse the JSON response
-                .then(data => {
-                    // Handle the JSON response
-                    console.log(data); // Output the JSON response to the console
-
-                    // Example: Update UI based on the response
-                    if (data.status==='success') {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Vous êtes redirigé vers le tableau de categories',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            didOpen: () => {
-                                Swal.showLoading();
-                                window.location = data.redirect;
-                            }
-                        });
-                        window.location = data.redirect;
-                    } else {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'error',
-                            title: 'Les donnees entrants sont similaire avec les anciennes !',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            didOpen: () => {
-                                Swal.showLoading()
-                                window.location = data.redirect
-                            },
-
-                        });
-
-                    }
+                // Make a POST request to your Laravel route
+                fetch('/product/update/' + {{$items[1]->id}}, {
+                    method: 'POST',
+                    body: formData
                 })
-                .catch(error => {
-                    console.error('Error:', error); // Log any errors
-                });
+                    .then(response => response.json()) // Parse the JSON response
+                    .then(data => {
+                        // Handle the JSON response
+                        // Example: Update UI based on the response
+                        if (data.status === 'success') {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Vous êtes redirigé vers le tableau de categories',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                },
+                                didClose: () => {
+                                    document.cookie = "tabProductOpened=product";
+                                    window.location = data.redirect + encodeURIComponent(document.cookie);
+                                }
+                            });
+                            window.location = data.redirect;
+                        } else {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Les donnees entrants sont similaire avec les anciennes !',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                                didClose: () => {
+                                    document.cookie = "tabProductOpened=product";
+                                    window.location = data.redirect + encodeURIComponent(document.cookie);
+                                }
+
+                            });
+
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error); // Log any errors
+                    });
+            });
         });
     </script>
 

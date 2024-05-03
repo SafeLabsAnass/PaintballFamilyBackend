@@ -28,6 +28,43 @@
 
     <!-- Page Title -->
     <title></title>
+    <script>
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            if (getCookie('tabProductOpened') === "product") {
+                $('#nav-Categories-tab').removeClass('active');
+                $('#nav_food_items').addClass('active');
+                $('#Categories').removeClass('active');
+                $('#food_items').addClass('active');
+            } else {
+                $('#nav_food_items').removeClass('active');
+                $('#nav-Categories-tab').addClass('active');
+                $('#food_items').removeClass('active');
+                $('#Categories').addClass('active');
+            }
+            window.onload = function() {
+                document.cookie = "tabProductOpened="
+            }
+        });
+
+    </script>
 
 
 </head>
@@ -206,7 +243,6 @@
         </div>
     </div>
     <!-- Add Category Modal End  -->
-
 
     <!-- Require Javascript Start -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -29,7 +29,7 @@ class CategoryController extends Controller
      */
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-            $items = [Category::all(), Product::all()];
+        $items = [Category::all(), Product::all()];
                 return view('pages.categories')->with('items', $items);
         }
 
@@ -58,6 +58,9 @@ class CategoryController extends Controller
      */
     public function show(int $id)
     {
+        $cookie_name = "tabProductOpened";
+        $cookie_value = "";
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
         $categorie = DB::table('categories')->where('id', $id)->first();
         return
             view('pages.update_category')->with('categorie', $categorie);
