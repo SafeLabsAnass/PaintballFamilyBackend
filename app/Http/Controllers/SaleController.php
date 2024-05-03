@@ -38,7 +38,7 @@ class SaleController extends Controller
      */
     public function show(int $id)
     {
-        $sale = SaLe::where('id',$id)->first();
+        $sale = Sale::where('id',$id)->first();
 
         return response()->json(new SaleResource($sale),201);
     }
