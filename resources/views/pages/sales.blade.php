@@ -35,23 +35,16 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-        let sale_id
-        $(document).ready(function() {
-            document.getElementById('btn-click').on('click', function () {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+        function showSale(id) {
+            $(document).ready(function () {
                 $.ajax({
                     type: 'GET',
-                    url: '/sale/show/' + sale_id,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
+                    url: '/sale/show/' + id,
                     success: function (response) {
                         if (response) {
-                            if (sale_id === response.id) {
+                            if (id === response.id) {
                                 const date = new Date(response?.created_at);
                                 document.getElementById('matricule').textContent = response?.matricule
                                 document.getElementById('user').textContent = 'by ' + response?.user
@@ -86,7 +79,7 @@
                     }
                 })
             });
-        });
+        }
     </script>
 
     <script type="text/javascript">
@@ -156,8 +149,7 @@
                             <h3 class="text-center text-muted CreatedAt"
                                 style="position: relative; left: 6.2%">{{$sale->created_at}}</h3>
                             <div class="btn_container d-flex ml-auto">
-                                <button type="button" id="btn-click" class="btn" onclick="
-                                sale_id={{$sale->id}};">
+                                <button type="button" id="btn-click" class="btn" onclick="showSale({{$sale->id}})">
                                     <a data-toggle="modal" data-target="#receipt_model"><i class="zmdi zmdi-eye"></i></a>
                                 </button>
                             </div>
