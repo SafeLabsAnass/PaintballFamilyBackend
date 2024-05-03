@@ -38,8 +38,7 @@
     <script>
         let sale_id
         $(document).ready(function() {
-            document.getElementById('btn-click').addEventListener('click', function (event) {
-                event.preventDefault();
+            document.getElementById('btn-click').on('click', function () {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
