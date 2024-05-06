@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('site');
             $table->string('vat_number');
-            $table->comment('logo');
+            $table->string('logo');
             $table->timestamps();
         });
     }
