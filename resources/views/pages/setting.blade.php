@@ -52,7 +52,7 @@
                             </label>
                         </div>
                         <div class="upload-box  mt-1 ml-4 mb-3  mx-auto">
-                            <center><img id="preview" src="@if(\App\Models\Company::all()->count()!=0) {{\App\Models\Company::all()->first()->logo}} @endif" alt="Image Preview" style="max-width: 200px; max-height: 200px; @if(\App\Models\Company::all()->count()==0) display: none; @endif"></center>
+                            <center><img id="preview" src="@if(\App\Models\Company::all()->count()!=0) {{ config('app.url') }}/storage/{{\App\Models\Company::all()->first()->logo}} @endif" alt="Image Preview" style="max-width: 200px; max-height: 200px; @if(\App\Models\Company::all()->count()==0) display: none; @endif"></center>
                         </div>
                     </div>
                     <div class="form-group">
