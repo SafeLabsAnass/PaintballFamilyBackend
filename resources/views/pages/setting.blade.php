@@ -8,23 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Datetimepicker CSS -->
-    <link href="css/jquery.datetimepicker.min.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/widgEditor.css" />
+    <link rel="stylesheet" href="{{ asset('css/widgEditor.css')}}" />
 
     <!-- Responsive CSS -->
-    <link href="css/responsive.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/responsive.css')}}" type="text/css" rel="stylesheet">
 
     <!-- Font CSS -->
-    <link href="css/gogle_sans_font.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/gogle_sans_font.css')}}" type="text/css" rel="stylesheet">
 
     <!--  For icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <!-- Custom CSS -->
-    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/style.css')}}" type="text/css" rel="stylesheet">
     <!-- Page Title -->
     <title></title>
 
@@ -32,48 +32,7 @@
 
 <body id="page_items">
 <!-- Header Start -->
-<header class="container-fluid ">
-    <nav class="navbar navbar-expand-xl navbar-light align-items-center">
-        <div class="nav-item">
-            <a class="navbar-brand nav-link px-2" href="dashboard.html">
-                <img src="images/logo.png" class="img-fluid">
-            </a>
-        </div>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="zmdi zmdi-menu"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <ul class="navbar-nav mr-0 ml-auto d-flex align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="home.html"><i class="zmdi zmdi-assignment"></i> POS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="items.html"><i class="zmdi zmdi-cutlery"></i> Items</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="people.html"><i class="zmdi zmdi-accounts-alt"></i> People</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="sales_expenses.html"><i class="zmdi zmdi-collection-text"></i> Sales & Expenses</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="setting.html"><i class="zmdi zmdi-settings"></i> Settings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="orders_status.html"><i class="zmdi zmdi-hourglass-alt"></i> Orders Status</a>
-                </li>
-                <li class="nav-item profile_img">
-                    <a href="index.html" class="img_box center_img">
-                        <img src="images/profile.png" class="crop_img">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
-
-<div class="header_spacebar"></div>
+@include('navbar')
 <!-- Header End -->
 
 <!-- Body Wrapper Start -->
@@ -82,44 +41,45 @@
         <div class="col m-1" style="max-width: 45%;">
             <div class="bg-second p-4">
                 <h3 class="mt-0 mb-4 text-white">Setting</h3>
-                <form>
-                    <div class="row pb-5 align-items-center">
-                        <div class="col-12 col-lg-5 col-md-6 col-sm-12">
-                            <div class="img_box d-flex align-items-center text-white p-3 bg-success" style="border-radius: 20px;">
-                                <i class="zmdi zmdi-image-alt mr-3" style="font-size: 2rem;"></i>
-                                <p class="m-0">Upload Icon</p>
-                            </div>
+                <form method="post" action="@if(\App\Models\Company::all()->count()==0) {{route('settings.store')}} @else {{route('settings.edit',\App\Models\Company::all()->first()->id)}} @endif" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row" style="max-width: 600px">
+                        <div class="upload-box mt-1 mr-4 mb-3 mx-auto">
+                            <label for="img" class="img m-0 active">
+                                <i class="zmdi zmdi-image-alt"></i>
+                                <input id="img" type="file" name="image">
+                                <span>Upload product image</span>
+                            </label>
                         </div>
-                        <div class="col-12 col-lg-7 col-md-6 col-sm-12 pt-2">
-                            <div class="d-flex info">
-                                <i class="zmdi zmdi-info-outline d-block text-white mt-2 mr-4"></i>
-                                <p class="text-muted m-0">Icon Should have in <br>1:1 ratio for better viewing <br> experience.</p>
-                            </div>
+                        <div class="upload-box  mt-1 ml-4 mb-3  mx-auto">
+                            <center><img id="preview" src="@if(\App\Models\Company::all()->count()!=0) {{\App\Models\Company::all()->first()->logo}} @endif" alt="Image Preview" style="max-width: 200px; max-height: 200px; @if(\App\Models\Company::all()->count()==0) display: none; @endif"></center>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Company Name</label>
-                        <input type="text" class="form-control" value="Italian Food">
+                        <input type="text" class="form-control col-lg-8" name="name" >
                     </div>
                     <div class="form-group">
                         <label>Company Phone Num</label>
-                        <input type="text" class="form-control" value="+1 987 987 6322">
+                        <input type="text" class="form-control col-lg-8" name="phone">
                     </div>
                     <div class="form-group">
-                        <label>Company Email Address Num</label>
-                        <input type="email" class="form-control" value="mail2italianfood@gmail.com">
-                    </div>
-                    <h3 class="mt-0 my-4 text-white">PayPal Payment</h3>
-
-                    <div class="form-group">
-                        <label>PayPal secret key</label>
-                        <input type="text" class="form-control" value="paypal_frgyrh_frgbsw454d_fgrekzn">
+                        <label>Company Address </label>
+                        <input type="text" class="form-control col-lg-8"  name="address">
                     </div>
                     <div class="form-group">
-                        <label>PayPal Publishable key</label>
-                        <input type="text" class="form-control" value="paypal_frgyrh_frgbsw454d_fgrekzn">
+                        <label>Company Email </label>
+                        <input type="email" class="form-control col-lg-8"  name="email">
                     </div>
-
+                    <div class="form-group">
+                        <label>WebSite</label>
+                        <input type="text" class="form-control col-lg-8" name="site">
+                    </div>
+                    <div class="form-group">
+                        <label>VAT Number</label>
+                        <input type="text" class="form-control col-lg-8" name="vat_number">
+                    </div>
+                    <button type="submit" class="btn py-3" style="max-width: 200px">Submit</button>
                 </form>
             </div>
         </div>
@@ -133,35 +93,19 @@
                                 <textarea id="noise" name="noise" class="widgEditor nothing"></textarea>
                             </fieldset>
                         </div>
-                        <h3 class="mt-0 my-4 text-white col-12">Text in the Receipt Header</h3>
-                        <div class="col-md-12 mb-4">
-                            <fieldset class="bg-white">
-                                <textarea id="noise2" name="noise" class="widgEditor nothing"></textarea>
-                            </fieldset>
-                        </div>
                     </div>
                 </form>
             </div>
             <div class="bg-second p-4 mb-4">
-                <h3 class="mt-0 mb-5 text-white">Other Setting</h3>
+                <h3 class="mt-0 mb-5 text-white">Invoice Setting</h3>
                 <form>
                     <div class="form-group">
-                        <label>Currency</label>
-                        <select class="form-control" style="background: var(--bg-color)! important;">
-                            <option>USD</option>
-                        </select>
+                        <label>Prefix ID</label>
+                        <input type="text" class="form-control col-lg-3">
                     </div>
                     <div class="form-group">
-                        <label>Rounding (Number of decimal)</label>
-                        <select class="form-control" style="background: var(--bg-color)! important;">
-                            <option>0.01</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>TimeZone</label>
-                        <select class="form-control" style="background: var(--bg-color)! important;">
-                            <option>America/St_Barthelemy</option>
-                        </select>
+                        <label>Initial Count</label>
+                        <input type="number" class="form-control col-lg-2">
                     </div>
                 </form>
             </div>
@@ -176,15 +120,37 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!-- Require Javascript End -->
 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-<script src="js/widgEditor.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><script src="js/widgEditor.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script src="js/jquery.datetimepicker.full.js"></script>
 <script>
     $("#datetime").datetimepicker();
 </script>
+<script>
+    document.getElementById('img').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('preview').style.display = 'block';
+            document.getElementById('preview').src = e.target.result;
+            // You can access the image data here via e.target.result
+        };
+
+        reader.readAsDataURL(file);
+    });
+</script>
+
+
 <script type="text/javascript">
     jQuery(function($) {
         var path = window.location.href;

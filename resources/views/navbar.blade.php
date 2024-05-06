@@ -1,8 +1,8 @@
 <header class="container-fluid">
     <nav class="navbar navbar-expand-xl navbar-light align-items-center">
         <div class="nav-item">
-            <a class="navbar-brand nav-link px-2" href="dashboard.html">
-                <img src="{{ asset('images/logo.png')}}" class="img-fluid">
+            <a class="navbar-brand nav-link px-2" href="{{route('home')}}">
+                <img src="{{ asset('images/logo.png')}}" class="img-fluid" alt="">
             </a>
         </div>
 
@@ -25,6 +25,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('payments')}}"><i class="zmdi zmdi-paypal-alt"></i> Payments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('settings')}}"><i class="zmdi zmdi-settings"></i> Settings</a>
                 </li>
                 <li class="nav-item profile_img">
                     @if(Auth::check())

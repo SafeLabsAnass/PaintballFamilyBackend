@@ -15,19 +15,19 @@
 **    under the terms of the GNU General Public License as published by the
 **    Free Software Foundation; either version 2 of the License, or (at your
 **    option) any later version.
-**    
+**
 **    This program is distributed in the hope that it will be useful, but
 **    WITHOUT ANY WARRANTY; without even the implied warranty of
 **    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 **    General Public License for more details.
-**    
+**
 **    You should have received a copy of the GNU General Public License along
 **    with this program; if not, write to the Free Software Foundation, Inc.,
 **    59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-**    
-**    
-**    
-**    
+**
+**
+**
+**
 **    Purpose:
 **    -------------------------------------------------------------------------
 **
@@ -175,19 +175,19 @@ function widgInit()
 	if (typeof(document.designMode) == "string" && (document.all || document.designMode == "off"))
 	{
 		var theTextareas = document.getElementsByTagName("textarea");
-		
+
 		for (var i = 0; i < theTextareas.length; i++)
 		{
 			var theTextarea = theTextareas[i];
-			
+
 			if (theTextarea.className.classExists("widgEditor"))
 			{
 				if (theTextarea.id == "")
 				{
 					theTextarea.id = theTextarea.name;
 				}
-				
-				
+
+
 				setTimeout("new widgEditor('" + theTextarea.id + "')", 500 * (i));
 			}
 		}
@@ -196,7 +196,7 @@ function widgInit()
 	{
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -206,7 +206,7 @@ function widgInit()
 function widgEditor(replacedTextareaID)
 {
 	var self = this;
-	
+
 	this.theTextarea = document.getElementById(replacedTextareaID);
 	this.theContainer = document.createElement("div");
 	this.theIframe = document.createElement("iframe");
@@ -216,42 +216,42 @@ function widgEditor(replacedTextareaID)
 	this.locked = true;
 	this.pasteCache = "";
 	this.wysiwyg = true;
-	
+
 	if (document.all)
 	{
 		this.IE = true;
 	}
-	
+
 	if (this.theTextarea.id == null)
 	{
 		this.theTextarea.id = this.theTextarea.name;
 	}
-	
+
 	this.theTextarea.style.visibility = "hidden";
 
 	/* Modify DOM objects for editor */
 	this.theContainer.id = this.theTextarea.id + "WidgContainer";
 	this.theContainer.className = "widgContainer";
-	
+
 	this.theIframe.id = this.theTextarea.id + "WidgIframe";
 	this.theIframe.className = "widgIframe";
-	
+
 	this.theInput.type = "hidden";
 	this.theInput.id = this.theTextarea.id;
 	this.theInput.name = this.theTextarea.name;
 	this.theInput.value = this.theTextarea.value;
 
 	this.theToolbar = new widgToolbar(this);
-	
+
 	/* An extra input to determine if the submitted data is from the normal textarea or from the widgEditor */
-	this.theExtraInput.type = "hidden";	
+	this.theExtraInput.type = "hidden";
 	this.theExtraInput.id = this.theTextarea.id + "WidgEditor";
 	this.theExtraInput.name = this.theTextarea.name + "WidgEditor";
 	this.theExtraInput.value = "true";
-	
+
 	this.theTextarea.id += "WidgTextarea";
 	this.theTextarea.name += "WidgTextarea";
-	
+
 	this.theContainer.appendChild(this.theToolbar.theList);
 	this.theContainer.appendChild(this.theIframe);
 	this.theContainer.appendChild(this.theInput);
@@ -259,18 +259,18 @@ function widgEditor(replacedTextareaID)
 	this.theContainer.style.visibility = "hidden";
 
 	this.theInput.widgEditorObject = this;
-	
+
 	this.theTextarea.parentNode.replaceChild(this.theContainer, this.theTextarea);
 
 	/* Fill editor with old textarea content */
 	this.writeDocument(this.theInput.value);
-	
+
 	/* Make editor editable */
 	this.initEdit();
-	
+
 	/* Attach onsubmit to parent form */
 	this.modifyFormSubmit();
-	
+
 	return true;
 }
 
@@ -295,7 +295,7 @@ widgEditor.prototype.cleanPaste = function()
 		{
 			matchedHead += this.pasteCache.charAt(newContentStart);
 		}
-		
+
 		/* If newContentStart is inside a HTML tag, move to opening brace of tag */
 		for (var i = newContentStart; i >= 0; i--)
 		{
@@ -303,7 +303,7 @@ widgEditor.prototype.cleanPaste = function()
 			{
 				newContentStart = i;
 				matchedHead = this.pasteCache.substring(0, newContentStart);
-				
+
 				break;
 			}
 			else if(this.pasteCache.charAt(i) == ">")
@@ -328,7 +328,7 @@ widgEditor.prototype.cleanPaste = function()
 			{
 				newContentFinish = i;
 				matchedTail = this.pasteCache.substring(0, newContentFinish);
-				
+
 				break;
 			}
 			else if(this.pasteCache.charAt(i) == "<")
@@ -379,7 +379,7 @@ widgEditor.prototype.cleanPaste = function()
 		tempNode.innerHTML = newSnippet;
 
 		acceptableChildren(tempNode);
-		
+
 		this.theInput.value = matchedHead + tempNode.innerHTML + matchedTail;
 
 		/* Final cleanout for MS Word cruft */
@@ -388,14 +388,14 @@ widgEditor.prototype.cleanPaste = function()
 		this.theInput.value = this.theInput.value.replace(/<\/[^ >]+:[^>]*>/g, "");
 
 		this.refreshDisplay();
-		
+
 		/* Convert semantics to spans in Mozilla */
 		if (!this.IE)
 		{
 			this.convertSPANs();
 		}
 	}
-	
+
 	return true;
 }
 
@@ -406,7 +406,7 @@ widgEditor.prototype.cleanPaste = function()
 widgEditor.prototype.cleanSource = function()
 {
 	var theHTML = "";
-	
+
 	if (this.wysiwyg)
 	{
 		theHTML = this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML;
@@ -417,26 +417,26 @@ widgEditor.prototype.cleanSource = function()
 	}
 
 	theHTML = theHTML.validTags();
-	
+
 	/* Remove leading and trailing whitespace */
 	theHTML = theHTML.replace(/^\s+/, "");
 	theHTML = theHTML.replace(/\s+$/, "");
-	
+
 	/* Remove style attribute inside any tag */
 	theHTML = theHTML.replace(/ style="[^"]*"/g, "");
 
 	/* Replace improper BRs */
 	theHTML = theHTML.replace(/<br>/g, "<br />");
-	
+
 	/* Remove BRs right before the end of blocks */
 	theHTML = theHTML.replace(/<br \/>\s*<\/(h1|h2|h3|h4|h5|h6|li|p)/g, "</$1");
-	
+
 	/* Replace improper IMGs */
 	theHTML = theHTML.replace(/(<img [^>]+[^\/])>/g, "$1 />");
-	
+
 	/* Remove empty tags */
 	theHTML = theHTML.replace(/(<[^\/]>|<[^\/][^>]*[^\/]>)\s*<\/[^>]*>/g, "");
-	
+
 	if (this.wysiwyg)
 	{
 		this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML = theHTML;
@@ -445,9 +445,9 @@ widgEditor.prototype.cleanSource = function()
 	{
 		this.theTextarea.value = theHTML;
 	}
-	
+
 	this.theInput.value = theHTML;
-	
+
 	return true;
 }
 
@@ -460,53 +460,53 @@ widgEditor.prototype.convertSPANs = function(theSwitch)
 	{
 		/* Replace styled spans with their semantic equivalent */
 		var theSPANs = this.theIframe.contentWindow.document.getElementsByTagName("span");
-	
+
 		while(theSPANs.length > 0)
 		{
 			var theChildren = new Array();
 			var theReplacementElement = null;
 			var theParentElement = null;
-			
+
 			for (var j = 0; j < theSPANs[0].childNodes.length; j++)
 			{
 				theChildren.push(theSPANs[0].childNodes[j].cloneNode(true));
 			}
-			
+
 			/* Detect type of span style */
 			switch (theSPANs[0].getAttribute("style"))
 			{
 				case "font-weight: bold;":
 					theReplacementElement = this.theIframe.contentWindow.document.createElement("strong");
 					theParentElement = theReplacementElement;
-					
+
 					break;
-				
+
 				case "font-style: italic;":
 					theReplacementElement = this.theIframe.contentWindow.document.createElement("em");
 					theParentElement = theReplacementElement;
-					
+
 					break;
-					
+
 				case "font-weight: bold; font-style: italic;":
 					theParentElement = this.theIframe.contentWindow.document.createElement("em");
 					theReplacementElement = this.theIframe.contentWindow.document.createElement("strong");
 					theReplacementElement.appendChild(theParentElement);
-					
+
 					break;
-					
+
 				case "font-style: italic; font-weight: bold;":
 					theParentElement = this.theIframe.contentWindow.document.createElement("strong");
 					theReplacementElement = this.theIframe.contentWindow.document.createElement("em");
 					theReplacementElement.appendChild(theParentElement);
-					
+
 					break;
-					
+
 				default:
 					replaceNodeWithChildren(theSPANs[0]);
-				
+
 					break;
 			}
-			
+
 			if (theReplacementElement != null)
 			{
 				for (var j = 0; j < theChildren.length; j++)
@@ -516,7 +516,7 @@ widgEditor.prototype.convertSPANs = function(theSwitch)
 
 				theSPANs[0].parentNode.replaceChild(theReplacementElement, theSPANs[0]);
 			}
-			
+
 			theSPANs = this.theIframe.contentWindow.document.getElementsByTagName("span");
 		}
 	}
@@ -524,19 +524,19 @@ widgEditor.prototype.convertSPANs = function(theSwitch)
 	{
 		/* Replace em and strong tags with styled spans */
 		var theEMs = this.theIframe.contentWindow.document.getElementsByTagName("em");
-		
+
 		while(theEMs.length > 0)
 		{
 			var theChildren = new Array();
 			var theSpan = this.theIframe.contentWindow.document.createElement("span");
-			
+
 			theSpan.setAttribute("style", "font-style: italic;");
-			
+
 			for (var j = 0; j < theEMs[0].childNodes.length; j++)
 			{
 				theChildren.push(theEMs[0].childNodes[j].cloneNode(true));
 			}
-			
+
 			for (var j = 0; j < theChildren.length; j++)
 			{
 				theSpan.appendChild(theChildren[j]);
@@ -545,21 +545,21 @@ widgEditor.prototype.convertSPANs = function(theSwitch)
 			theEMs[0].parentNode.replaceChild(theSpan, theEMs[0]);
 			theEMs = this.theIframe.contentWindow.document.getElementsByTagName("em");
 		}
-		
+
 		var theSTRONGs = this.theIframe.contentWindow.document.getElementsByTagName("strong");
-		
+
 		while(theSTRONGs.length > 0)
 		{
 			var theChildren = new Array();
 			var theSpan = this.theIframe.contentWindow.document.createElement("span");
-			
+
 			theSpan.setAttribute("style", "font-weight: bold;");
-			
+
 			for (var j = 0; j < theSTRONGs[0].childNodes.length; j++)
 			{
 				theChildren.push(theSTRONGs[0].childNodes[j].cloneNode(true));
 			}
-			
+
 			for (var j = 0; j < theChildren.length; j++)
 			{
 				theSpan.appendChild(theChildren[j]);
@@ -569,7 +569,7 @@ widgEditor.prototype.convertSPANs = function(theSwitch)
 			theSTRONGs = this.theIframe.contentWindow.document.getElementsByTagName("strong");
 		}
 	}
-	
+
 	return true;
 }
 
@@ -581,7 +581,7 @@ widgEditor.prototype.detectPaste = function(e)
 {
 	var keyPressed = null;
 	var theEvent = null;
-	
+
 	if (e)
 	{
 		theEvent = e;
@@ -590,11 +590,11 @@ widgEditor.prototype.detectPaste = function(e)
 	{
 		theEvent = event;
 	}
-	
+
 	if (theEvent.ctrlKey && theEvent.keyCode == 86 && this.wysiwyg)
 	{
 		var self = this;
-		
+
 		this.pasteCache = this.theIframe.contentWindow.document.getElementsByTagName("body")[0].innerHTML;
 
 		/* Because Mozilla can't access the clipboard directly, must rely on timeout to check pasted differences in main content */
@@ -611,7 +611,7 @@ widgEditor.prototype.detectPaste = function(e)
 widgEditor.prototype.initEdit = function()
 {
 	var self = this;
-	
+
 	try
 	{
 		this.theIframe.contentWindow.document.designMode = "on";
@@ -620,18 +620,18 @@ widgEditor.prototype.initEdit = function()
 	{
 		/* setTimeout needed to counteract Mozilla bug whereby you can't immediately change designMode on newly created iframes */
 		setTimeout(function(){self.initEdit()}, 250);
-			
+
 		return false;
 	}
-	
+
 	if (!this.IE)
 	{
 		this.convertSPANs(false);
 	}
-	
+
 	this.theContainer.style.visibility = "visible";
 	this.theTextarea.style.visibility = "visible";
-	
+
 	/* Mozilla event capturing */
 	if (typeof document.addEventListener == "function")
 	{
@@ -646,10 +646,10 @@ widgEditor.prototype.initEdit = function()
 		this.theIframe.contentWindow.document.attachEvent("onkeyup", function(){widgToolbarCheckState(self); return true;});
 		this.theIframe.contentWindow.document.attachEvent("onkeydown", function(e){self.detectPaste(e); return true;}, false);
 	}
-	
+
 	this.locked = false;
 
-	return true;	
+	return true;
 }
 
 
@@ -660,12 +660,12 @@ widgEditor.prototype.insertNewParagraph = function(elementArray, succeedingEleme
 {
 	var theBody = this.theIframe.contentWindow.document.getElementsByTagName("body")[0];
 	var theParagraph = this.theIframe.contentWindow.document.createElement("p");
-	
+
 	for (var i = 0; i < elementArray.length; i++)
 	{
 		theParagraph.appendChild(elementArray[i]);
 	}
-	
+
 	if (typeof(succeedingElement) != "undefined")
 	{
 		theBody.insertBefore(theParagraph, succeedingElement);
@@ -674,7 +674,7 @@ widgEditor.prototype.insertNewParagraph = function(elementArray, succeedingEleme
 	{
 		theBody.appendChild(theParagraph);
 	}
-	
+
 	return true;
 }
 
@@ -687,7 +687,7 @@ widgEditor.prototype.modifyFormSubmit = function()
 	var self = this;
 	var theForm = this.theContainer.parentNode;
 	var oldOnsubmit = null;
-	
+
 	/* Find the parent form element */
 	while (theForm.nodeName.toLowerCase() != "form")
 	{
@@ -710,7 +710,7 @@ widgEditor.prototype.modifyFormSubmit = function()
 		{
 			self.updateWidgInput();
 
-			return oldOnsubmit();			
+			return oldOnsubmit();
 		}
 	}
 
@@ -807,7 +807,7 @@ widgEditor.prototype.paragraphise = function()
 			this.insertNewParagraph(removedElements);
 		}
 	}
-	
+
 	return true;
 }
 
@@ -838,12 +838,12 @@ widgEditor.prototype.switchMode = function()
 	if (!this.locked)
 	{
 		this.locked = true;
-		
+
 		/* Switch to HTML source */
 		if (this.wysiwyg)
 		{
 			this.updateWidgInput();
-			this.theTextarea.value = this.theInput.value;	
+			this.theTextarea.value = this.theInput.value;
 			this.theContainer.replaceChild(this.theTextarea, this.theIframe);
 			this.theToolbar.disable();
 			this.wysiwyg = false;
@@ -860,7 +860,7 @@ widgEditor.prototype.switchMode = function()
 			this.wysiwyg = true;
 		}
 	}
-			
+
 	return true;
 }
 
@@ -877,8 +877,8 @@ widgEditor.prototype.updateWidgInput = function()
 		{
 			this.convertSPANs(true);
 		}
-		
-		this.paragraphise();		
+
+		this.paragraphise();
 		this.cleanSource();
 	}
 	else
@@ -906,7 +906,7 @@ widgEditor.prototype.writeDocument = function(documentContent)
 			</body>\
 		</html>\
 	';
-	
+
 	/* Insert dynamic variables/content into document */
 	/* IE needs stylesheet to be written inline */
 	if (typeof document.all != "undefined")
@@ -918,9 +918,9 @@ widgEditor.prototype.writeDocument = function(documentContent)
 	{
 		documentTemplate = documentTemplate.replace(/INSERT:STYLESHEET:END/, "");
 	}
-	
+
 	documentTemplate = documentTemplate.replace(/INSERT:CONTENT:END/, documentContent);
-	
+
 	this.theIframe.contentWindow.document.open();
 	this.theIframe.contentWindow.document.write(documentTemplate);
 	this.theIframe.contentWindow.document.close();
@@ -932,9 +932,9 @@ widgEditor.prototype.writeDocument = function(documentContent)
 		stylesheet.setAttribute("rel", "stylesheet");
 		stylesheet.setAttribute("type", "text/css");
 		stylesheet.setAttribute("href", widgStylesheet);
-		this.theIframe.contentWindow.document.getElementsByTagName("head")[0].appendChild(stylesheet);
+		// this.theIframe.contentWindow.document.getElementsByTagName("head")[0].appendChild(stylesheet);
 	}
-	
+
 	return true;
 }
 
@@ -945,9 +945,9 @@ widgEditor.prototype.writeDocument = function(documentContent)
 function widgToolbar(theEditor)
 {
 	var self = this;
-	
+
 	this.widgEditorObject = theEditor;
-	
+
 	/* Create toolbar ul element */
 	this.theList = document.createElement("ul");
 	this.theList.id = this.widgEditorObject.theInput.id + "WidgToolbar";
@@ -961,42 +961,42 @@ function widgToolbar(theEditor)
 		{
 			case "bold":
 				this.addButton(this.theList.id + "ButtonBold", "widgButtonBold", "Bold", "bold");
-				
+
 				break;
-				
+
 			case "italic":
 				this.addButton(this.theList.id + "ButtonItalic", "widgButtonItalic", "Italic", "italic");
-				
+
 				break;
-				
+
 			case "hyperlink":
 				this.addButton(this.theList.id + "ButtonLink", "widgButtonLink", "Hyperlink", "link");
-				
+
 				break;
-				
+
 			case "unorderedlist":
 				this.addButton(this.theList.id + "ButtonUnordered", "widgButtonUnordered", "Unordered List", "insertunorderedlist");
-				
+
 				break;
-				
+
 			case "orderedlist":
 				this.addButton(this.theList.id + "ButtonOrdered", "widgButtonOrdered", "Ordered List", "insertorderedlist");
-				
+
 				break;
-				
+
 			case "image":
 				this.addButton(this.theList.id + "ButtonImage", "widgButtonImage", "Insert Image", "image");
-				
+
 				break;
-				
+
 			case "htmlsource":
 				this.addButton(this.theList.id + "ButtonHTML", "widgButtonHTML", "HTML Source", "html");
-				
+
 				break;
-				
+
 			case "blockformat":
 				this.addSelect(this.theList.id + "SelectBlock", "widgSelectBlock", widgSelectBlockOptions, "formatblock");
-				
+
 				break;
 		}
 	}
@@ -1014,7 +1014,7 @@ widgToolbar.prototype.addButton = function(theID, theClass, theLabel, theAction)
 	var menuItem = document.createElement("li");
 	var theLink = document.createElement("a");
 	var theText = document.createTextNode(theLabel);
-	
+
 	menuItem.id = theID;
 	menuItem.className = "widgEditButton";
 
@@ -1040,9 +1040,9 @@ widgToolbar.prototype.addSelect = function(theID, theClass, theContentArray, the
 {
 	var menuItem = document.createElement("li");
 	var theSelect = document.createElement("select");
-	
+
 	menuItem.className = "widgEditSelect";
-	
+
 	theSelect.id = theID;
 	theSelect.name = theID;
 	theSelect.className = theClass;
@@ -1053,13 +1053,13 @@ widgToolbar.prototype.addSelect = function(theID, theClass, theContentArray, the
 	{
 		var theOption = document.createElement("option");
 		var theText = document.createTextNode(theContentArray[i + 1]);
-		
+
 		theOption.value = theContentArray[i];
 
 		theOption.appendChild(theText);
 		theSelect.appendChild(theOption);
 	}
-	
+
 	menuItem.appendChild(theSelect);
 	this.theList.appendChild(menuItem);
 
@@ -1079,7 +1079,7 @@ widgToolbar.prototype.disable = function()
 	for (var i = 0; i < this.theList.childNodes.length; i++)
 	{
 		var theChild = this.theList.childNodes[i];
-		
+
 		if (theChild.nodeName.toLowerCase() == "li" && theChild.className == "widgEditSelect")
 		{
 			/* Loop through li children to find select */
@@ -1088,13 +1088,13 @@ widgToolbar.prototype.disable = function()
 				if (theChild.childNodes[j].nodeName.toLowerCase() == "select")
 				{
 					theChild.childNodes[j].disabled = "disabled";
-					
+
 					break;
 				}
 			}
 		}
 	}
-	
+
 	return true;
 }
 
@@ -1106,12 +1106,12 @@ widgToolbar.prototype.enable = function()
 {
 	/* Change class to enable buttons using CSS */
 	this.theList.className = this.theList.className.replace(/ widgSource/, "");
-	
+
 	/* Loop through lis */
 	for (var i = 0; i < this.theList.childNodes.length; i++)
 	{
 		var theChild = this.theList.childNodes[i];
-		
+
 		if (theChild.nodeName.toLowerCase() == "li" && theChild.className == "widgEditSelect")
 		{
 			/* Loop through li children to find select */
@@ -1120,13 +1120,13 @@ widgToolbar.prototype.enable = function()
 				if (theChild.childNodes[j].nodeName.toLowerCase() == "select")
 				{
 					theChild.childNodes[j].disabled = "";
-					
+
 					break;
 				}
 			}
 		}
 	}
-	
+
 	return true;
 }
 
@@ -1139,7 +1139,7 @@ widgToolbar.prototype.setState = function(theState, theStatus)
 	if (theState != "SelectBlock")
 	{
 		var theButton = document.getElementById(this.theList.id + "Button" + theState);
-	
+
 		if (theButton != null)
 		{
 			if (theStatus == "on")
@@ -1155,15 +1155,15 @@ widgToolbar.prototype.setState = function(theState, theStatus)
 	else
 	{
 		var theSelect = document.getElementById(this.theList.id + "SelectBlock");
-		
+
 		if (theSelect != null)
 		{
 			theSelect.value = "";
 			theSelect.value = theStatus;
 		}
 	}
-			
-	return true;	
+
+	return true;
 }
 
 
@@ -1178,26 +1178,26 @@ function widgToolbarAction()
 	var theIframe = theWidgEditor.theIframe;
 	var theSelection = "";
 
-	/* If somehow a button other than "HTML source" is clicked while viewing HTML source, ignore click */	
+	/* If somehow a button other than "HTML source" is clicked while viewing HTML source, ignore click */
 	if (!theWidgEditor.wysiwyg && this.action != "html")
 	{
 		return false;
 	}
-	
+
 	switch (this.action)
 	{
 		case "formatblock":
 			theIframe.contentWindow.document.execCommand(this.action, false, this.value);
-			
+
 			theWidgEditor.theToolbar.setState("SelectBlock", this.value);
-			
+
 			break;
-			
+
 		case "html":
 			theWidgEditor.switchMode();
-			
+
 			break;
-			
+
 		case "link":
 			if (this.parentNode.className.classExists("on"))
 			{
@@ -1232,34 +1232,34 @@ function widgToolbarAction()
 				var theURL = prompt("Enter the URL for this link:", "http://");
 
 				if (theURL != null)
-				{			
+				{
 					theIframe.contentWindow.document.execCommand("CreateLink", false, theURL);
 					theWidgEditor.theToolbar.setState("Link", "on");
 				}
 			}
-			
+
 			break;
-			
+
 		case "image":
 			var theImage = prompt("Enter the location for this image:", "");
-			
+
 			if (theImage != null && theImage != "")
 			{
 				var theAlt = prompt("Enter the alternate text for this image:", "");
 				var theSelection = null;
 				var theRange = null;
-				
+
 				/* IE selections */
 				if (theIframe.contentWindow.document.selection)
 				{
 					/* Escape quotes in alt text */
 					theAlt = theAlt.replace(/"/g, "'");
-			
+
 					theSelection = theIframe.contentWindow.document.selection;
 					theRange = theSelection.createRange();
 					theRange.collapse(false);
 					theRange.pasteHTML("<img alt=\"" + theAlt + "\" src=\"" + theImage + "\" />");
-					
+
 					break;
 				}
 				/* Mozilla selections */
@@ -1276,14 +1276,14 @@ function widgToolbarAction()
 
 					theRange = theSelection.getRangeAt(0);
 					theRange.collapse(false);
-					
+
 					var theImageNode = theIframe.contentWindow.document.createElement("img");
-					
+
 					theImageNode.src = theImage;
 					theImageNode.alt = theAlt;
-					
+
 					theRange.insertNode(theImageNode);
-					
+
 					break;
 				}
 			}
@@ -1291,26 +1291,26 @@ function widgToolbarAction()
 			{
 				return false;
 			}
-		
+
 		default:
 			theIframe.contentWindow.document.execCommand(this.action, false, null);
-			
+
 			var theAction = this.action.replace(/^./, function(match){return match.toUpperCase();});
 
-			/* Turn off unordered toolbar item if ordered toolbar item was activated */	
+			/* Turn off unordered toolbar item if ordered toolbar item was activated */
 			if (this.action == "insertorderedlist")
 			{
 				theAction = "Ordered";
 				theWidgEditor.theToolbar.setState("Unordered", "off");
 			}
-			
-			/* Turn off ordered toolbar item if unordered toolbar item was activated */	
+
+			/* Turn off ordered toolbar item if unordered toolbar item was activated */
 			if (this.action == "insertunorderedlist")
 			{
 				theAction = "Unordered";
 				theWidgEditor.theToolbar.setState("Ordered", "off");
 			}
-			
+
 			/* If toolbar item was turned on */
 			if (theIframe.contentWindow.document.queryCommandState(this.action, false, null))
 			{
@@ -1321,7 +1321,7 @@ function widgToolbarAction()
 				theWidgEditor.theToolbar.setState(theAction, "off");
 			}
 	}
-	
+
 	if (theWidgEditor.wysiwyg == true)
 	{
 		theIframe.contentWindow.focus();
@@ -1330,8 +1330,8 @@ function widgToolbarAction()
 	{
 		theWidgEditor.theTextarea.focus();
 	}
-	
-	return false;	
+
+	return false;
 }
 
 
@@ -1345,19 +1345,19 @@ function widgToolbarCheckState(theWidgEditor, resubmit)
 		/* Allow browser to update selection before using the selection */
 		setTimeout(function(){widgToolbarCheckState(theWidgEditor, true); return true;}, 500);
 	}
-	
+
 	var theSelection = null;
 	var theRange = null;
 	var theParentNode = null;
 	var theLevel = 0;
-	
+
 	/* Turn off all the buttons */
 	var menuListItems = theWidgEditor.theToolbar.theList.childNodes;
 	for (var i = 0; i < menuListItems.length; i++)
 	{
 		menuListItems[i].className = menuListItems[i].className.removeClass("on");
 	}
-	
+
 	/* IE selections */
 	if (theWidgEditor.theIframe.contentWindow.document.selection)
 	{
@@ -1383,40 +1383,40 @@ function widgToolbarCheckState(theWidgEditor, resubmit)
 		{
 			return false;
 		}
-		
+
 		theRange = theSelection.getRangeAt(0);
 		theParentNode = theRange.commonAncestorContainer;
 	}
-	
+
 	while (theParentNode.nodeType == 3)
 	{
 		theParentNode = theParentNode.parentNode;
 	}
-	
+
 	while (theParentNode.nodeName.toLowerCase() != "body")
 	{
 		switch (theParentNode.nodeName.toLowerCase())
 		{
 			case "a":
 				theWidgEditor.theToolbar.setState("Link", "on");
-				
+
 				break;
-				
+
 			case "em":
 				theWidgEditor.theToolbar.setState("Italic", "on");
-				
+
 				break;
-				
+
 			case "li":
-			
+
 				break;
-				
+
 			case "ol":
 				theWidgEditor.theToolbar.setState("Ordered", "on");
 				theWidgEditor.theToolbar.setState("Unordered", "off");
-				
+
 				break;
-				
+
 			case "span":
 				if (theParentNode.getAttribute("style") == "font-weight: bold;")
 				{
@@ -1436,31 +1436,31 @@ function widgToolbarCheckState(theWidgEditor, resubmit)
 					theWidgEditor.theToolbar.setState("Bold", "on");
 					theWidgEditor.theToolbar.setState("Italic", "on");
 				}
-				
+
 				break;
-			
+
 			case "strong":
 				theWidgEditor.theToolbar.setState("Bold", "on");
-				
+
 				break;
-			
+
 			case "ul":
 				theWidgEditor.theToolbar.setState("Unordered", "on");
 				theWidgEditor.theToolbar.setState("Ordered", "off");
-				
+
 				break;
-			
+
 			default:
 				theWidgEditor.theToolbar.setState("SelectBlock", "<" + theParentNode.nodeName.toLowerCase() + ">");
-			
+
 				break;
 		}
-		
+
 		theParentNode = theParentNode.parentNode;
 		theLevel++;
 	}
-	
-	return true;			
+
+	return true;
 }
 
 
@@ -1470,7 +1470,7 @@ function widgToolbarCheckState(theWidgEditor, resubmit)
 function widgToolbarMouseover()
 {
 	window.status = "";
-	
+
 	return true;
 }
 
@@ -1480,7 +1480,7 @@ function widgToolbarMouseover()
 function acceptableChildren(theNode)
 {
 	var theChildren = theNode.childNodes;
-	
+
 	for (var i = 0; i < theChildren.length; i++)
 	{
 		if (!theChildren[i].nodeName.isAcceptedElementName())
@@ -1490,26 +1490,26 @@ function acceptableChildren(theNode)
 				if (theNode.nodeName.toLowerCase() == "p")
 				{
 					acceptableChildren(replaceNodeWithChildren(theNode));
-					
+
 					return true;
 				}
-				
+
 				changeNodeType(theChildren[i], "p");
 			}
 			else
 			{
 				replaceNodeWithChildren(theChildren[i]);
 			}
-				
+
 			i = -1;
 		}
 	}
-	
+
 	for (var i = 0; i < theChildren.length; i++)
 	{
 		acceptableChildren(theChildren[i]);
 	}
-	
+
 	return true;
 }
 
@@ -1522,22 +1522,22 @@ function changeNodeType(theNode, nodeType)
 	var theChildren = new Array();
 	var theNewNode = document.createElement(nodeType);
 	var theParent = theNode.parentNode;
-	
+
 	if (theParent != null)
 	{
 		for (var i = 0; i < theNode.childNodes.length; i++)
 		{
 			theChildren.push(theNode.childNodes[i].cloneNode(true));
 		}
-		
+
 		for (var i = 0; i < theChildren.length; i++)
 		{
 			theNewNode.appendChild(theChildren[i]);
 		}
-		
+
 		theParent.replaceChild(theNewNode, theNode);
 	}
-	
+
 	return true;
 }
 
@@ -1549,24 +1549,24 @@ function replaceNodeWithChildren(theNode)
 {
 	var theChildren = new Array();
 	var theParent = theNode.parentNode;
-	
+
 	if (theParent != null)
 	{
 		for (var i = 0; i < theNode.childNodes.length; i++)
 		{
 			theChildren.push(theNode.childNodes[i].cloneNode(true));
 		}
-		
+
 		for (var i = 0; i < theChildren.length; i++)
 		{
 			theParent.insertBefore(theChildren[i], theNode);
 		}
-		
+
 		theParent.removeChild(theNode);
-		
+
 		return theParent;
 	}
-	
+
 	return true;
 }
 
@@ -1587,7 +1587,7 @@ String.prototype.addClass = function(theClass)
 	{
 		return theClass;
 	}
-	
+
 	return this;
 }
 
@@ -1599,12 +1599,12 @@ String.prototype.classExists = function(theClass)
 {
 	var regString = "(^| )" + theClass + "\W*";
 	var regExpression = new RegExp(regString);
-	
+
 	if (regExpression.test(this))
 	{
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -1616,7 +1616,7 @@ String.prototype.isAcceptedElementName = function()
 {
 	var elementList = new Array("#text", "a", "em", "h1", "h2", "h3", "h4", "h5", "h6", "img", "li", "ol", "p", "strong", "ul");
 	var theName = this.toLowerCase();
-	
+
 	for (var i = 0; i < elementList.length; i++)
 	{
 		if (theName == elementList[i])
@@ -1624,7 +1624,7 @@ String.prototype.isAcceptedElementName = function()
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -1636,7 +1636,7 @@ String.prototype.isInlineName = function()
 {
 	var inlineList = new Array("#text", "a", "em", "font", "span", "strong", "u");
 	var theName = this.toLowerCase();
-	
+
 	for (var i = 0; i < inlineList.length; i++)
 	{
 		if (theName == inlineList[i])
@@ -1644,7 +1644,7 @@ String.prototype.isInlineName = function()
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -1656,7 +1656,7 @@ String.prototype.removeClass = function(theClass)
 {
 	var regString = "(^| )" + theClass + "\W*";
 	var regExpression = new RegExp(regString);
-	
+
 	return this.replace(regExpression, "");
 }
 
@@ -1667,12 +1667,12 @@ String.prototype.removeClass = function(theClass)
 String.prototype.reverse = function()
 {
 	var theString = "";
-	
+
 	for (var i = this.length - 1; i >= 0; i--)
 	{
 		theString += this.charAt(i);
 	}
-	
+
 	return theString;
 }
 
@@ -1683,10 +1683,10 @@ String.prototype.reverse = function()
 String.prototype.validTags = function()
 {
 	var theString = this;
-	
+
 	/* Replace uppercase element names with lowercase */
 	theString = theString.replace(/<[^> ]*/g, function(match){return match.toLowerCase();});
-	
+
 	/* Replace uppercase attribute names with lowercase */
 	theString = theString.replace(/<[^>]*>/g, function(match)
 		{
@@ -1694,14 +1694,14 @@ String.prototype.validTags = function()
 
 			return match;
 		});
-			
+
 	/* Put quotes around unquoted attributes */
 	theString = theString.replace(/<[^>]*>/g, function(match)
 		{
 			match = match.replace(/( [^=]+=)([^"][^ >]*)/g, "$1\"$2\"");
-			
+
 			return match;
 		});
-		
+
 	return theString;
 }

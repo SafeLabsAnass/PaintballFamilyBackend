@@ -143,66 +143,6 @@
         });
     </script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            document.getElementById('editForm').addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevent the default form submission
-
-                // Serialize the form data
-                const formData = new FormData(this);
-
-                // Make a POST request to your Laravel route
-                fetch('/product/update/' + {{$items[1]->id}}, {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.json()) // Parse the JSON response
-                    .then(data => {
-                        // Handle the JSON response
-                        // Example: Update UI based on the response
-                        if (data.status === 'success') {
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: 'Vous êtes redirigé vers le tableau de categories',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                },
-                                didClose: () => {
-                                    document.cookie = "tabProductOpened=product";
-                                    window.location = data.redirect + encodeURIComponent(document.cookie);
-                                }
-                            });
-                            window.location = data.redirect;
-                        } else {
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'error',
-                                title: 'Les donnees entrants sont similaire avec les anciennes !',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                didOpen: () => {
-                                    Swal.showLoading()
-                                },
-                                didClose: () => {
-                                    document.cookie = "tabProductOpened=product";
-                                    window.location = data.redirect + encodeURIComponent(document.cookie);
-                                }
-
-                            });
-
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error); // Log any errors
-                    });
-            });
-        });
-    </script>
-
-
-    <script type="text/javascript">
         jQuery(function($) {
             var path = window.location.href;
             $('a.nav-link').each(function() {

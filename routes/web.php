@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\Product;
@@ -44,6 +45,7 @@ Route::middleware('auth')->group(function () {
                 view('pages.update_product');
         })->name('update_product');
 
+        Route::get('/settings', [SettingController::class, 'index'])->name('settings');
         Route::get('/peoples', [UserController::class, 'index'])->name('peoples');
         Route::get('user/destroy/{id}', [UserController::class, 'destroy']);
         Route::post('user/store', [UserController::class, 'store'])->name('user.store');
@@ -67,6 +69,9 @@ Route::middleware('auth')->group(function () {
         Route::get('payments/destroy/{id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
         Route::get('payments/show/{id}', [PaymentController::class, 'show'])->name('payment.show');
         Route::post('payments/update/{id}', [PaymentController::class, 'edit'])->name('payment.edit');
+        Route::post('settings/store', [SettingController::class, 'store'])->name('settings.store');
+        Route::post('settings/show/{id}', [SettingController::class, 'store'])->name('settings.show');
+        Route::post('settings/edit/{id}', [SettingController::class, 'edit'])->name('settings.edit');
 
 
     });
