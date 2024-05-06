@@ -43,7 +43,7 @@ class SettingController extends Controller
             $company->phone = $request->phone;
             $company->address = $request->address;
             $company->email = $request->email;
-            $company->logo =  asset('storage/' . $logo);
+            $company->logo = $logo;
             $company->site = $request->site;
             $company->vat_number = $request->vat_number;
             $company->save();

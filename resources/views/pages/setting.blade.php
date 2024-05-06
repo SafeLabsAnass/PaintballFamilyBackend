@@ -107,9 +107,9 @@
                         <label>Initial Count</label>
                         <input type="number" class="form-control col-lg-2">
                     </div>
+                    <button type="submit" class="btn py-3" style="max-width: 200px">Submit</button>
                 </form>
             </div>
-            <button type="submit" class="btn py-3" style="max-width: 200px">Submit</button>
 
         </div>
     </div>
