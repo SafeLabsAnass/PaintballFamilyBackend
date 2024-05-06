@@ -56,6 +56,9 @@ class ProductController extends Controller
     {
         $product = Product::where('id', $id)->first();
         $categories = Category::all();
+        $cookie_name = "tabProductOpened";
+        $cookie_value = "product";
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
         return
             view('pages.update_product')->with('items', [$categories,$product]);
 

@@ -48,6 +48,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            document.getElementById('nav-Categories-tab').addEventListener('click',function (){
+                document.cookie = "tabProductOpened="
+            });
+
             if (getCookie('tabProductOpened') === "product") {
                 $('#nav-Categories-tab').removeClass('active');
                 $('#nav_food_items').addClass('active');
