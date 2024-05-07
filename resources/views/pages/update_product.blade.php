@@ -48,7 +48,7 @@
                     <div class="col m-1">
                         <div class="bg-second p-4">
                             <h3 class="mt-0 mb-5 text-white">Update a product</h3>
-                            <form action="{{route('product.update',$items[1]->id)}}" method="POST" id="editForm" enctype="multipart/form-data">
+                            <form action="{{route('product.update.web',$items[1]->id)}}" method="POST" id="editForm" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row" style="max-width: 600px">
                                     <div class="upload-box mt-1 mr-4 mb-3 mx-auto">
@@ -128,6 +128,63 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('js/jquery.datetimepicker.full.js')}}"></script>
+    <script type="text/javascript">
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Serialize the form data
+            const formData = new FormData(this);
+
+            // Make a POST request to your Laravel route
+            fetch('/product/update/'+{{$items[1]->id}}, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+                    // Handle the JSON response
+                    console.log(data); // Output the JSON response to the console
+
+                    // Example: Update UI based on the response
+                    if (data.status==='success') {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Vous êtes redirigé vers le tableau de categories',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                            didClose: ()=>{
+                                window.location = data.redirect;
+                            }
+                        });
+                        window.location = data.redirect;
+                    } else {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Les donnees entrants sont similaire avec les anciennes !',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                            didClose: ()=>{
+                                window.location = data.redirect;
+                            }
+
+                        });
+
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Log any errors
+                });
+        });
+    </script>
+
     <script>
         document.getElementById('img').addEventListener('change', function(event) {
             const file = event.target.files[0];

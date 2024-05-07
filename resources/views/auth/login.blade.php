@@ -47,7 +47,7 @@
 
 <body id="page_sign_in">
 <div class="container mx-auto my-auto px-0">
-    <form method="POST" action="{{ route('login') }}" id="loginForm" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('login.web') }}" id="loginForm" enctype="multipart/form-data">
         @csrf
         <div class="col-10 mx-auto pt-5 px-4 pt-1">
             <div class="logo_box mx-auto text-center">

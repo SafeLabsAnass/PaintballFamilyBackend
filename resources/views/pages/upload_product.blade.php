@@ -29,6 +29,7 @@
     <!-- Page Title -->
     <title></title>
 
+
 </head>
 
 <body id="page_items">
@@ -52,7 +53,7 @@
                     <div class="col m-1">
                         <div class="bg-second p-4">
                             <h3 class="mt-0 mb-5 text-white">Upload a product</h3>
-                            <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
+                            <form action="{{route('product.store.web')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row" style="max-width: 600px">
                                     <div class="upload-box mt-1 mr-4 mb-3 mx-auto">

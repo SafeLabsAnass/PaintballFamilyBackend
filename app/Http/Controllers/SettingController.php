@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\InvoiceSetting;
 use App\Models\Site;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -14,7 +17,8 @@ class SettingController extends Controller
     public function index()
     {
         $company = Company::all()->first();
-       return view('pages.setting')->with('company', $company);
+        $invoice = InvoiceSetting::all()->first();
+       return view('pages.setting')->with('items', [$company, $invoice]);
     }
 
     /**
@@ -26,6 +30,37 @@ class SettingController extends Controller
 
     }
 
+    public function editInvoice(Request $request)
+    {
+
+        if(InvoiceSetting::all()->count()!=0) {
+
+            $invoiceSetting = InvoiceSetting::all()->first();
+            $invoiceSetting->prefix_id = $request->prefix_id;
+            $invoiceSetting->initial_count = $request->initial_count;
+            $invoiceSetting->thanks_message = $request->noise;
+            $invoiceSetting->save();
+            return redirect()->route('settings');
+        }
+    }
+    /**
+     *@return RedirectResponse
+     *@param Request $request
+    */
+    public function storeInvoice(Request $request): RedirectResponse
+    {
+        if(InvoiceSetting::all()->count()==0) {
+
+            $invoiceSetting = new InvoiceSetting();
+            $invoiceSetting->prefix_id = $request->prefix_id;
+            $invoiceSetting->initial_count = $request->initial_count;
+            $invoiceSetting->thanks_message = $request->noise;
+            $invoiceSetting->save();
+
+            return redirect()->route('settings');
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -34,10 +69,17 @@ class SettingController extends Controller
         //
         if(Company::all()->count()==0) {
             request()->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
+            $logo = '';
+            if(request()->image != null){
+                $logo = request()->image->getClientOriginalName();
+                Storage::put('app/public', $logo);
+                Storage::setVisibility('public/' . $logo, 'public');
+            }
             $logo = request()->image->getClientOriginalName();
-            request()->image->move(storage_path('app/public'), $logo);
+            Storage::put('app/public', $logo);
+            Storage::setVisibility('public/' . $logo, 'public');
             $company = new Company();
             $company->name = $request->name;
             $company->phone = $request->phone;
@@ -47,7 +89,7 @@ class SettingController extends Controller
             $company->site = $request->site;
             $company->vat_number = $request->vat_number;
             $company->save();
-            return redirect('/settings');
+            return redirect()->route('settings');
         }
     }
 
@@ -63,9 +105,38 @@ class SettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Site $site)
+    public function edit(Request $request)
     {
-        //
+        if(Company::all()->count()!=0) {
+            request()->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $logo = '';
+            $company = Company::all()->first();
+            if(request()->image!= null){
+                $logo = request()->image->getClientOriginalName();
+                request()->image->move(storage_path('app/public'), $logo);
+            }
+            if (file_exists(storage_path('app/public' . '/' . $request->imageTest))) {
+            $company->logo = $logo;
+            } else {
+                request()->validate([
+                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+                $imageName = request()->image->getClientOriginalName();
+                request()->image->move(storage_path('app/public'), $imageName);
+                $company->logo = $logo;
+
+            }
+            $company->name = $request->name;
+            $company->phone = $request->phone;
+            $company->address = $request->address;
+            $company->email = $request->email;
+            $company->site = $request->site;
+            $company->vat_number = $request->vat_number;
+            $company->save();
+            return redirect()->route('settings');
+        }
     }
 
     /**

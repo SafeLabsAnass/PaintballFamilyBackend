@@ -6,6 +6,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- Datetimepicker CSS -->
     <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
@@ -28,6 +30,13 @@
     <!-- Page Title -->
     <title></title>
 
+    <style>
+        #noiseWidgToolbarSelectBlock{
+            display: none;
+        }
+    </style>
+
+
 </head>
 
 <body id="page_items">
@@ -38,10 +47,10 @@
 <!-- Body Wrapper Start -->
 <div class="body_wrapper container-fluid">
     <div class="row no-gutters">
-        <div class="col m-1" style="max-width: 45%;">
+        <div class="col ml-1" style="max-width: 45%;">
             <div class="bg-second p-4">
                 <h3 class="mt-0 mb-4 text-white">Setting</h3>
-                <form method="post" action="@if(\App\Models\Company::all()->count()==0) {{route('settings.store')}} @else {{route('settings.edit',\App\Models\Company::all()->first()->id)}} @endif" enctype="multipart/form-data">
+                <form method="post" action="@if(\App\Models\Company::all()->count()==0) {{route('settings.store')}} @else {{route('settings.edit',$items[0]->id)}} @endif" enctype="multipart/form-data">
                     @csrf
                     <div class="row" style="max-width: 600px">
                         <div class="upload-box mt-1 mr-4 mb-3 mx-auto">
@@ -51,63 +60,60 @@
                                 <span>Upload product image</span>
                             </label>
                         </div>
-                        <div class="upload-box  mt-1 ml-4 mb-3  mx-auto">
-                            <center><img id="preview" src="@if(\App\Models\Company::all()->count()!=0) {{ config('app.url') }}/storage/{{\App\Models\Company::all()->first()->logo}} @endif" alt="Image Preview" style="max-width: 200px; max-height: 200px; @if(\App\Models\Company::all()->count()==0) display: none; @endif"></center>
+                        <div class="upload-box mt-1 ml-4 mb-3  mx-auto">
+                            <center><img id="preview" src="@if(\App\Models\Company::all()->count()!=0) {{ asset('storage/' . $items[0]->logo) }} @endif" alt="Image Preview" style="max-width: 200px; max-height: 200px; @if(\App\Models\Company::all()->count()==0) display: none; @endif"></center>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Company Name</label>
-                        <input type="text" class="form-control col-lg-8" name="name" >
+                        <input type="text" class="form-control col-lg-8" name="name" value="@isset($items[0]->name) {{$items[0]->name}} @endif" >
                     </div>
                     <div class="form-group">
                         <label>Company Phone Num</label>
-                        <input type="text" class="form-control col-lg-8" name="phone">
+                        <input type="text" class="form-control col-lg-8" name="phone" value="@isset($items[0]->phone) {{$items[0]->phone}} @endif">
                     </div>
                     <div class="form-group">
                         <label>Company Address </label>
-                        <input type="text" class="form-control col-lg-8"  name="address">
+                        <input type="text" class="form-control col-lg-8"  name="address" value="@isset($items[0]->address) {{$items[0]->address}} @endif">
                     </div>
                     <div class="form-group">
                         <label>Company Email </label>
-                        <input type="email" class="form-control col-lg-8"  name="email">
+                        <input type="email" class="form-control col-lg-8"  name="email" value="@isset($items[0]->email) {{$items[0]->email}} @endif">
                     </div>
                     <div class="form-group">
                         <label>WebSite</label>
-                        <input type="text" class="form-control col-lg-8" name="site">
+                        <input type="text" class="form-control col-lg-8" name="site" value="@isset($items[0]->site) {{$items[0]->site}} @endif">
                     </div>
                     <div class="form-group">
                         <label>VAT Number</label>
-                        <input type="text" class="form-control col-lg-8" name="vat_number">
+                        <input type="text" class="form-control col-lg-8" name="vat_number" value="@isset($items[0]->vat_number) {{$items[0]->vat_number}} @endif">
                     </div>
                     <button type="submit" class="btn py-3" style="max-width: 200px">Submit</button>
                 </form>
             </div>
         </div>
         <div class="col m-1">
-            <div class="bg-second p-4 mb-2">
-                <h3 class="mt-0 mb-5 text-white">Text in the Receipt Header</h3>
-                <form>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <fieldset class="bg-white">
-                                <textarea id="noise" name="noise" class="widgEditor nothing"></textarea>
-                            </fieldset>
-                        </div>
-                    </div>
-                </form>
-            </div>
+
             <div class="bg-second p-4 mb-4">
                 <h3 class="mt-0 mb-5 text-white">Invoice Setting</h3>
-                <form>
+
+                <form action="@if(\App\Models\InvoiceSetting::all()->count()==0) {{route('invoice.store')}} @else {{route('invoice.edit',\App\Models\InvoiceSetting::all()->first()->id)}} @endif" method="POST">
+                    @csrf
                     <div class="form-group">
                         <label>Prefix ID</label>
-                        <input type="text" class="form-control col-lg-3">
+                        <input type="text" class="form-control col-lg-3" name="prefix_id" value="@isset($items[1]->prefix_id) {{$items[1]->prefix_id}} @endif">
                     </div>
                     <div class="form-group">
                         <label>Initial Count</label>
-                        <input type="number" class="form-control col-lg-2">
+                <input type="number" class="form-control col-lg-2" name="initial_count" id="initial_count">
                     </div>
-                    <button type="submit" class="btn py-3" style="max-width: 200px">Submit</button>
+                    <div class="form-group">
+                        <label>thank you message :</label>
+                            <fieldset class="bg-white">
+                                <textarea id="noise" name="noise" class="widgEditor nothing"></textarea>
+                            </fieldset>
+                    </div>
+                    <center><button type="submit" class="btn py-3" style="max-width: 200px">Submit</button></center>
                 </form>
             </div>
 
@@ -135,6 +141,17 @@
 <script src="js/jquery.datetimepicker.full.js"></script>
 <script>
     $("#datetime").datetimepicker();
+</script>
+<script type="text/javascript">
+    document.getElementById("initial_count").value = @isset($items[1]->initial_count) {{$items[1]->initial_count}} @else '' @endif
+</script>
+<script src="https://cdn.jsdelivr.net/npm/he@1.2.0/he.js"></script>
+<script type="text/javascript">
+var thanksMessage = "Your actual thanks message here";
+var encodedContent = "@isset($items[1]->thanks_message) {{$items[1]->thanks_message}} @else '' @endif"
+var decodedContent  = he.decode(encodedContent);
+plainText = String(decodedContent);
+        document.getElementById("noise").innerHTML = plainText
 </script>
 <script>
     document.getElementById('img').addEventListener('change', function(event) {

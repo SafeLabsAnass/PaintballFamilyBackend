@@ -84,7 +84,7 @@
         <div class="left_sidebar">
             <!-- Nav Tabs Start -->
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-Categories-tab" data-toggle="tab" href="#Categories" role="tab" aria-controls="nav-profile" aria-selected="true">Categories</a>
+                <a class="nav-item nav-link active mt-5" id="nav-Categories-tab" data-toggle="tab" href="#Categories" role="tab" aria-controls="nav-profile" aria-selected="true">Categories</a>
                 <a class="nav-item nav-link" id="nav_food_items" data-toggle="tab" href="#food_items" role="tab" aria-controls="nav-home" aria-selected="false">Products</a>
             </div>
             <!-- Nav Tabs End -->
@@ -123,10 +123,10 @@
                                 <h3 class="text-center Table Price">{{$product->price}} €</h3>
                                 <div class="btn_container d-flex ml-auto">
                                     <button type="button" class="btn">
-                                        <a href="{{route('product.destroy',$product->id)}}"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="{{route('product.destroy.web',$product->id)}}"><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
-                                        <a href="{{route('product.show',$product->id)}}"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="{{route('product.show.web',$product->id)}}"><i class="zmdi zmdi-edit"></i></a>
                                     </button>
                                 </div>
                             </li>
@@ -169,10 +169,10 @@
 
                                 <div class="btn_container d-flex mr-0 ml-auto">
                                     <button type="button" class="btn">
-                                        <a href="{{route('category.destroy',$category->id)}}"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="{{route('category.destroy.web',$category->id)}}"><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
-                                        <a href="{{route('category.show',$category->id)}}"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="{{route('category.show.web',$category->id)}}"><i class="zmdi zmdi-edit"></i></a>
                                     </button>
 
                                 </div>
@@ -199,7 +199,7 @@
                     <h2 class="col-10 mx-auto">Add Category</h2>
                 </div>
                 <div class="modal-body p-0">
-                    <form action="{{route('category.store')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('category.store.web')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="col-10 mx-auto form_container">
                             <div class="row pb-5">

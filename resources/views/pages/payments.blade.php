@@ -135,7 +135,7 @@
             </div>
             <div class="modal-body p-0">
 
-                <form action="{{route('payment.edit',Session::get('payment_id'))}}" method="POST">
+                <form action="{{route('payment.edit.web',Session::get('payment_id'))}}" method="POST">
                     @csrf
                     <div class="col-10 mx-auto form_container">
                         <div class="form-group">
@@ -172,7 +172,7 @@
             </div>
             <div class="modal-body p-0">
 
-                <form action="{{ route('payment.store') }}" method="POST" id="addForm">
+                <form action="{{ route('payment.store.web') }}" method="POST" id="addForm">
                     @csrf
                     <div class="col-10 mx-auto form_container">
                         <div class="form-group">

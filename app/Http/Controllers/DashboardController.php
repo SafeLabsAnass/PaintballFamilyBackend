@@ -71,18 +71,19 @@ class DashboardController extends Controller
        $items = new stdClass();
        $currentMonth = Carbon::now()->month;
        $currentYear = Carbon::now()->year;
-       $topSellingCounts = Sale::select('created_at', DB::raw('COUNT(DATE_FORMAT(created_at,"%Y-%d-%M")) as total_sale'))
+       $topSellingCounts =  Sale::select(DB::raw('Date(created_at) as date'), DB::raw('COUNT(*) as total_sale'))
            ->whereMonth('created_at', $currentMonth)
            ->whereYear('created_at', $currentYear)
-           ->groupBy('created_at')
-           ->orderByDesc('total_sale')
+           ->groupBy('date')
+           ->orderBy('total_sale')
            ->get();
        $listDays = [];
        foreach ($topSellingCounts as $topSellingCount) {
-           $date = Carbon::parse($topSellingCount->created_at);
+           $date = Carbon::parse($topSellingCount->date);
            $listDays [] =
                ['days'=>$date->format('d M'),
-                   "count"=>$topSellingCount->total_sale];
+                   "count"=>$topSellingCount->total_sale];   
+
        }
        $items->lineChart = $listDays;
        return response()->json([

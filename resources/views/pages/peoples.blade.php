@@ -266,7 +266,7 @@
     <div class="left_sidebar">
         <!-- Nav Tabs Start -->
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav_customers_items" data-toggle="tab" href="#customers" role="tab"
+            <a class="nav-item nav-link active mt-5" id="nav_customers_items" data-toggle="tab" href="#customers" role="tab"
                aria-controls="nav-home" aria-selected="false">Admin</a>
             <a class="nav-item nav-link" id="nav_super_admin_items" data-toggle="tab" href="#super_admin" role="tab"
                aria-controls="nav-profile" aria-selected="true">Super Admin</a>

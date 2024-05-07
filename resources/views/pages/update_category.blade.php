@@ -46,7 +46,7 @@
                     <div class="col m-1">
                         <div class="bg-second p-4">
                             <h3 class="mt-0 mb-5 text-white">Update a category</h3>
-                            <form method="POST" action="{{route('category.update',$categorie->id)}}" id="editForm" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('category.update.web',$categorie->id)}}" id="editForm" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row" style="max-width: 600px">
                                     <div class="upload-box mt-1 mr-4 mb-3 mx-auto">

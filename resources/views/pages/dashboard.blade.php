@@ -167,6 +167,11 @@
             success: function (response) {
                 if (response) {
                     for (let i = 0; i < response.items.lineChart.length ; i++) {
+                        // var date = new Date(response.items.lineChart[i].days.toString());
+                        // console.log(response.items.lineChart[i].days.toString());
+                        // var day = date.getDay();
+                        // var month = date.getMonth();
+                        // var month_name = date.toLocaleString('default', { month: 'long' })
                         listDays.push(response.items.lineChart[i].days.toString())
                         listCount.push(response.items.lineChart[i].count)
                     }

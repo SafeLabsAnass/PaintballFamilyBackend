@@ -21,7 +21,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
-    Route::post('/', [AuthenticatedSessionController::class, 'store'])->name('login');
+    Route::post('/', [AuthenticatedSessionController::class, 'store'])->name('login.web');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
@@ -56,5 +56,5 @@ Route::middleware('auth')->group(function () {
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->name('logout');
+                ->name('logout.web');
 });

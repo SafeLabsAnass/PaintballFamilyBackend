@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasTable('companies')) Schema::create('companies', function (Blueprint $table) {
+        if(!Schema::hasTable('invoice_settings')) Schema::create('invoice_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('phone');
-            $table->string('address');
-            $table->string('email');
-            $table->string('site');
-            $table->string('vat_number');
-            $table->string('logo');
+            $table->string('prefix_id')->nullable();
+            $table->integer('initial_count')->nullable();
+            $table->string('thanks_message')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('invoice_settings');
     }
 };
