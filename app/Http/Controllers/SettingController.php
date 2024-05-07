@@ -115,7 +115,6 @@ class SettingController extends Controller
             $company = Company::all()->first();
             if(request()->image!= null){
                 $logo = request()->image->getClientOriginalName();
-                request()->image->move(storage_path('app/public'), $logo);
             }
             if (file_exists(storage_path('app/public' . '/' . $request->imageTest))) {
             $company->logo = $logo;
