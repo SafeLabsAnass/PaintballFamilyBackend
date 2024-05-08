@@ -51,7 +51,7 @@
         @csrf
         <div class="col-10 mx-auto pt-5 px-4 pt-1">
             <div class="logo_box mx-auto text-center">
-                <img src="{{ asset('images/logo.png')}}" class="img-fluid">
+                <img src="{{ asset('storage/' . \App\Models\Company::all()->first()->logo) }}" class="img-fluid">
             </div>
             <h2 class="text-white">Login to your Account</h2>
             <div class="form-group">

@@ -38,7 +38,7 @@
     <nav class="navbar navbar-expand-xl navbar-light align-items-center">
         <div class="nav-item">
             <a class="navbar-brand nav-link px-2" href="{{route('login')}}">
-                <img src="{{ asset('images/logo.png')}}" class="img-fluid">
+                <img src="{{ asset('storage/' . \App\Models\Company::all()->first()->logo) }}" class="img-fluid">
             </a>
         </div>
 

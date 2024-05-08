@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-xl navbar-light align-items-center">
         <div class="nav-item">
             <a class="navbar-brand nav-link px-2" href="{{route('home')}}">
-                <img src="{{ asset('images/logo.png')}}" class="img-fluid" alt="">
+                <img src="{{ asset('storage/' . \App\Models\Company::all()->first()->logo) }}" class="img-fluid" alt="">
             </a>
         </div>
 

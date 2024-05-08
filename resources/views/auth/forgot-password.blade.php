@@ -61,7 +61,7 @@
                 <center>
                     <div class="card-header" style="font-size: x-large">{{ __('Forget Password') }}</div>
                     <div class="logo_box mx-auto text-center">
-                        <img src="{{ asset('images/logo.png')}}" width="300" height="300"
+                        <img src="{{ asset('storage/' . \App\Models\Company::all()->first()->logo) }}" width="300" height="300"
                              class="img-fluid mb-5 mt-5">
                     </div>
                 </center>

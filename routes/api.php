@@ -11,7 +11,7 @@ use App\Http\Controllers\API\SiteCategoryController;
 use App\Http\Controllers\API\SiteController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('login', [LoginController::class, 'login.api']);
+Route::post('login', [LoginController::class, 'login']);
 Route::post('register', RegisterController::class);
 Route::middleware('api.auth')->group(function () {
         Route::middleware('role:administrator')->group(function () {
