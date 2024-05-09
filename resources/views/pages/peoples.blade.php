@@ -130,7 +130,7 @@
                                     Swal.showLoading();
                                 },
                                 didClose: ()=>{
-                                    window.location = data.redirect
+                                    window.history.replaceState( {} , title, data.redirect );
                                 }
                             });
                         } else {
@@ -144,6 +144,9 @@
                                     didOpen: () => {
                                         Swal.showLoading()
                                     },
+                                    didClose: ()=>{
+                                        window.history.replaceState( {} , title, data.redirect );
+                                    }
                                 });
                                 // window.location.reload();
                             }
@@ -197,6 +200,9 @@
                                     didOpen: () => {
                                         Swal.showLoading()
                                     },
+                                    didClose: ()=>{
+                                        window.history.replaceState( {} , title, data.redirect );
+                                    }
                                 });
                                 // window.location.reload();
                             }
@@ -804,7 +810,7 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.status === "success") {
-                            window.location = data.redirect;
+                            window.history.replaceState( {} , title, data.redirect );
                         } else {
 
                         }
@@ -880,7 +886,7 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.status === "success") {
-                            window.location = data.redirect;
+                            window.history.replaceState( {} , title, data.redirect );
                         } else {
 
                         }
@@ -932,7 +938,7 @@
                             timer: 4000,
                             didOpen: () => {
                                 Swal.showLoading()
-                            },
+                            }
 
                         });
                     }

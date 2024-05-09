@@ -78,13 +78,15 @@
                         <label>Company Address </label>
                         <input type="text" class="form-control col-lg-8"  name="address" value="@isset($items[0]->address) {{$items[0]->address}} @endif">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-lg-4">
                         <label>Company Email </label>
-                        <input type="email" class="form-control col-lg-8"  name="email" value="@isset($items[0]->email) {{$items[0]->email}} @endif">
-                    </div>
-                    <div class="form-group">
-                        <label>WebSite</label>
-                        <input type="text" class="form-control col-lg-8" name="site" value="@isset($items[0]->site) {{$items[0]->site}} @endif">
+                        <input type="email" class="form-control col-lg-12"  name="email" value="@isset($items[0]->email) {{$items[0]->email}} @endif">
+                        </div>
+                        <div class="col-lg-4">
+                            <label>WebSite</label>
+                        <input type="text" class="form-control col-lg-12" name="site" value="@isset($items[0]->site) {{$items[0]->site}} @endif">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>VAT Number</label>
@@ -94,12 +96,12 @@
                 </form>
             </div>
         </div>
-        <div class="col m-1">
+        <div class="col ml-2">
 
-            <div class="bg-second p-4 mb-4">
+            <div class="bg-second p-4">
                 <h3 class="mt-0 mb-5 text-white">Invoice Setting</h3>
 
-                <form action="@if(\App\Models\InvoiceSetting::all()->count()==0) {{route('invoice.store')}} @else {{route('invoice.edit',\App\Models\InvoiceSetting::all()->first()->id)}} @endif" method="POST">
+                <form class="mb-4" action="@if(\App\Models\InvoiceSetting::all()->count()==0) {{route('invoice.store')}} @else {{route('invoice.edit',\App\Models\InvoiceSetting::all()->first()->id)}} @endif" method="POST">
                     @csrf
                     <div class="form-group">
                         <label>Prefix ID</label>
@@ -115,7 +117,7 @@
                                 <textarea id="noise" name="noise" class="widgEditor nothing"></textarea>
                             </fieldset>
                     </div>
-                    <center><button type="submit" class="btn py-3" style="max-width: 200px">Submit</button></center>
+                    <center><button type="submit" class="btn py-3 mb-3" style="max-width: 200px">Submit</button></center>
                 </form>
             </div>
 

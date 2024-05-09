@@ -157,10 +157,9 @@
                                 Swal.showLoading();
                             },
                             didClose: ()=>{
-                                window.location = data.redirect;
+                                window.history.replaceState( {} , title, data.redirect );
                             }
                         });
-                        window.location = data.redirect;
                     } else {
                         Swal.fire({
                             position: 'center',
@@ -172,7 +171,7 @@
                                 Swal.showLoading()
                             },
                             didClose: ()=>{
-                                window.location = data.redirect;
+                                window.history.replaceState( {} , title, data.redirect );
                             }
 
                         });

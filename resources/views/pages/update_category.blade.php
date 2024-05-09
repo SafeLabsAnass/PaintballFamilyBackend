@@ -154,7 +154,9 @@
                             timer: 3000,
                             didOpen: () => {
                                 Swal.showLoading();
-                                window.location = data.redirect;
+                            },
+                            didClose: ()=>{
+                                window.history.replaceState( {} , title, data.redirect );
                             }
                         });
                         window.location = data.redirect;
@@ -167,8 +169,10 @@
                             timer: 3000,
                             didOpen: () => {
                                 Swal.showLoading()
-                                window.location = data.redirect
                             },
+                            didClose: ()=>{
+                                window.history.replaceState( {} , title, data.redirect );
+                            }
 
                         });
 
