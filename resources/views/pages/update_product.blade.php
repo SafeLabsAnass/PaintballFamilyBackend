@@ -157,7 +157,7 @@
                                 Swal.showLoading();
                             },
                             didClose: ()=>{
-                                window.history.replaceState( {} , title, data.redirect );
+                                window.location = data.redirect;
                             }
                         });
                     } else {
@@ -171,7 +171,7 @@
                                 Swal.showLoading()
                             },
                             didClose: ()=>{
-                                window.history.replaceState( {} , title, data.redirect );
+                                window.location = data.redirect;
                             }
 
                         });

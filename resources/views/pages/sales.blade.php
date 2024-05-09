@@ -163,7 +163,7 @@
                                         Swal.showLoading();
                                     },
                                     didClose: ()=>{
-                                        window.history.replaceState( {} , '',);
+                                        window.location = data.redirect;
                                     }
                                 });
                                 // window.location.reload();

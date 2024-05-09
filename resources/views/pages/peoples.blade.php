@@ -130,7 +130,7 @@
                                     Swal.showLoading();
                                 },
                                 didClose: ()=>{
-                                    window.history.replaceState( {} , title, data.redirect );
+                                    window.location = data.redirect;;
                                 }
                             });
                         } else {
@@ -145,7 +145,7 @@
                                         Swal.showLoading()
                                     },
                                     didClose: ()=>{
-                                        window.history.replaceState( {} , title, data.redirect );
+                                        window.location = data.redirect;;
                                     }
                                 });
                                 // window.location.reload();
@@ -186,7 +186,7 @@
                                     Swal.showLoading();
                                 },
                                 didClose: ()=>{
-                                    window.history.replaceState( {} , title, data.redirect );
+                                    window.location = data.redirect;;
                                 }
                             });
                         } else {
@@ -201,7 +201,7 @@
                                         Swal.showLoading()
                                     },
                                     didClose: ()=>{
-                                        window.history.replaceState( {} , title, data.redirect );
+                                        window.location = data.redirect;;
                                     }
                                 });
                                 // window.location.reload();
@@ -810,7 +810,7 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.status === "success") {
-                            window.history.replaceState( {} , title, data.redirect );
+                            window.location = data.redirect;;
                         } else {
 
                         }
@@ -886,7 +886,7 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.status === "success") {
-                            window.history.replaceState( {} , title, data.redirect );
+                            window.location = data.redirect;;
                         } else {
 
                         }
