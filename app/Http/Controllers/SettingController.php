@@ -18,7 +18,7 @@ class SettingController extends Controller
     {
         $company = Company::all()->first();
         $invoice = InvoiceSetting::all()->first();
-       return view('pages.setting')->with('items', [$company, $invoice]);
+        return view('pages.setting')->with('items', [$company, $invoice]);
     }
 
     /**
@@ -33,7 +33,7 @@ class SettingController extends Controller
     public function editInvoice(Request $request)
     {
 
-        if(InvoiceSetting::all()->count()!=0) {
+        if (InvoiceSetting::all()->count() != 0) {
 
             $invoiceSetting = InvoiceSetting::all()->first();
             $invoiceSetting->prefix_id = $request->prefix_id;
@@ -43,13 +43,14 @@ class SettingController extends Controller
             return redirect()->route('settings');
         }
     }
+
     /**
-     *@return RedirectResponse
-     *@param Request $request
-    */
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function storeInvoice(Request $request): RedirectResponse
     {
-        if(InvoiceSetting::all()->count()==0) {
+        if (InvoiceSetting::all()->count() == 0) {
 
             $invoiceSetting = new InvoiceSetting();
             $invoiceSetting->prefix_id = $request->prefix_id;
@@ -59,6 +60,7 @@ class SettingController extends Controller
 
             return redirect()->route('settings');
         }
+        return redirect()->route('settings');
     }
 
     /**
@@ -91,6 +93,8 @@ class SettingController extends Controller
             $company->save();
             return redirect()->route('settings');
         }
+        return redirect()->route('settings');
+
     }
 
 
@@ -111,21 +115,18 @@ class SettingController extends Controller
             request()->validate([
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
             ]);
-            $logo = '';
             $company = Company::all()->first();
             if(request()->image!= null){
                 $logo = request()->image->getClientOriginalName();
-            }
-            if (file_exists(storage_path('app/public' . '/' . $logo))) {
-            $company->logo = $logo;
-            } else {
-                request()->validate([
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
-                ]);
-                $imageName = request()->image->getClientOriginalName();
-                request()->image->move(storage_path('app/public'), $imageName);
-                $company->logo = $logo;
+                if (!file_exists(storage_path('app/public' . '/' . $logo))) {
+                    request()->validate([
+                        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
+                    ]);
+                    $imageName = request()->image->getClientOriginalName();
+                    request()->image->move(storage_path('app/public'), $imageName);
 
+                }
+                $company->logo = $logo;
             }
             $company->name = $request->name;
             $company->phone = $request->phone;
