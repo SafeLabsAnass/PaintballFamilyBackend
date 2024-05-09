@@ -58,7 +58,6 @@ class AuthenticatedSessionController extends Controller
                         'email',
                         $request->input('email')
                     ) && Auth::attempt($request->only('email', 'password'))) {
-
                     $request->session()->regenerate();
 
                     return response()->json([

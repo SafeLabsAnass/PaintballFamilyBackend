@@ -24,7 +24,7 @@ class LoginController extends Controller
 
 //            $user->tokens()->delete();
 
-            $success = $user->createToken('MyApp')->plainTextToken;
+            $success = $user->createToken('PaintballFamily')->plainTextToken;
 
             return $this->success(['token' => $success,'user'=>$user], AuthConstants::LOGIN);
         }
