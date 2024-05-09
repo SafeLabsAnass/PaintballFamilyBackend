@@ -77,7 +77,7 @@ class SaleController extends Controller
             }
             $sale->update();
             if($sale->amount_given < $sale->total_amount){
-                $sale->total_paid = 0;
+                $sale->total_paid = $sale->amount_given;
                 $sale->status = 'Unpaid';
             }
             else{
@@ -125,7 +125,7 @@ class SaleController extends Controller
             $sale->income = $request->income;
             $sale->update();
             if($sale->amount_given < $sale->total_amount){
-                $sale->total_paid = 0;
+                $sale->total_paid = $sale->amount_given;
                 $sale->status = 'Unpaid';
             }
             else{

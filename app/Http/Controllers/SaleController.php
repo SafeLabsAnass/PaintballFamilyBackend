@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SaleResource;
+use App\Models\Payment;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::all()->sortByDesc('created_at');
+        $sales = Sale::all()->sortBy('facture_id');
         return view('pages.sales')->with('sales', $sales);
     }
 
@@ -63,6 +64,11 @@ class SaleController extends Controller
                     "status" => 'error',
                     "message" => 'Please select Edit the total paid to be > 0'
                 ], 201);
+            } elseif ($request->total_paid == $sale->total_amount && $request->status == 'Unpaid') {
+                return response()->json([
+                    "status" => 'error',
+                    "message" => 'Please select Paid the total paid == total amount'
+                ], 201);
             }
             else {
                 $topSaleFacture = DB::select("SELECT MAX(CAST(SUBSTRING_INDEX(facture_id, '#', -1) AS UNSIGNED)) AS max_initial_count
@@ -72,21 +78,14 @@ class SaleController extends Controller
                     $initial_count = InvoiceSetting::all()->first()->initial_count;
                     $sale->facture_id = $prefix_id . (int)$initial_count;
                 } else {
-                    if (Sale::count() > 0 && $sale->status == 'Paid') {
+                    if ($request->status == 'Paid') {
                         $prefix_id = InvoiceSetting::all()->first()->prefix_id;
                         $initial_count = (int)$topSaleFacture + 1;
                         $sale->facture_id = $prefix_id . $initial_count;
-                    } elseif (Sale::count() == 0) {
-                        $temporary_id = InvoiceSetting::all()->first()->temporary_id;
-                        $sale->facture_id = $temporary_id;
-                    } elseif (Sale::count() != 0) {
-                        $temporary_count = DB::select("SELECT MAX(CAST(SUBSTRING_INDEX(facture_id, '#', -1) AS UNSIGNED)) AS temporary_count
-            FROM sales WHERE facture_id LIKE 'TEMPORARY%'")[0]->temporary_count;
-                        $sale->facture_id = 'TEMPORARY #' . (int)$temporary_count + 1;
                     }
                 }
                 $sale->status = $request->status;
-                $sale->payment = $request->payment;
+                $sale->payment_id = Payment::where('type', $request->payment)->first()->id;
                 $sale->total_amount = $request->total_amount;
                 $sale->total_paid = $request->total_paid;
                 $sale->save();

@@ -84,7 +84,7 @@
                                 });
                                 document.getElementById('total_amount_show').value = response?.total_amount
                                 document.getElementById('total_paid_show').value = response?.total_paid
-                                document.getElementById('total_paid_show').disabled = response?.total_amount === response?.total_paid;
+                                // document.getElementById('total_paid_show').disabled = response?.total_amount === response?.total_paid;
                                 const statusList = document.getElementById("status");
                                 let select = document.getElementById("status");
                                 select.innerHTML = '';
@@ -148,7 +148,7 @@
                                     Swal.showLoading();
                                 },
                                 didClose: ()=>{
-                                    window.history.replaceState( {} ,'', );
+                                    location.reload();
                                 }
                             });
                         } else {
@@ -395,7 +395,6 @@
             <div class="modal-body p-0">
 
                 <form id="editForm">
-                    @csrf
                     <div class="col-10 mx-auto form_container">
                         <div class="form-group">
                             <label>Status</label>
@@ -413,12 +412,14 @@
                         <div class="form-group">
                             <label>Total Amount</label>
                             <input type="number" class="form-control" name="total_amount"
-                                   id="total_amount_show" disabled>
+                                   id="total_amount_show" min="0" value="0" step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" onblur="
+this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'">
                         </div>
                         <div class="form-group">
                             <label>Total Paid</label>
                             <input type="number" class="form-control" name="total_paid"
-                                   id="total_paid_show">
+                                   id="total_paid_show" min="0" value="0" step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" onblur="
+this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'">
                         </div>
                     </div>
 
@@ -428,7 +429,7 @@
                                 <button type="reset" class="btn btn-warning" data-dismiss="modal">Cancel</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary">Edit Status</button>
+                                <button type="submit" class="btn btn-primary">Edit Sale</button>
                             </div>
                         </div>
                     </div>
