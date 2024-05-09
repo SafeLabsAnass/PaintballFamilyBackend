@@ -68,21 +68,21 @@ class AuthenticatedSessionController extends Controller
                     return response()->json([
                         "status" => 'error',
                         "redirect" => url('/'),
-                        "message" => 'Wrong password'
+                        "message" => 'Mot de passe erroné'
                     ]);
             }
         } else {
                 return response()->json([
                     "status" => 'error',
                     "redirect" => url('/'),
-                    "message" => 'You dont have an account'
+                    "message" => 'Vous n\'avez pas de compte'
                 ]);
             }
         } catch (QueryException|ValidationException) {
             return response()->json([
                 "status" => 'error',
                 "redirect" => url('/'),
-                "message" => 'Your connection to internet is disabled!'
+                "message" => 'Votre connexion à l\'internet est désactivée !'
             ]);
         }
     }

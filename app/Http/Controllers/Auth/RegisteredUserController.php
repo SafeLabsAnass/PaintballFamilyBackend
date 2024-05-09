@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
             return view('auth.register');
         }
         else{
-            return redirect('/')->with('error', 'autorisée à l\'admin seulement');
+            return redirect('/')->with('error', 'autorisée seulement au manager');
         }
     }
 

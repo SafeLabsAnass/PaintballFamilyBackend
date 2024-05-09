@@ -57,17 +57,17 @@ class SaleController extends Controller
             if ($request->total_paid < $sale->total_amount && $request->status == 'Paid') {
                 return response()->json([
                     "status" => 'error',
-                    "message" => 'Please select Unpaid the total paid lower to total amount'
+                    "message" => 'Veuillez sélectionner Unpaid si le total paid est inférieur au total amount'
                 ], 201);
             }elseif ($request->total_paid < $sale->total_amount && $request->status == 'Unpaid'){
                 return response()->json([
                     "status" => 'error',
-                    "message" => 'Please select Edit the total paid to be > 0'
+                    "message" => 'Veuillez modifier le total paid pour qu\'il soit > 0'
                 ], 201);
             } elseif ($request->total_paid == $sale->total_amount && $request->status == 'Unpaid') {
                 return response()->json([
                     "status" => 'error',
-                    "message" => 'Please select Paid the total paid == total amount'
+                    "message" => 'Veuillez sélectionner Paid le total paid == total amount'
                 ], 201);
             }
             else {
@@ -100,7 +100,7 @@ class SaleController extends Controller
         } else {
             return response()->json([
                 "status" => 'error',
-                "message" => 'Please edit the Draft status'
+                "message" => 'Veuillez modifier le statut Draft'
             ], 201);
         }
     }
