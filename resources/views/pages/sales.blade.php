@@ -162,9 +162,6 @@
                                     didOpen: () => {
                                         Swal.showLoading();
                                     },
-                                    didClose: ()=>{
-                                        window.location = data.redirect;
-                                    }
                                 });
                                 // window.location.reload();
                             }
