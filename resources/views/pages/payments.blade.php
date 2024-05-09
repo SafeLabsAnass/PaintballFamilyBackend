@@ -67,7 +67,7 @@
     <div class="left_sidebar">
         <!-- Nav Tabs Start -->
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-sales-tab" data-toggle="tab" href="#sales" role="tab" aria-controls="nav-home" aria-selected="true">Payments</a>
+            <a class="nav-item nav-link active mt-5" id="nav-sales-tab" data-toggle="tab" href="#sales" role="tab" aria-controls="nav-home" aria-selected="true">Payments</a>
 
         </div>
         <!-- Nav Tabs End -->

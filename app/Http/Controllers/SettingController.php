@@ -69,7 +69,7 @@ class SettingController extends Controller
         //
         if(Company::all()->count()==0) {
             request()->validate([
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
             ]);
             $logo = '';
             if(request()->image != null){
@@ -109,7 +109,7 @@ class SettingController extends Controller
     {
         if(Company::all()->count()!=0) {
             request()->validate([
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
             ]);
             $logo = '';
             $company = Company::all()->first();
@@ -120,7 +120,7 @@ class SettingController extends Controller
             $company->logo = $logo;
             } else {
                 request()->validate([
-                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
                 ]);
                 $imageName = request()->image->getClientOriginalName();
                 request()->image->move(storage_path('app/public'), $imageName);

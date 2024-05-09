@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'passport', // Assuming you're using Laravel Passport for API authentication
+            'provider' => 'users',
+            'expires' => 60 * 4 , // Token expiration for mobile (in seconds)
+        ],
     ],
 
     /*

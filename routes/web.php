@@ -35,11 +35,7 @@ Route::middleware('auth')->group(function () {
                 view('pages.upload_product')->with('categories', $categories);
         })->name('upload_product');
 
-        Route::get('/sales', function () {
-            $sales = Sale::all();
-            return
-                view('pages.sales')->with('sales', $sales);
-        })->name('sales');
+        Route::get('/sales', [SaleController::class, 'index'])->name('sales');
         Route::get('/update_product/{id}', function () {
             return
                 view('pages.update_product');
@@ -63,6 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::get('category/show/{id}', [categoryController::class, 'show'])->name('category.show.web');
         Route::get('sale/destroy/{id}', [SaleController::class, 'destroy'])->name('sale.destroy.web');
         Route::get('sale/show/{id}', [saleController::class, 'show'])->name('sale.show.web');
+        Route::post('sale/edit/{id}', [saleController::class, 'edit'])->name('sale.edit.web');
         Route::get('/payments', [PaymentController::class, 'index'])->name('payments');
         Route::post('payments/store', [PaymentController::class, 'store'])->name('payment.store.web');
         Route::get('payments/destroy/{id}', [PaymentController::class, 'destroy'])->name('payment.destroy.web');

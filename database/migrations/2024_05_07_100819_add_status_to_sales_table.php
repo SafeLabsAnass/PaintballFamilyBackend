@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('sales', function (Blueprint $table) {
-            $table->string('status')->default('');
+        if(!Schema::hasTable('sales')) Schema::table('sales', function (Blueprint $table) {
+            $table->string('status')->default('Draft');
         });
     }
 

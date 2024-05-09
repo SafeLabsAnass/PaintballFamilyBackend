@@ -267,9 +267,9 @@
         <!-- Nav Tabs Start -->
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active mt-5" id="nav_customers_items" data-toggle="tab" href="#customers" role="tab"
-               aria-controls="nav-home" aria-selected="false">Admin</a>
+               aria-controls="nav-home" aria-selected="false">User</a>
             <a class="nav-item nav-link" id="nav_super_admin_items" data-toggle="tab" href="#super_admin" role="tab"
-               aria-controls="nav-profile" aria-selected="true">Super Admin</a>
+               aria-controls="nav-profile" aria-selected="true">Manager</a>
         </div>
         <!-- Nav Tabs End -->
     </div>
@@ -284,7 +284,7 @@
             <div class="tab-pane fade show active" id="customers" role="tabpanel" aria-labelledby="nav_customers_items">
                 <div class="tab_header">
                     <h1 class="d-flex">
-                        <span class="d-block" style="min-width: 161px;">Admins</span>
+                        <span class="d-block" style="min-width: 161px;">Users</span>
                         <button type="button" class="btn"><a data-toggle="modal" data-target="#add_admin">Add New</a>
                         </button>
                     </h1>
@@ -330,7 +330,7 @@
                                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header px-0">
-                                            <h2 class="col-10 mx-auto">Edit People</h2>
+                                            <h2 class="col-10 mx-auto">Edit User</h2>
                                         </div>
                                         <div class="modal-body p-0">
 
@@ -388,7 +388,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="col-6">
-                                                            <button type="submit" class="btn">Edit People</button>
+                                                            <button type="submit" class="btn">Edit User</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -411,7 +411,7 @@
             <div class="tab-pane fade show" id="super_admin" role="tabpanel" aria-labelledby="nav_super_admin_items">
                 <div class="tab_header">
                     <h1 class="d-flex">
-                        <span class="d-block" style="min-width: 200px;">Super Admins</span>
+                        <span class="d-block" style="min-width: 200px;">Managers</span>
                         <button type="button" class="btn"><a data-toggle="modal" data-target="#add_super_admin">Add
                                 New</a></button>
                     </h1>
@@ -460,7 +460,7 @@
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header px-0">
-                                <h2 class="col-10 mx-auto">Edit People</h2>
+                                <h2 class="col-10 mx-auto">Edit User</h2>
                             </div>
                             <div class="modal-body p-0">
 
@@ -508,7 +508,7 @@
                                         <div class="row no-gutters w-100">
                                             <div class="col-6"> <button type="reset" class="btn Cencel" data-dismiss="modal">Cancel</button></div>
                                             <div class="col-6">
-                                                <button type="submit" class="btn">Edit People</button>
+                                                <button type="submit" class="btn">Edit User</button>
                                             </div>
                                         </div>
                                     </div>
@@ -540,7 +540,7 @@
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header px-0">
-                <h2 class="col-10 mx-auto">Add Admin</h2>
+                <h2 class="col-10 mx-auto">Add User</h2>
             </div>
             <div class="modal-body p-0">
 
@@ -641,7 +641,7 @@
                                 <button type="reset" class="btn btn-warning" data-dismiss="modal">Cancel</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary">Add Admin</button>
+                                <button type="submit" class="btn btn-primary">Add User</button>
                             </div>
                         </div>
                     </div>
@@ -656,7 +656,7 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header px-0">
-                    <h2 class="col-10 mx-auto">Add Super Admin</h2>
+                    <h2 class="col-10 mx-auto">Add Manager</h2>
                 </div>
                 <div class="modal-body p-0">
 
@@ -757,7 +757,7 @@
                                     <button type="reset" class="btn btn-warning" data-dismiss="modal">Cancel</button>
                                 </div>
                                 <div class="col-6">
-                                    <button type="submit" class="btn btn-primary">Add Super Admin</button>
+                                    <button type="submit" class="btn btn-primary">Add Manager</button>
                                 </div>
                             </div>
                         </div>

@@ -24,16 +24,18 @@ class SaleResource extends JsonResource
         return [
             'id' => $this->id,
             'matricule' => $this->matricule,
+            'facture_id' => $this->facture_id,
             'user' => $user->username,
             'adresse' => $site->adresse,
             'payment_type' => $payment->type,
             'amount_given' => $this->amount_given,
             'income' => $this->income,
             'client_name' => $this->client_name,
+            'total_amount' => $this->total_amount,
+            'status' => $this->status,
             'total_paid' => $this->total_paid,
             'created_at' => $this->created_at,
             'sales_products' => SaleProductResource::collection($this->salesProducts),
-
         ];
     }
 }

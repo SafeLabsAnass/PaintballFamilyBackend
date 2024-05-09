@@ -41,7 +41,7 @@ class CategoryController extends Controller
     {
 //        dd($request->all());
         request()->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
         ]);
         $imageName = request()->image->getClientOriginalName();
         request()->image->move(storage_path('app/public'), $imageName);
@@ -85,7 +85,7 @@ class CategoryController extends Controller
                 $category->image = $request->imageTest;
             } else {
                 request()->validate([
-                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
                 ]);
                 $imageName = request()->image->getClientOriginalName();
                 request()->image->move(storage_path('app/public'), $imageName);
