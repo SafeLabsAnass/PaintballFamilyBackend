@@ -64,13 +64,15 @@
                             <center><img id="preview" src="@if(\App\Models\Company::all()->count()!=0) {{ asset('storage/' . $items[0]->logo) }} @endif" alt="Image Preview" style="max-width: 200px; max-height: 200px; @if(\App\Models\Company::all()->count()==0) display: none; @endif"></center>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Company Name</label>
-                        <input type="text" class="form-control col-lg-8" name="name" value="@isset($items[0]->name) {{$items[0]->name}} @endif" >
-                    </div>
-                    <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <label>Company Name</label>
+                            <input type="text" class="form-control col-lg-12" name="name" value="@isset($items[0]->name) {{$items[0]->name}} @endif" >
+                        </div>
+                        <div class="col-lg-4">
                         <label>Company Phone Num</label>
-                        <input type="text" class="form-control col-lg-8" name="phone" value="@isset($items[0]->phone) {{$items[0]->phone}} @endif">
+                        <input type="text" class="form-control col-lg-12" name="phone" value="@isset($items[0]->phone) {{$items[0]->phone}} @endif">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Company Address </label>
