@@ -38,35 +38,37 @@ class SettingController extends Controller
 
         if (InvoiceSetting::all()->count() != 0) {
             $invoiceSetting = InvoiceSetting::all()->first();
-            if($invoiceSetting->prefix_id == $request->prefix_id && $invoiceSetting->initial_count == $request->initial_count &&
-                $invoiceSetting->thanks_message == $request->noise)
-            {
-                return response()->json(
-                    [
-                        "status" => 'error',
-                        "message" => "Les donnees entrants sont similaire avec les anciennes donnees",
-                        "redirect" => route('settings')
-                    ],
-                    201
-                );
-            }
+//            if($invoiceSetting->prefix_id == $request->prefix_id && $invoiceSetting->initial_count == $request->initial_count &&
+//                $invoiceSetting->thanks_message == $request->noise)
+//            {
+//                return response()->json(
+//                    [
+//                        "status" => 'error',
+//                        "message" => "Les donnees entrants sont similaire avec les anciennes donnees",
+//                        "redirect" => route('settings')
+//                    ],
+//                    201
+//                );
+//            }
             $invoiceSetting->prefix_id = $request->prefix_id;
             $invoiceSetting->initial_count = $request->initial_count;
             $invoiceSetting->thanks_message = $request->noise;
             $invoiceSetting->save();
-            return response()->json(
-                [
-                    "status" => 'success',
-                    "message" => InvoiceConstants::STORE,
-                    "redirect" => route('settings')
-                ],
-                201
-            );        }
+            return redirect()->route('settings');
+//            return response()->json(
+//                [
+//                    "status" => 'success',
+//                    "message" => InvoiceConstants::STORE,
+//                    "redirect" => route('settings')
+//                ],
+//                201
+//            );
+        }
     }
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return RedirectResponse
      */
     public function storeInvoice(Request $request)
     {
@@ -77,14 +79,15 @@ class SettingController extends Controller
             $invoiceSetting->initial_count = $request->initial_count;
             $invoiceSetting->thanks_message = $request->noise;
             $invoiceSetting->save();
-            return response()->json(
-                [
-                    "status" => 'success',
-                    "message" => InvoiceConstants::STORE,
-                    "redirect" => route('settings')
-                ],
-                201
-            );
+            return redirect()->route('settings');
+//            return response()->json(
+//                [
+//                    "status" => 'success',
+//                    "message" => InvoiceConstants::STORE,
+//                    "redirect" => route('settings')
+//                ],
+//                201
+//            );
         }
     }
 

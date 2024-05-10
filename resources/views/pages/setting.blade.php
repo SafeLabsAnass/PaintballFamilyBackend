@@ -99,7 +99,8 @@
             <div class="bg-second p-4">
                 <h3 class="mt-0 mb-5 text-white">Invoice Setting</h3>
 
-                <form class="mb-4" id="form_edit">
+                <form class="mb-4" id="form_edit" action="@if(\App\Models\InvoiceSetting::all()->count()==0) {{route('invoice.store')}} @else {{route('invoice.edit',\App\Models\InvoiceSetting::all()->first()->id)}} @endif" method="POST">
+                    @csrf
                     <div class="form-group">
                         <label>Prefix ID</label>
                         <input type="text" class="form-control col-lg-3" name="prefix_id" value="@isset($items[1]->prefix_id) {{$items[1]->prefix_id}} @endif">
@@ -111,7 +112,7 @@
                     <div class="form-group">
                         <label>thank you message :</label>
                             <fieldset class="bg-white">
-                                <textarea id="noise" name="noise" class="widgEditor nothing"></textarea>
+                                <textarea id="noise" name="noise" class="widgEditor"></textarea>
                             </fieldset>
                     </div>
                     <center><button type="submit" class="btn py-3 mb-3" style="max-width: 200px">Submit</button></center>
@@ -180,65 +181,66 @@
             })
         });
     });
-    console.log($('#noise'))
-    $(document).ready(function() {
-        document.getElementById('form_edit').addEventListener('submit', function (event) {
-            event.preventDefault();
-            let noiseValue = $('#noise').val();// Prevent the default form submission
-            // Make a POST request to your Laravel route
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            let formData = $('#form_edit').serializeArray();
-            formData.push({name: 'noise', value: noiseValue});
-            $.ajax({
-                type: 'POST',
-                url: '@if(\App\Models\InvoiceSetting::all()->count()==0) {{route('invoice.store')}} @else {{route('invoice.edit',\App\Models\InvoiceSetting::all()->first()->id)}} @endif',
-                data: formData,
-                dataType: 'json',
-                success: function (data) {
-                    if (data.status === "success") {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: data.message,
-                            showConfirmButton: false,
-                            timer: 3000,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            },
-                            didClose: ()=>{
-                                window.location = data.redirect
-                            }
-                        });
-                    } else {
-                        if (data.status) {
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'error',
-                                title: data.message,
-                                showConfirmButton: false,
-                                timer: 3000,
-                                didOpen: () => {
-                                    Swal.showLoading()
-                                },
-                                didClose: ()=>{
-                                    window.location = data.redirect
-                                }
-                            });
-                            // window.location.reload();
-                        }
-                    }
-                },
-                error: function (data) {
-                    console.log(data)
+    {{--$(document).ready(async function() {--}}
+    {{--   await document.getElementById('form_edit').addEventListener('submit', async function (event) {--}}
+    {{--        event.preventDefault();--}}
+    {{--        let noiseValue = document.getElementById('noise');// Prevent the default form submission--}}
+    {{--        await console.log("Noise Value:", noiseValue);--}}
+    {{--        // Make a POST request to your Laravel route--}}
+    {{--        $.ajaxSetup({--}}
+    {{--            headers: {--}}
+    {{--                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+    {{--            }--}}
+    {{--        });--}}
+    {{--        let formData = $('#form_edit').serializeArray();--}}
+    {{--        await formData.push({name: 'noise', value: noiseValue});--}}
+    {{--        console.log(formData)--}}
+    {{--        --}}{{--$.ajax({--}}
+    {{--        --}}{{--    type: 'POST',--}}
+    {{--        --}}{{--    url: '@if(\App\Models\InvoiceSetting::all()->count()==0) {{route('invoice.store')}} @else {{route('invoice.edit',\App\Models\InvoiceSetting::all()->first()->id)}} @endif',--}}
+    {{--        --}}{{--    data: formData,--}}
+    {{--        --}}{{--    dataType: 'json',--}}
+    {{--        --}}{{--    success: function (data) {--}}
+    {{--        --}}{{--        if (data.status === "success") {--}}
+    {{--        --}}{{--            Swal.fire({--}}
+    {{--        --}}{{--                position: 'center',--}}
+    {{--        --}}{{--                icon: 'success',--}}
+    {{--        --}}{{--                title: data.message,--}}
+    {{--        --}}{{--                showConfirmButton: false,--}}
+    {{--        --}}{{--                timer: 3000,--}}
+    {{--        --}}{{--                didOpen: () => {--}}
+    {{--        --}}{{--                    Swal.showLoading();--}}
+    {{--        --}}{{--                },--}}
+    {{--        --}}{{--                didClose: ()=>{--}}
+    {{--        --}}{{--                    window.location = data.redirect--}}
+    {{--        --}}{{--                }--}}
+    {{--        --}}{{--            });--}}
+    {{--        --}}{{--        } else {--}}
+    {{--        --}}{{--            if (data.status) {--}}
+    {{--        --}}{{--                Swal.fire({--}}
+    {{--        --}}{{--                    position: 'center',--}}
+    {{--        --}}{{--                    icon: 'error',--}}
+    {{--        --}}{{--                    title: data.message,--}}
+    {{--        --}}{{--                    showConfirmButton: false,--}}
+    {{--        --}}{{--                    timer: 3000,--}}
+    {{--        --}}{{--                    didOpen: () => {--}}
+    {{--        --}}{{--                        Swal.showLoading()--}}
+    {{--        --}}{{--                    },--}}
+    {{--        --}}{{--                    didClose: ()=>{--}}
+    {{--        --}}{{--                        window.location = data.redirect--}}
+    {{--        --}}{{--                    }--}}
+    {{--        --}}{{--                });--}}
+    {{--        --}}{{--                // window.location.reload();--}}
+    {{--        --}}{{--            }--}}
+    {{--        --}}{{--        }--}}
+    {{--        --}}{{--    },--}}
+    {{--        --}}{{--    error: function (data) {--}}
+    {{--        --}}{{--        console.log(data)--}}
 
-                }
-            })
-        });
-    });
+    {{--        --}}{{--    }--}}
+    {{--        --}}{{--})--}}
+    {{--    });--}}
+    {{--});--}}
         var thanksMessage = "Your actual thanks message here";
         var encodedContent = "@isset($items[1]->thanks_message) {{$items[1]->thanks_message}} @else '' @endif"
         var decodedContent = he.decode(encodedContent);
