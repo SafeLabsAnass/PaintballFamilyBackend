@@ -29,10 +29,40 @@ class CategoryController extends Controller
      */
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        $items = [Category::all(), Product::all()];
-                return view('pages.categories')->with('items', $items);
-        }
+        $itemsPerPage = session('itemsPerPage', 6);
+//        $list = [6,15,20,25,30];
+        $items = [Category::paginate(7), Product::paginate(7)];
 
+                return view('pages.categories')->with('items', $items);
+    }
+
+    public function checkCategoryTab(): View|\Illuminate\Foundation\Application|Factory|Application
+    {
+        $check_tab = 'category';
+        $items = [Category::paginate(7), Product::paginate(6), $check_tab];
+
+        return view('pages.categories')->with('items', $items);
+    }
+
+    public function checkProductTab(): View|\Illuminate\Foundation\Application|Factory|Application
+    {
+        $check_tab = 'product';
+        $items = [Category::paginate(7), Product::paginate(6), $check_tab];
+
+        return view('pages.categories')->with('items', $items);
+    }
+
+    public function updatePerPage(Request $request)
+    {
+        // Retrieve the selected number of items per page
+        $itemsPerPage = $request->input('itemsPerPage', 15); // Default to 15 if not provided
+
+        // Store the selected number of items per page in session or any other storage mechanism
+        session(['itemsPerPage' => $itemsPerPage]);
+
+        // Redirect back to the previous page
+        return redirect()->back();
+    }
     /**
      * @param CategoryRequest $request
      * @return RedirectResponse

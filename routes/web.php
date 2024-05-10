@@ -70,6 +70,9 @@ Route::middleware('auth')->group(function () {
         Route::post('settings/edit/{id}', [SettingController::class, 'edit'])->name('settings.edit');
         Route::post('settings/invoice-store',[SettingController::class, 'storeInvoice'])->name('invoice.store');
         Route::post('settings/invoice-edit/{id}', [SettingController::class, 'editInvoice'])->name('invoice.edit');
+        Route::get('check-category-tab', [categoryController::class, 'checkCategoryTab'])->name('check-category-tab');
+        Route::get('check-product-tab', [categoryController::class, 'checkProductTab'])->name('check-product-tab');
+        Route::post('update-paginate', [categoryController::class, 'updatePerPage'])->name('updatePerPage');
 
     });
 });

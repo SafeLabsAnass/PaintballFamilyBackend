@@ -273,57 +273,62 @@
                         </ul>
                     </div>
                     <!-- Order List End -->
+                    <div class="tab_footer">
+                        <div class="row no-gutter align-items-center">
+                            <div class="col-12 col-md-12 col-lg-4 pb-3">
+                                <h2>Showing 1 to {{$sales->count()}} of {{App\Models\Sale::all()->count()}}
+                                    items</h2>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-8 pb-3">
+                                <div class="row align-items-center">
+                                    {{--                                    <form class="col-7" id="itemsPerPageForm" action="{{ route('updatePerPage') }}"--}}
+                                    {{--                                          method="POST">--}}
+                                    {{--                                        <div class="form-group d-flex align-items-center">--}}
+                                    {{--                                            @csrf--}}
+                                    {{--                                            <label for="exampleFormControlSelect1">Item per page--}}
+
+                                    {{--                                            </label>--}}
+                                    {{--                                            <select class="form-control mx-3" id="exampleFormControlSelect1"--}}
+                                    {{--                                                    style="max-width: 80px;">--}}
+                                    {{--                                                @foreach($items[2] as $item)--}}
+                                    {{--                                                    @if($item == $items[1]->count())--}}
+                                    {{--                                                        <option>{{$item}}</option>--}}
+                                    {{--                                                        @break--}}
+                                    {{--                                                    @endif--}}
+                                    {{--                                                @endforeach--}}
+                                    {{--                                                @foreach($items[2] as $item)--}}
+                                    {{--                                                    @if($item != $items[1]->count())--}}
+                                    {{--                                                        <option>{{$item}}</option>--}}
+                                    {{--                                                        @endif--}}
+                                    {{--                                                    @endforeach--}}
+                                    {{--                                            </select>--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    </form>--}}
+                                    <nav class="navigation col-5" aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end mb-0">
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $sales->previousPageUrl() }}"><i
+                                                        class="zmdi zmdi-chevron-left"></i></a>
+                                            </li>
+                                            @for ($i = 1; $i <= $sales->lastPage(); $i++)
+                                                <li class="page-item"><a class="page-link"
+                                                                         href="{{ $sales->url($i) }}">{{$i}}</a></li>
+                                            @endfor
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $sales->nextPageUrl() }}"><i
+                                                        class="zmdi zmdi-chevron-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Tab Footer start -->
                 </div>
-                {{--            <div class="tab-pane fade show" id="products" role="tabpanel" aria-labelledby="nav-products-tab"> --}}
-                {{--                <div class="tab_header"> --}}
-                {{--                    <h1>Products</h1> --}}
-                {{--                </div> --}}
-                {{--                <!-- Order List Start --> --}}
-                {{--                <div class="order_list"> --}}
-                {{--                    <div class="list_header d-flex"> --}}
-                {{--                        <h2 class="text-center order_num">Matricule</h2> --}}
-                {{--                        <h2 class="text-left   Name">Product</h2> --}}
-                {{--                        <h2 class="text-center Amount">Price</h2> --}}
-                {{--                        <h2 class="text-center Table">Quantity</h2> --}}
-                {{--                        <h2 class="text-center Items">Amount</h2> --}}
-                {{--                        <h2 class="text-right  CreatedAt" style="position: relative; left: 4.5%">CreatedAt</h2> --}}
-                {{--                    </div> --}}
 
-                {{--                    <ul> --}}
-                {{--                        @foreach ($sales as $sale) --}}
-                {{--                            @foreach ($sale->salesProducts as $sp) --}}
-                {{--                                <li class="d-flex"> --}}
-                {{--                                    <h3 class="text-center order_num">{{\App\Models\Sale::where('id',$sp->sale_id)->first()->matricule}}</h3> --}}
-                {{--                                    <h3 class="text-left Name">{{\App\Models\Product::where('id',$sp->product_id)->first()->name}}</h3> --}}
-                {{--                                    <h3 class="text-center Amount"> --}}
-                {{--                                        <strong>{{\App\Models\Product::where('id',$sp->product_id)->first()->price}} €</strong> --}}
-                {{--                                    </h3> --}}
-                {{--                                    <h3 class="text-center Table">{{$sp->quantity}}</h3> --}}
-                {{--                                    <h3 class="text-center Items">{{$sp->amount}} €</h3> --}}
-                {{--                                    <h3 class="text-right text-muted CreatedAt" --}}
-                {{--                                        style="position: relative; left: 4.5%">{{$sp->created_at}}</h3> --}}
-                {{--                                    <div class="btn_container d-flex mr-0 ml-auto"> --}}
-                {{--                                        <button type="button" class="btn"> --}}
-                {{--                                            <a data-toggle="modal" data-target="#receipt_model"><i --}}
-                {{--                                                    class="zmdi zmdi-print"></i></a> --}}
-                {{--                                        </button> --}}
-                {{--                                    </div> --}}
-                {{--                                </li> --}}
-                {{--                            @endforeach --}}
-                {{--                        @endforeach --}}
-                {{--                    </ul> --}}
-                {{--                </div> --}}
-                {{--                <!-- Order List End --> --}}
-
-                {{--                <!-- Tab Footer start --> --}}
-                {{--            </div> --}}
-                <!-- Sales Tab Content End -->
-
-                <!-- Expenses Tab Content Start -->
-                <!-- Tab Content End -->
-            </div>
         </div>
         <!-- Right Sidebar End -->
     </div>

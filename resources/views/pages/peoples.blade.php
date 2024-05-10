@@ -138,7 +138,7 @@
                                 Swal.fire({
                                     position: 'center',
                                     icon: 'error',
-                                    title: 'Les donnees entrants sont similaire avec les anciennes !',
+                                    title: 'Les donnees entrants sont similaire avec les anciennes donnees!',
                                     showConfirmButton: false,
                                     timer: 3000,
                                     didOpen: () => {
@@ -194,7 +194,7 @@
                                 Swal.fire({
                                     position: 'center',
                                     icon: 'error',
-                                    title: 'Les donnees entrants sont similaire avec les anciennes !',
+                                    title: 'Les donnees entrants sont similaire avec les anciennes donnees !',
                                     showConfirmButton: false,
                                     timer: 3000,
                                     didOpen: () => {

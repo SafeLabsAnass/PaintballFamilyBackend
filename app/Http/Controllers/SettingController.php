@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\InvoiceConstants;
+use App\Constants\SettingsConstants;
 use App\Models\Company;
 use App\Models\InvoiceSetting;
 use App\Models\Site;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -34,21 +37,38 @@ class SettingController extends Controller
     {
 
         if (InvoiceSetting::all()->count() != 0) {
-
             $invoiceSetting = InvoiceSetting::all()->first();
+            if($invoiceSetting->prefix_id == $request->prefix_id && $invoiceSetting->initial_count == $request->initial_count &&
+                $invoiceSetting->thanks_message == $request->noise)
+            {
+                return response()->json(
+                    [
+                        "status" => 'error',
+                        "message" => "Les donnees entrants sont similaire avec les anciennes donnees",
+                        "redirect" => route('settings')
+                    ],
+                    201
+                );
+            }
             $invoiceSetting->prefix_id = $request->prefix_id;
             $invoiceSetting->initial_count = $request->initial_count;
             $invoiceSetting->thanks_message = $request->noise;
             $invoiceSetting->save();
-            return redirect()->route('settings');
-        }
+            return response()->json(
+                [
+                    "status" => 'success',
+                    "message" => InvoiceConstants::STORE,
+                    "redirect" => route('settings')
+                ],
+                201
+            );        }
     }
 
     /**
      * @param Request $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function storeInvoice(Request $request): RedirectResponse
+    public function storeInvoice(Request $request)
     {
         if (InvoiceSetting::all()->count() == 0) {
 
@@ -57,10 +77,15 @@ class SettingController extends Controller
             $invoiceSetting->initial_count = $request->initial_count;
             $invoiceSetting->thanks_message = $request->noise;
             $invoiceSetting->save();
-
-            return redirect()->route('settings');
+            return response()->json(
+                [
+                    "status" => 'success',
+                    "message" => InvoiceConstants::STORE,
+                    "redirect" => route('settings')
+                ],
+                201
+            );
         }
-        return redirect()->route('settings');
     }
 
     /**
@@ -73,7 +98,7 @@ class SettingController extends Controller
             request()->validate([
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
             ]);
-            $logo = '';
+                $logo = '';
             if(request()->image != null){
                 $logo = request()->image->getClientOriginalName();
                 Storage::put('app/public', $logo);
@@ -91,9 +116,15 @@ class SettingController extends Controller
             $company->site = $request->site;
             $company->vat_number = $request->vat_number;
             $company->save();
-            return redirect()->route('settings');
+            return response()->json(
+                [
+                    "status" => 'success',
+                    "message" => SettingsConstants::STORE,
+                    "redirect" => route('settings')
+                ],
+                201
+            );
         }
-        return redirect()->route('settings');
 
     }
 
@@ -112,10 +143,22 @@ class SettingController extends Controller
     public function edit(Request $request)
     {
         if(Company::all()->count()!=0) {
-            request()->validate([
+            $company = Company::all()->first();
+            if ($request->name == $company->name && $request->phone == $company->phone
+                && $request->address == $company->address && $request->email == $company->email &&
+                $company->site == $request->site && $request->imageTest == $company->logo) {
+                return response()->json(
+                    [
+                        "status" => 'error',
+                        "message" => "Les donnees entrants sont similaire avec les anciennes donnees",
+                        "redirect" => route('settings')
+                    ],
+                    201
+                );
+            }
+                request()->validate([
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:40048',
             ]);
-            $company = Company::all()->first();
             if(request()->image!= null){
                 $logo = request()->image->getClientOriginalName();
                 if (!file_exists(storage_path('app/public' . '/' . $logo))) {
@@ -135,7 +178,14 @@ class SettingController extends Controller
             $company->site = $request->site;
             $company->vat_number = $request->vat_number;
             $company->save();
-            return redirect()->route('settings');
+            return response()->json(
+                [
+                    "status" => 'success',
+                    "message" => SettingsConstants::STORE,
+                    "redirect" => route('settings')
+                ],
+                201
+            );
         }
     }
 

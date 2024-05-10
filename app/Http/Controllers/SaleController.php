@@ -17,7 +17,8 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::all()->sortBy('facture_id');
+
+        $sales = Sale::orderBy('facture_id')->paginate(12);
         return view('pages.sales')->with('sales', $sales);
     }
 

@@ -35,8 +35,6 @@
             display: none;
         }
     </style>
-
-
 </head>
 
 <body id="page_items">
@@ -50,8 +48,7 @@
         <div class="col ml-1" style="max-width: 45%;">
             <div class="bg-second p-4">
                 <h3 class="mt-0 mb-4 text-white">Setting</h3>
-                <form method="post" action="@if(\App\Models\Company::all()->count()==0) {{route('settings.store')}} @else {{route('settings.edit',$items[0]->id)}} @endif" enctype="multipart/form-data">
-                    @csrf
+                <form id="form" enctype="multipart/form-data">
                     <div class="row" style="max-width: 600px">
                         <div class="upload-box mt-1 mr-4 mb-3 mx-auto">
                             <label for="img" class="img m-0 active">
@@ -61,6 +58,7 @@
                             </label>
                         </div>
                         <div class="upload-box mt-1 ml-4 mb-3  mx-auto">
+                            <input id="imageTest" type="text" name="imageTest" value="@isset($items[0]->logo) {{$items[0]->logo}} @endif" style="display: none;">
                             <center><img id="preview" src="@if(\App\Models\Company::all()->count()!=0) {{ asset('storage/' . $items[0]->logo) }} @endif" alt="Image Preview" style="max-width: 200px; max-height: 200px; @if(\App\Models\Company::all()->count()==0) display: none; @endif"></center>
                         </div>
                     </div>
@@ -101,8 +99,7 @@
             <div class="bg-second p-4">
                 <h3 class="mt-0 mb-5 text-white">Invoice Setting</h3>
 
-                <form class="mb-4" action="@if(\App\Models\InvoiceSetting::all()->count()==0) {{route('invoice.store')}} @else {{route('invoice.edit',\App\Models\InvoiceSetting::all()->first()->id)}} @endif" method="POST">
-                    @csrf
+                <form class="mb-4" id="form_edit">
                     <div class="form-group">
                         <label>Prefix ID</label>
                         <input type="text" class="form-control col-lg-3" name="prefix_id" value="@isset($items[1]->prefix_id) {{$items[1]->prefix_id}} @endif">
@@ -124,6 +121,130 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/he@1.2.0/he.js"></script>
+<script>
+    $(document).ready(function() {
+        document.getElementById('form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+            // Make a POST request to your Laravel route
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '@if(\App\Models\Company::all()->count()==0) {{route('settings.store')}} @else {{route('settings.edit',$items[0]->id)}} @endif',
+                data: $('#form').serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === "success") {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 3000,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                            didClose: () => {
+                                window.location = data.redirect
+                            }
+                        });
+                    } else {
+                        if (data.status) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: data.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                                didClose: () => {
+                                    window.location = data.redirect
+                                }
+                            });
+                            // window.location.reload();
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+
+                }
+            })
+        });
+    });
+    console.log($('#noise'))
+    $(document).ready(function() {
+        document.getElementById('form_edit').addEventListener('submit', function (event) {
+            event.preventDefault();
+            let noiseValue = $('#noise').val();// Prevent the default form submission
+            // Make a POST request to your Laravel route
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            let formData = $('#form_edit').serializeArray();
+            formData.push({name: 'noise', value: noiseValue});
+            $.ajax({
+                type: 'POST',
+                url: '@if(\App\Models\InvoiceSetting::all()->count()==0) {{route('invoice.store')}} @else {{route('invoice.edit',\App\Models\InvoiceSetting::all()->first()->id)}} @endif',
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === "success") {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 3000,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                            didClose: ()=>{
+                                window.location = data.redirect
+                            }
+                        });
+                    } else {
+                        if (data.status) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: data.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                                didClose: ()=>{
+                                    window.location = data.redirect
+                                }
+                            });
+                            // window.location.reload();
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+
+                }
+            })
+        });
+    });
+        var thanksMessage = "Your actual thanks message here";
+        var encodedContent = "@isset($items[1]->thanks_message) {{$items[1]->thanks_message}} @else '' @endif"
+        var decodedContent = he.decode(encodedContent);
+        plainText = String(decodedContent);
+        document.getElementById("noise").innerHTML = plainText
+</script>
 <!-- Require Javascript Start -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -149,18 +270,12 @@
 <script type="text/javascript">
     document.getElementById("initial_count").value = @isset($items[1]->initial_count) {{$items[1]->initial_count}} @else '' @endif
 </script>
-<script src="https://cdn.jsdelivr.net/npm/he@1.2.0/he.js"></script>
-<script type="text/javascript">
-var thanksMessage = "Your actual thanks message here";
-var encodedContent = "@isset($items[1]->thanks_message) {{$items[1]->thanks_message}} @else '' @endif"
-var decodedContent  = he.decode(encodedContent);
-plainText = String(decodedContent);
-        document.getElementById("noise").innerHTML = plainText
-</script>
+
 <script>
     document.getElementById('img').addEventListener('change', function(event) {
         const file = event.target.files[0];
         const reader = new FileReader();
+        document.getElementById('imageTest').value = file.name
         reader.onload = function(e) {
             document.getElementById('preview').style.display = 'block';
             document.getElementById('preview').src = e.target.result;

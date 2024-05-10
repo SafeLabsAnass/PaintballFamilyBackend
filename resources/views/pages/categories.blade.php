@@ -7,6 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Datetimepicker CSS -->
     <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
@@ -45,11 +46,49 @@
             return "";
         }
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script>
+        let checkTab = ''
         $(document).ready(function () {
             document.getElementById('nav-Categories-tab').addEventListener('click',function (){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: 'check-category-tab',
+                    dataType: 'json',
+                    success: function (response) {
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(status);
+                        // Handle errors here
+                    }
+                })
+
                 document.cookie = "tabProductOpened="
+            });
+            document.getElementById('nav_food_items').addEventListener('click', function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: 'check-product-tab',
+                    dataType: 'json',
+                    success: function (response) {
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(status);
+                        // Handle errors here
+                    }
+                })
+                document.cookie = "tabProductOpened=product"
             });
 
             if (getCookie('tabProductOpened') === "product") {
@@ -63,9 +102,9 @@
                 $('#food_items').removeClass('active');
                 $('#Categories').addClass('active');
             }
-            window.onload = function() {
-                document.cookie = "tabProductOpened="
-            }
+            document.getElementById('exampleFormControlSelect1').addEventListener('change', function () {
+                document.getElementById('itemsPerPageForm').submit();
+            });
         });
 
     </script>
@@ -134,7 +173,58 @@
                         </ul>
                     </div>
                     <!-- Order List End -->
+                    <div class="tab_footer">
+                        <div class="row no-gutter align-items-center">
+                            <div class="col-12 col-md-12 col-lg-4 pb-3">
+                                <h2>Showing 1 to {{$items[1]->count()}} of {{App\Models\Product::all()->count()}}
+                                    items</h2>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-8 pb-3">
+                                <div class="row align-items-center">
+{{--                                    <form class="col-7" id="itemsPerPageForm" action="{{ route('updatePerPage') }}"--}}
+{{--                                          method="POST">--}}
+{{--                                        <div class="form-group d-flex align-items-center">--}}
+{{--                                            @csrf--}}
+{{--                                            <label for="exampleFormControlSelect1">Item per page--}}
 
+{{--                                            </label>--}}
+{{--                                            <select class="form-control mx-3" id="exampleFormControlSelect1"--}}
+{{--                                                    style="max-width: 80px;">--}}
+{{--                                                @foreach($items[2] as $item)--}}
+{{--                                                    @if($item == $items[1]->count())--}}
+{{--                                                        <option>{{$item}}</option>--}}
+{{--                                                        @break--}}
+{{--                                                    @endif--}}
+{{--                                                @endforeach--}}
+{{--                                                @foreach($items[2] as $item)--}}
+{{--                                                    @if($item != $items[1]->count())--}}
+{{--                                                        <option>{{$item}}</option>--}}
+{{--                                                        @endif--}}
+{{--                                                    @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </form>--}}
+                                    <nav class="navigation col-5" aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end mb-0">
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $items[1]->previousPageUrl() }}"><i
+                                                        class="zmdi zmdi-chevron-left"></i></a>
+                                            </li>
+                                            @for ($i = 1; $i <= $items[1]->lastPage(); $i++)
+                                                <li class="page-item"><a class="page-link"
+                                                                         href="{{ $items[1]->url($i) }}">{{$i}}</a></li>
+                                            @endfor
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $items[1]->nextPageUrl() }}"><i
+                                                        class="zmdi zmdi-chevron-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Tab Footer start -->
                 </div>
                 <!-- Food Items Tab Content End -->
@@ -181,6 +271,50 @@
                         </ul>
                     </div>
                     <!-- Tab Footer start -->
+{{--                    <div class="tab_footer">--}}
+{{--                        <div class="row no-gutter align-items-center">--}}
+{{--                            <div class="col-12 col-md-12 col-lg-4 pb-3">--}}
+{{--                                <h2>Showing 1 to 6 of {{$items[0]->count()}} items</h2>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-12 col-md-12 col-lg-8 pb-3">--}}
+{{--                                <div class="row align-items-center">--}}
+{{--                                    <form class="col-7">--}}
+{{--                                        <div class="form-group d-flex align-items-center">--}}
+{{--                                            <label for="exampleFormControlSelect1">Item per page</label>--}}
+{{--                                            <select class="form-control mx-3" id="exampleFormControlSelect1"--}}
+{{--                                                    style="max-width: 80px;">--}}
+{{--                                                <option>10</option>--}}
+{{--                                                <option>15</option>--}}
+{{--                                                <option>20</option>--}}
+{{--                                                <option>25</option>--}}
+{{--                                                <option>30</option>--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </form>--}}
+
+{{--                                    <nav class="navigation col-5" aria-label="Page navigation example">--}}
+{{--                                        <ul class="pagination justify-content-end mb-0">--}}
+{{--                                            <li class="page-item disabled">--}}
+{{--                                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i--}}
+{{--                                                        class="zmdi zmdi-chevron-left"></i></a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="page-item"><a class="page-link"--}}
+{{--                                                                     href="{{ $items[0]->previousPageUrl() }}">1</a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="page-item"><a class="page-link"--}}
+{{--                                                                     href="{{ $items[0]->nextPageUrl() }}">2</a></li>--}}
+{{--                                            <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
+{{--                                            <li class="page-item">--}}
+{{--                                                <a class="page-link" href="#"><i--}}
+{{--                                                        class="zmdi zmdi-chevron-right"></i></a>--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </nav>--}}
+
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
                 <!-- Categories Tab Content Start -->
             </div>
@@ -249,12 +383,20 @@
     <!-- Add Category Modal End  -->
 
     <!-- Require Javascript Start -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- Require Javascript End -->
     <script src="{{ asset('js/jquery.datetimepicker.full.js')}}"></script>
+    {{--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+          integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    {{--    <script src="https://code.jquery.com/jquery-3.7.1.js"--}}
+    {{--            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="--}}
+    {{--            crossorigin="anonymous"></script>--}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    {{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}}
     <script>
         $("#datetime").datetimepicker();
     </script>
