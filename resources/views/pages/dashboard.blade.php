@@ -229,7 +229,6 @@
             url: '/home/chartsCircular/',
             dataType: 'json',
             success: function (response) {
-                console.log(response)
                 if (response) {
                     for (let i = 0; i < response.items.circularChart.length ; i++) {
                         total+=response.items.circularChart[i].count
@@ -247,8 +246,6 @@
                         labels.push((""+response.items.circularChart[i].category+" ("+Math.round((response.items.circularChart[i].count/total)*100
                         )+"%)").toString())
                     }
-                    console.log(categories_percent)
-                    console.log(labels)
                     new Chart(document.getElementById("doughnut-chart"), {
                         type: 'doughnut',
                         legend: {
