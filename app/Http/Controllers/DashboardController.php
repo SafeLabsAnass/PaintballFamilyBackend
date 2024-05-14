@@ -82,7 +82,7 @@ class DashboardController extends Controller
            $date = Carbon::parse($topSellingCount->date);
            $listDays [] =
                ['days'=>$date->format('d M'),
-                   "count"=>$topSellingCount->total_sale];   
+                   "count" => $topSellingCount->total_sale];
 
        }
        $items->lineChart = $listDays;
@@ -92,4 +92,37 @@ class DashboardController extends Controller
            "items" => $items
        ], 201);
    }
+
+    function chartsCircular(): \Illuminate\Http\JsonResponse
+    {
+        $items = new stdClass();
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $topSellingCounts = SaleProduct::select(
+            DB::raw('COUNT(DISTINCT products.id) as categorySaleTotal'),
+            'sales_products.sale_id as sale',
+            'categories.name as name')
+            ->join('products', 'sales_products.product_id', '=', 'products.id')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->groupBy('sales_products.sale_id', 'categories.name')
+            ->get();
+        $listCategorySale = [];
+        $saleByCategory = new stdClass();
+        $categories_names = Category::all('name');
+        foreach ($categories_names as $categories_name) {
+            $nbr = 0;
+            foreach ($topSellingCounts as $topSellingCount) {
+                if ($categories_name['name'] == $topSellingCount->name) {
+                       $nbr ++;
+                }
+            }
+            $listCategorySale [] = ['count'=>$nbr,'category'=>$categories_name['name']];
+        }
+        $items->circularChart = $listCategorySale;
+        return response()->json([
+            "status" => 'success',
+            "redirect" => route('home'),
+            "items" => $items
+        ], 201);
+    }
 }

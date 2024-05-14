@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:superadministrator')->group(function () {
         Route::get('/home', [DashboardController::class,'statistics' ])->name('home');
         Route::get('/home/chart', [DashboardController::class,'charts' ])->name('chart');
+        Route::get('/home/chartsCircular', [DashboardController::class,'chartsCircular' ])->name('chartsCircular');
         Route::get('/upload_product', function () {
             $categories = Category::all();
             return

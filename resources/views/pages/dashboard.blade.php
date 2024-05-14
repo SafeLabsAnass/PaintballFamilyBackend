@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="col-md-12 mb-4 ">
                             <div class="chart-area p-3 p-xl-4 d-flex align-items-center">
-                                <i class="zmdi zmdi-cutlery text-success"></i>
+                                <i class="zmdi zmdi-shopping-cart text-success"></i>
                                 <div class='ml-4'>
                                     <span class="text-muted">Total Sales</span>
                                     <strong class="h1 d-block">{{$items->sales}}</strong>
@@ -116,8 +116,9 @@
                                      aria-valuemax="100"></div>
                             </div>
                                 <span style="min-width: 100px;"
-                                      class="text-right mr-5">{{$payment['totalPayment']}} <span
-                                        class="text-muted">({{$payment['percent']}}%)</span></span>
+                                      class="text-right mr-5"><span
+                                        class="text-muted">({{$payment['percent']}}%)</span>
+                                </span>
                         </div>
                             @endforeach
                     </div>
@@ -179,7 +180,6 @@
                     for (let i = 0; i < count ; i++) {
                         listColors.push("#28a745")
                     }
-                    console.log(listDays,listCount,listColors)
                     new Chart(document.getElementById("bar-chart"), {
                         type: 'bar',
                         data: {
@@ -212,31 +212,78 @@
             }
         })
     }
-    showChart();
-    // Bar chart
-
-
-    new Chart(document.getElementById("doughnut-chart"), {
-        type: 'doughnut',
-        legend: {
-            position: 'bottom'
-        },
-        data: {
-            labels: ["paintball 26%", "Ninja (26%)", "Beverage (12%)", "Minigolf (32%)", "Itallian (10%)", "Starter (9%)", "Surf (16%)", "Palycity (6%)", "Popular (6%)" ],
-            datasets: [{
-                //                    label: "Population (millions)",
-                backgroundColor: ["#eb1e1e", "#f09514", "#f02899", "#03b8ff", "#009946", "#8d37e6", "#898989", "#3337f0","#898909"],
-                data: [26, 26, 12, 32, 10, 9, 16, 6,6],
-                borderWidth: [0, 0, 0, 0, 0, 0, 0, 0,0]
-            }]
-        },
-        options: {
-            title: {
-                //                    display: true,
-                //                    text: 'Predicted world population (millions) in 2050'
+    let categories_percent = []
+    let categories_name = []
+    let labels = []
+    let borderWidth = []
+    let backgroundColor = ["#eb1e1e", "#f09514", "#f02899", "#03b8ff", "#009946", "#8d37e6", "#898989", "#3337f0"]
+    let total = 0
+    function showChartCircular() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        }
-    });
+        });
+        $.ajax({
+            type: 'GET',
+            url: '/home/chartsCircular/',
+            dataType: 'json',
+            success: function (response) {
+                console.log(response)
+                if (response) {
+                    for (let i = 0; i < response.items.circularChart.length ; i++) {
+                        total+=response.items.circularChart[i].count
+                        borderWidth.push(3)
+                        if(backgroundColor.length<response.items.circularChart.length)
+                        {
+                            backgroundColor.push('#1111f6')
+                        }
+                    }
+                    for (let i = 0; i < response.items.circularChart.length ; i++) {
+                        // listDays.push(response.items.circularChart[i].category.toString())
+                        categories_percent.push(Math.round((response.items.circularChart[i].count/total)*100
+                        ));
+                        categories_name.push(response.items.circularChart[i].category);
+                        labels.push((""+response.items.circularChart[i].category+" ("+Math.round((response.items.circularChart[i].count/total)*100
+                        )+"%)").toString())
+                    }
+                    console.log(categories_percent)
+                    console.log(labels)
+                    new Chart(document.getElementById("doughnut-chart"), {
+                        type: 'doughnut',
+                        legend: {
+                            position: 'bottom'
+                        },
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                //                    label: "Population (millions)",
+                                backgroundColor: backgroundColor,
+                                data: categories_percent,
+                                borderWidth: borderWidth
+                            }]
+                        },
+                        options: {
+                            title: {
+                                //                    display: true,
+                                //                    text: 'Predicted world population (millions) in 2050'
+                            }
+                        }
+                    });
+
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(status);
+                console.log(error);
+                console.log(xhr);
+                // Handle errors here
+            }
+        })
+    }
+    showChart();
+    showChartCircular();
+    // Bar chart
 </script>
 <script>
     $('.owl-carousel').owlCarousel({
