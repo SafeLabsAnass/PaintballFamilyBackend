@@ -257,13 +257,14 @@
                                 //                    label: "Population (millions)",
                                 backgroundColor: backgroundColor,
                                 data: categories_percent,
-                                borderWidth: borderWidth
+                                borderWidth: borderWidth,
+
                             }]
                         },
                         options: {
                             title: {
-                                //                    display: true,
-                                //                    text: 'Predicted world population (millions) in 2050'
+                                                   display: true,
+                                                   text: 'Pourcentage des categories en sales'
                             }
                         }
                     });
