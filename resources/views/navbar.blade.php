@@ -1,3 +1,4 @@
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 <header class="container-fluid">
     <nav class="navbar navbar-expand-xl navbar-light align-items-center">
         <div class="nav-item">
@@ -15,7 +16,7 @@
                     <a class="nav-link" href="{{route('home')}}"><i class="zmdi zmdi-assignment"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="categories" href="{{route('categories')}}"><i class="zmdi zmdi-cutlery"></i> Categories</a>
+                    <a class="nav-link" id="categories" href="{{route('categories')}}"><i class="zmdi zmdi-case"></i> Categories</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('peoples')}}"><i class="zmdi zmdi-accounts-alt"></i> Users</a>

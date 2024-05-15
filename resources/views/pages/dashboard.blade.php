@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="chart-area p-3 p-xl-4 d-flex align-items-center">
-                                <i class="zmdi zmdi-cutlery text-success"></i>
+                                <i class="zmdi zmdi-case text-success"></i>
                                 <div class='ml-4'>
                                     <span class="text-muted">Total Categories</span>
                                     <strong class="h1 d-block">{{$items->categories}}</strong>
@@ -72,7 +72,7 @@
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="chart-area p-3 p-xl-4 d-flex align-items-center">
-                                <i class="zmdi zmdi-cutlery text-success"></i>
+                                <i class="zmdi zmdi-shopping-basket text-success"></i>
                                 <div class='ml-4'>
                                     <span class="text-muted">Total Products</span>
                                     <strong class="h1 d-block">{{$items->products}}</strong>
