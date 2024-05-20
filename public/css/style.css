@@ -874,14 +874,14 @@
 ================================
 */
  #page_sign_in {
-     background: url('../images/sign_in_bg.png');
+     background: url('../images/screen.png');
      background-size: cover;
      background-repeat: no-repeat;
      background-position: center;
      min-height: 100vh;
  }
  #page_register {
-     background: url('../images/sign_in_bg.png');
+     background: url('../images/screen.png');
      background-size: cover;
      background-repeat: no-repeat;
      background-position: center;
