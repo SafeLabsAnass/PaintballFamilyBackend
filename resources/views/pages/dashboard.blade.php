@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Datetimepicker CSS -->
-    <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet"><link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
-
+<link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet"><link rel="icon" href="{{ asset('storage/' . \App\Models\Company::all()->first()->logo) }}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" type="text/css">
 
