@@ -20,6 +20,8 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
+    Route::get('privacy', [AuthenticatedSessionController::class, 'privacy'])
+        ->name('privacy');
 
     Route::post('/', [AuthenticatedSessionController::class, 'store'])->name('login.web');
 

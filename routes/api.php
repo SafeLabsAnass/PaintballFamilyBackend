@@ -9,6 +9,7 @@ use App\Http\Controllers\API\SaleController;
 use App\Http\Controllers\API\SaleProductController;
 use App\Http\Controllers\API\SiteCategoryController;
 use App\Http\Controllers\API\SiteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [LoginController::class, 'login']);
@@ -33,6 +34,7 @@ Route::middleware('api.auth')->group(function () {
         Route::get('sale/show/{id}', [SaleController::class, 'show'])->name('sale.show.api');
         Route::put('sale/update/{id}', [SaleController::class, 'update'])->name('sale.update.api');
         Route::delete('sale/destroy/{id}', [SaleController::class, 'destroy'])->name('sale.destroy.api');
+        Route::delete('user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy.api');
         Route::apiResource('saleProduct', SaleProductController::class);
         Route::get('saleProduct/show/{id}', [SaleProductController::class, 'show'])->name('saleProduct.show.api');
         Route::put('saleProduct/update/{id}', [SaleProductController::class, 'update'])->name('saleProduct.update.api');

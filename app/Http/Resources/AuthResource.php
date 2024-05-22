@@ -15,6 +15,7 @@ class AuthResource extends JsonResource
     public function toArray(Request $request): array
     {
         $site=Site::where('id',$this->site_id)->first();
+        return $site;
         return [
             'id' => $this->id,
             'username' => $this->username,

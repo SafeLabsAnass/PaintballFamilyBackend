@@ -76,6 +76,12 @@
                     </a>
                 @endif
             </div>
+            <div class="form-group">
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                       href="{{ route('privacy') }}">
+                        {{ __('Privacy Policy') }}
+                    </a>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>

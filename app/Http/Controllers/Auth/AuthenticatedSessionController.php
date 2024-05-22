@@ -22,6 +22,11 @@ class AuthenticatedSessionController extends Controller
      *
      * @return View
      */
+    public function privacy()
+    {
+        return view('auth.privacy');
+    }
+
     public function create(): View
     {
         $usersWithRole = User::whereHas('roles', function ($query) {
