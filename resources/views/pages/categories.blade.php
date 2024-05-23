@@ -6,11 +6,13 @@
     <!-- Required meta tags -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Datetimepicker CSS -->
-<link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet"><link rel="icon" href="{{ asset('storage/' . \App\Models\Company::all()->first()->logo) }}">
+    <link href="{{ asset('css/jquery.datetimepicker.min.css')}}" type="text/css" rel="stylesheet">
+    <link rel="icon" href="{{ asset('storage/' . \App\Models\Company::all()->first()->logo) }}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" type="text/css">
 
