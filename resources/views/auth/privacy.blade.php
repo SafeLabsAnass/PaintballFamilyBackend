@@ -107,7 +107,7 @@
     <h4>Personal Data</h4>
     <p>During your use of our App, we may request you to furnish us with certain personally identifiable information that can be utilized to contact or identify you ("Personal Data"). This may include, but is not limited to:</p>
     <ul>
-        <li>test.safelabs@gmail.com</li>
+        <li>test.safelabsagency@gmail.com</li>
         <li>SafeLabs</li>
         <li>Phone number</li>
     </ul>
