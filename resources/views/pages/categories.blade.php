@@ -6,7 +6,9 @@
     <!-- Required meta tags -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
+<!--
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -163,7 +165,7 @@
                                 <h3 class="text-center Table Price">{{$product->price}} €</h3>
                                 <div class="btn_container d-flex ml-auto">
                                     <button type="button" class="btn">
-                                        <a href="{{route('product.destroy.web',$product->id)}}"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="{{route('product.destroy.web',$product->id)}}" onclick="return confirm('Voulez-vous vraiment supprimer ce produit ?')" ><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
                                         <a href="{{route('product.show.web',$product->id)}}"><i class="zmdi zmdi-edit"></i></a>
@@ -260,7 +262,7 @@
 
                                 <div class="btn_container d-flex mr-0 ml-auto">
                                     <button type="button" class="btn">
-                                        <a href="{{route('category.destroy.web',$category->id)}}"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="{{route('category.destroy.web',$category->id)}}" onclick="return confirm('Voulez-vous vraiment supprimer cette catégorie ?')"><i class="zmdi zmdi-delete"></i></a>
                                     </button>
                                     <button type="button" class="btn">
                                         <a href="{{route('category.show.web',$category->id)}}"><i class="zmdi zmdi-edit"></i></a>

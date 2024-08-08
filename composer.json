@@ -10,7 +10,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/auth": "*",
         "laravel/framework": "^v10.48.8",
-        "laravel/horizon": "^5.15",
+        "laravel/horizon": "^5.24",
         "laravel/sanctum": "^3.2",
         "laravel/telescope": "^4.17.6",
         "laravel/tinker": "^2.8",

@@ -6,7 +6,9 @@
     <!-- Required meta tags -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
+<!--
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -186,6 +188,7 @@
                 productList.innerHTML = ''
             });
         });
+
     </script>
 </head>
 
@@ -201,7 +204,7 @@
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active mt-5" id="nav-sales-tab" data-toggle="tab" href="#sales"
                     role="tab" aria-controls="nav-home" aria-selected="true">Sales</a>
-                {{--            <a class="nav-item nav-link " id="nav-products-tab" data-toggle="tab" href="#products" role="tab" --}}
+                {{--            <a class="nav-item nav-link " id="nav-+-tab" data-toggle="tab" href="#products" role="tab" --}}
                 {{--               aria-controls="nav-home" aria-selected="false">Products</a> --}}
             </div>
             <!-- Nav Tabs End -->
@@ -261,7 +264,7 @@
                                         <a data-toggle="modal" data-target="#receipt_model"><i
                                                 class="zmdi zmdi-eye"></i></a>
                                         </button>
-                                        <button type="button" id="btn-click" class="btn"><a href="{{route('sale.destroy.web',$sale->id)}}"><i
+                                        <button type="button" id="btn-click" class="btn"><a href="{{route('sale.destroy.web',$sale->id)}}" onclick="return confirm('Voulez-vous vraiment supprimer cette achat ?')"><i
                                                 class="zmdi zmdi-delete"></i></a>
                                         </button>
                                         <button class="btn" type="button" id="btn_show" data-toggle="modal"

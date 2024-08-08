@@ -21,7 +21,6 @@ class LoginController extends Controller
     {
         if (auth()->attempt($request->all())) {
             $user = auth()->user();
-
 //            $user->tokens()->delete();
 
             $success = $user->createToken('PaintballFamily')->plainTextToken;

@@ -6,7 +6,9 @@
     <!-- Required meta tags -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
+<!--
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -319,7 +321,7 @@
                                     <h3 class="text-left text-muted created">{{$user->created_at}}</h3>
                                     <div class="btn_container d-flex mr-0 ml-auto">
                                         <button type="button" class="btn">
-                                            <a href="{{url('user/destroy/'.$user->id)}}"><i
+                                            <a href="{{url('user/destroy/'.$user->id)}}" onclick="return confirm('Voulez-vous vraiment supprimer ce caissier ?')"><i
                                                     class="zmdi zmdi-delete"></i></a>
                                         </button>
                                         <button class="btn" type="button" id="btn_show" data-toggle="modal"
@@ -453,7 +455,7 @@
                             <h3 class="text-left text-muted created">{{$user->created_at}}</h3>
                             <div class="btn_container d-flex mr-0 ml-auto">
                                 <button type="button" class="btn">
-                                    <a href="{{url('user/destroy/'.$user->id)}}" ><i class="zmdi zmdi-delete"></i></a>
+                                    <a href="{{url('user/destroy/'.$user->id)}}" onclick="return confirm('Voulez-vous vraiment supprimer cette Administrateur ?')"><i class="zmdi zmdi-delete"></i></a>
                                 </button>
                                     <button class="btn" type="button" id="btn_show" data-toggle="modal" data-target="#edit_people_1" onclick="showSuper({{$user->id}})"><i class="zmdi zmdi-edit mb-5"></i></button>
                             </div>
